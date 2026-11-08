@@ -5,8 +5,7 @@
   "scripts": {
     "start": "npx serve . -l 3000",
     "serve": "npx serve . -l 3000",
-    "dev:next": "next dev",
-    "build:next": "next build"
+    "build": "echo 'Static site ready'"
   },
   "keywords": [
     "peintre-professionnel",
