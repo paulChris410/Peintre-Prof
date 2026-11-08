@@ -1,0 +1,3393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brew Haven | Specialty Roastery & Artisan Coffee</title>
+    
+    <!-- Meta Descriptions for SEO -->
+    <meta name="description" content="Brew Haven is a premium micro-batch specialty roastery. Log in to your account, explore our single-origin slow brews, read customer stories, and subscribe to our newsletter.">
+    <meta name="keywords" content="specialty coffee shop, roastery, dark mode cafe, coffee subscription, create account, local coffee brickwood">
+    <meta name="author" content="Brew Haven Design Team">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome Icons for visual indicators -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Premium Embedded Stylesheets -->
+    <style>
+        /* Custom properties for coffee theme dynamics */
+        :root {
+            --transition-speed: 0.4s;
+            --transition-timing: cubic-bezier(0.25, 0.8, 0.25, 1);
+            
+            --font-headings: 'Playfair Display', Georgia, serif;
+            --font-body: 'Outfit', sans-serif;
+            
+            /* Theme variables default to DARK mode */
+            --bg-base: radial-gradient(circle at 10% 20%, #15100d 0%, #060504 90%);
+            --bg-solid: #090706;
+            --bg-grid: rgba(255, 255, 255, 0.02);
+            --panel-bg: rgba(26, 20, 17, 0.55);
+            --panel-border: rgba(186, 139, 109, 0.15);
+            --panel-border-hover: rgba(186, 139, 109, 0.3);
+            --text-primary: #f6eedf;
+            --text-secondary: #c2b09c;
+            --text-muted: #8e7a68;
+            --accent: #d89f76;
+            --accent-glow: rgba(216, 159, 118, 0.15);
+            --accent-solid: #b47346;
+            --btn-bg: #8c5738;
+            --btn-text: #fdfaf7;
+            --btn-hover: #b47346;
+            --form-bg: rgba(18, 14, 12, 0.65);
+            --toast-bg: rgba(30, 24, 20, 0.95);
+            --success-color: #7ba87f;
+            --shadow-primary: 0 12px 40px rgba(0, 0, 0, 0.5);
+        }
+        
+        [data-theme="light"] {
+            --bg-base: radial-gradient(circle at 10% 20%, #faf8f5 0%, #eae3d9 90%);
+            --bg-solid: #f4edd8;
+            --bg-grid: rgba(0, 0, 0, 0.015);
+            --panel-bg: rgba(255, 255, 255, 0.65);
+            --panel-border: rgba(109, 76, 65, 0.12);
+            --panel-border-hover: rgba(109, 76, 65, 0.25);
+            --text-primary: #2d1e15;
+            --text-secondary: #5d483b;
+            --text-muted: #857266;
+            --accent: #a96338;
+            --accent-glow: rgba(169, 99, 56, 0.12);
+            --accent-solid: #8c4f2b;
+            --btn-bg: #6d3b1e;
+            --btn-text: #ffffff;
+            --btn-hover: #8c4f2b;
+            --form-bg: rgba(255, 255, 255, 0.85);
+            --toast-bg: rgba(255, 255, 255, 0.95);
+            --success-color: #4b8253;
+            --shadow-primary: 0 12px 40px rgba(109, 76, 65, 0.15);
+        }
+
+        /* Core reset */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            user-select: none;
+            -webkit-user-drag: none;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--bg-solid);
+            background-image: var(--bg-base);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            min-height: 100vh;
+            line-height: 1.6;
+            transition: background var(--transition-speed) var(--transition-timing),
+                        color var(--transition-speed) var(--transition-timing);
+        }
+
+        /* 3D background canvas */
+        #three-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -10;
+            pointer-events: none;
+            transition: opacity var(--transition-speed);
+        }
+
+        /* Grid lines background decoration */
+        .ambient-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -9;
+            background-size: 60px 60px;
+            background-image: linear-gradient(to right, var(--bg-grid) 1px, transparent 1px),
+                              linear-gradient(to bottom, var(--bg-grid) 1px, transparent 1px);
+            pointer-events: none;
+        }
+
+        /* Glassmorphic Panel card */
+        .glass-card {
+            background: var(--panel-bg);
+            border: 1px solid var(--panel-border);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: var(--shadow-primary);
+            border-radius: 24px;
+            transition: border var(--transition-speed) var(--transition-timing),
+                        background var(--transition-speed) var(--transition-timing),
+                        transform var(--transition-speed) var(--transition-timing),
+                        box-shadow var(--transition-speed) var(--transition-timing);
+        }
+
+        .glass-card:hover {
+            border-color: var(--panel-border-hover);
+        }
+
+        h1, h2, h3, h4, h5 {
+            font-family: var(--font-headings);
+            font-weight: 600;
+            letter-spacing: -0.02em;
+        }
+
+        /* Content spacing */
+        .app-container {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Sticky Navigation Bar */
+        header {
+            position: sticky;
+            top: 1.5rem;
+            z-index: 100;
+            margin-top: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.8rem 2rem;
+            border-radius: 20px;
+        }
+
+        /* Professional corporate inline SVG logo */
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            cursor: pointer;
+            text-decoration: none;
+            color: var(--text-primary);
+        }
+
+        .logo-svg-icon {
+            width: 40px;
+            height: 40px;
+            transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .logo-container:hover .logo-svg-icon {
+            transform: scale(1.15) rotate(-8deg);
+        }
+
+        .logo-text {
+            font-family: var(--font-headings);
+            font-weight: 700;
+            font-size: 1.45rem;
+            letter-spacing: 0.06em;
+            line-height: 1;
+        }
+
+        .logo-text span {
+            color: var(--accent);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            font-family: var(--font-body);
+            color: var(--text-secondary);
+            font-weight: 500;
+            font-size: 0.95rem;
+            padding: 0.5rem 0.9rem;
+            border-radius: 12px;
+            position: relative;
+            transition: color var(--transition-speed) var(--transition-timing),
+                        background var(--transition-speed) var(--transition-timing);
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--text-primary);
+            background: var(--accent-glow);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0px;
+            left: 50%;
+            transform: translateX(-50%) scaleX(0);
+            width: 8px;
+            height: 3px;
+            border-radius: 2px;
+            background: var(--accent);
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .nav-links a.active::after {
+            transform: translateX(-50%) scaleX(1);
+        }
+
+        /* Controls in navbar (Cart, Switch, User Profile) */
+        .nav-controls {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .icon-btn {
+            background: transparent;
+            border: 1px solid var(--panel-border);
+            color: var(--text-secondary);
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.1rem;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .icon-btn:hover {
+            color: var(--text-primary);
+            border-color: var(--accent);
+            background: var(--panel-bg);
+            transform: translateY(-2px);
+        }
+
+        /* Cart visual badge */
+        .cart-badge {
+            position: absolute;
+            top: -6px;
+            right: -6px;
+            background: var(--accent-solid);
+            color: white;
+            font-size: 0.7rem;
+            font-weight: 700;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            animation: pulse-scale 1.5s infinite;
+        }
+
+        .hamburger-btn {
+            display: none;
+        }
+
+        /* Interactive User Profile dropdown styled premium */
+        .user-menu-wrapper {
+            position: relative;
+        }
+
+        .user-profile-btn {
+            background: var(--accent-glow);
+            border: 1px solid var(--panel-border);
+            color: var(--text-primary);
+            font-family: var(--font-body);
+            font-weight: 600;
+            font-size: 0.88rem;
+            padding: 0.5rem 1.1rem;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .user-profile-btn:hover {
+            border-color: var(--accent);
+            background: var(--panel-bg);
+            transform: translateY(-1px);
+        }
+
+        .user-profile-btn i {
+            font-size: 0.95rem;
+            color: var(--accent);
+        }
+
+        .user-dropdown {
+            position: absolute;
+            top: 3.2rem;
+            right: 0;
+            width: 200px;
+            background: var(--toast-bg);
+            border: 1px solid var(--panel-border);
+            border-radius: 16px;
+            box-shadow: var(--shadow-primary);
+            padding: 0.5rem;
+            display: none;
+            flex-direction: column;
+            z-index: 200;
+            transform: translateY(10px);
+            opacity: 0;
+            transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+
+        .user-dropdown.active {
+            display: flex;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .user-dropdown-info {
+            padding: 0.8rem;
+            border-bottom: 1px solid var(--panel-border);
+            font-size: 0.85rem;
+            margin-bottom: 0.4rem;
+        }
+
+        .user-dropdown-info p {
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .user-dropdown-info span {
+            color: var(--text-muted);
+            font-size: 0.75rem;
+        }
+
+        .user-dropdown-action {
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            font-family: var(--font-body);
+            font-size: 0.9rem;
+            padding: 0.6rem 0.8rem;
+            text-align: left;
+            border-radius: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            transition: all 0.2s;
+        }
+
+        .user-dropdown-action:hover {
+            background: rgba(216, 159, 118, 0.1);
+            color: var(--accent);
+        }
+
+        /* Page Layout view routing */
+        .page-section {
+            display: none;
+            opacity: 0;
+            transform: translateY(20px);
+            padding: 2rem 0 6rem 0;
+            flex-grow: 1;
+        }
+
+        .page-section.active {
+            display: block;
+            animation: pageReveal 0.6s cubic-bezier(0.19, 1, 0.22, 1) forwards;
+        }
+
+        @keyframes pageReveal {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Buttons styles */
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--btn-bg);
+            color: var(--btn-text);
+            font-family: var(--font-body);
+            font-weight: 600;
+            font-size: 0.95rem;
+            padding: 0.9rem 1.8rem;
+            border: none;
+            border-radius: 14px;
+            cursor: pointer;
+            text-decoration: none;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s var(--transition-timing);
+        }
+
+        .btn-primary:hover {
+            background: var(--btn-hover);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px var(--accent-glow);
+        }
+
+        .btn-outline {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: transparent;
+            color: var(--text-primary);
+            font-family: var(--font-body);
+            font-weight: 500;
+            font-size: 0.95rem;
+            padding: 0.85rem 1.7rem;
+            border: 1px solid var(--panel-border);
+            border-radius: 14px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s var(--transition-timing);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--accent);
+            background: var(--accent-glow);
+            transform: translateY(-3px);
+        }
+
+        /* PAGE 1: HOME PAGE STYLES - EXTENDED SCROLL CONTENT */
+        .home-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3.5rem;
+            align-items: center;
+            min-height: calc(100vh - 12rem);
+        }
+
+        .hero-content {
+            padding: 3rem;
+            position: relative;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--accent-glow);
+            border: 1px solid var(--panel-border);
+            color: var(--accent);
+            font-size: 0.85rem;
+            font-weight: 600;
+            padding: 0.4rem 1rem;
+            border-radius: 30px;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .hero-title {
+            font-size: clamp(2.4rem, 4.2vw, 3.8rem);
+            line-height: 1.15;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-title span {
+            color: var(--accent);
+            font-style: italic;
+        }
+
+        .hero-description {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            max-width: 550px;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 1.2rem;
+            flex-wrap: wrap;
+        }
+
+        /* Empty block for the 3D entity space to hover adjacent to content */
+        .hero-canvas-spacer {
+            height: 480px;
+            width: 100%;
+            pointer-events: none;
+        }
+
+        /* EXTENDED SECTION: ROASTING JOURNEY TIMELINE */
+        .timeline-section {
+            margin-top: 6rem;
+            padding: 4rem 0;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.6rem;
+            margin-bottom: 0.6rem;
+        }
+
+        .section-header p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .timeline-container {
+            position: relative;
+            max-width: 900px;
+            margin: 0 auto;
+            padding-left: 3rem;
+            border-left: 2px dashed var(--panel-border);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 4rem;
+        }
+
+        .timeline-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -3.65rem;
+            top: 0.3rem;
+            width: 22px;
+            height: 22px;
+            background: var(--accent-solid);
+            border: 4px solid var(--bg-solid);
+            border-radius: 50%;
+            box-shadow: 0 0 12px var(--accent);
+            z-index: 2;
+        }
+
+        .timeline-badge {
+            color: var(--accent);
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 0.4rem;
+        }
+
+        .timeline-title {
+            font-size: 1.45rem;
+            margin-bottom: 0.6rem;
+        }
+
+        .timeline-desc {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            max-width: 750px;
+        }
+
+        /* EXTENDED SECTION: REVIEWS / TESTIMONIALS GRID */
+        .testimonials-section {
+            margin-top: 6rem;
+            padding: 4rem 0;
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .testimonial-card {
+            padding: 2.2rem;
+        }
+
+        .testimonial-rating {
+            color: #ffb300;
+            font-size: 0.9rem;
+            margin-bottom: 1.2rem;
+            display: flex;
+            gap: 0.2rem;
+        }
+
+        .testimonial-text {
+            font-family: var(--font-body);
+            font-style: italic;
+            font-size: 0.98rem;
+            color: var(--text-secondary);
+            margin-bottom: 1.8rem;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 0.9rem;
+            border-top: 1px solid var(--panel-border);
+            padding-top: 1.2rem;
+        }
+
+        .testimonial-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 1px solid var(--panel-border);
+        }
+
+        .testimonial-meta h4 {
+            font-size: 0.98rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .testimonial-meta p {
+            font-size: 0.78rem;
+            color: var(--accent);
+        }
+
+        /* EXTENDED SECTION: NEWSLETTER SIGNUP MODULE */
+        .newsletter-card {
+            margin-top: 6rem;
+            padding: 4rem 3rem;
+            text-align: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .newsletter-card h3 {
+            font-size: 2.2rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .newsletter-card p {
+            color: var(--text-secondary);
+            font-size: 1.05rem;
+            max-width: 550px;
+            margin: 0 auto 2.5rem auto;
+        }
+
+        .newsletter-form {
+            display: flex;
+            max-width: 550px;
+            margin: 0 auto;
+            gap: 0.8rem;
+        }
+
+        .newsletter-input {
+            flex-grow: 1;
+            background: var(--form-bg);
+            border: 1px solid var(--panel-border);
+            color: var(--text-primary);
+            padding: 0.9rem 1.2rem;
+            border-radius: 12px;
+            font-family: var(--font-body);
+            font-size: 0.95rem;
+            outline: none;
+            transition: all 0.3s;
+        }
+
+        .newsletter-input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 4px var(--accent-glow);
+        }
+
+        /* Side widgets cozy hours */
+        .cozy-hours-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-top: 6rem;
+            align-items: center;
+        }
+
+        .widget-hours {
+            padding: 2.5rem;
+        }
+
+        .widget-hours h3 {
+            font-size: 1.5rem;
+            color: var(--accent);
+            margin-bottom: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            border-bottom: 1px dashed var(--panel-border);
+            padding-bottom: 0.8rem;
+        }
+
+        .hours-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .hours-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.95rem;
+        }
+
+        .hours-row.today {
+            color: var(--accent);
+            font-weight: 700;
+        }
+
+        .badge-live {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: var(--success-color);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--success-color);
+            animation: pulse-dot 1.5s infinite;
+        }
+
+        /* PAGE 2: MENU PAGE STYLES */
+        .menu-top {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .menu-top h2 {
+            font-size: 2.8rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .menu-top p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .menu-filters {
+            display: flex;
+            justify-content: center;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+
+        .filter-btn {
+            background: var(--panel-bg);
+            border: 1px solid var(--panel-border);
+            color: var(--text-secondary);
+            font-family: var(--font-body);
+            font-weight: 500;
+            font-size: 0.9rem;
+            padding: 0.6rem 1.4rem;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            color: var(--btn-text);
+            background: var(--accent-solid);
+            border-color: var(--accent-solid);
+            transform: scale(1.05);
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .menu-card {
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 380px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .menu-card-top {
+            position: relative;
+        }
+
+        .menu-item-badge {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background: var(--accent-glow);
+            border: 1px solid var(--panel-border);
+            color: var(--accent);
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            text-transform: uppercase;
+        }
+
+        .menu-item-icon {
+            font-size: 2.2rem;
+            color: var(--accent);
+            margin-bottom: 1.2rem;
+            transition: transform 0.5s ease;
+        }
+
+        .menu-card:hover .menu-item-icon {
+            transform: scale(1.15) rotate(-5deg);
+        }
+
+        .menu-item-title {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .menu-item-desc {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            margin-bottom: 1.5rem;
+        }
+
+        .menu-card-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid var(--panel-border);
+            padding-top: 1rem;
+        }
+
+        .menu-item-price {
+            font-family: var(--font-headings);
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .menu-add-btn {
+            background: var(--accent-glow);
+            border: 1px solid var(--panel-border);
+            color: var(--accent);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .menu-add-btn:hover {
+            background: var(--btn-bg);
+            color: var(--btn-text);
+            border-color: var(--btn-bg);
+            transform: scale(1.1);
+        }
+
+        /* PAGE 3: ABOUT PAGE STYLES */
+        .about-story {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 3.5rem;
+            align-items: center;
+            margin-bottom: 5rem;
+        }
+
+        .story-content {
+            padding: 1rem;
+        }
+
+        .story-content h2 {
+            font-size: 2.8rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .story-text {
+            color: var(--text-secondary);
+            font-size: 1.05rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .about-photo-wrapper {
+            position: relative;
+            border-radius: 24px;
+            overflow: hidden;
+            height: 400px;
+            border: 1px solid var(--panel-border);
+        }
+
+        .about-photo-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.8s ease;
+        }
+
+        .about-photo-wrapper:hover img {
+            transform: scale(1.05);
+        }
+
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 5rem;
+        }
+
+        .value-card {
+            padding: 2.2rem;
+            text-align: center;
+        }
+
+        .value-icon {
+            font-size: 2.5rem;
+            color: var(--accent);
+            margin-bottom: 1.2rem;
+        }
+
+        .value-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .value-card p {
+            color: var(--text-secondary);
+            font-size: 0.92rem;
+        }
+
+        .team-title {
+            text-align: center;
+            font-size: 2.2rem;
+            margin-bottom: 3rem;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .team-card {
+            overflow: hidden;
+            text-align: center;
+            padding-bottom: 1.5rem;
+        }
+
+        .team-photo-container {
+            width: 100%;
+            height: 280px;
+            overflow: hidden;
+            border-radius: 20px 20px 0 0;
+            border-bottom: 1px solid var(--panel-border);
+        }
+
+        .team-photo-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        .team-card:hover .team-photo-container img {
+            transform: scale(1.08);
+        }
+
+        .team-info {
+            padding: 1.2rem;
+        }
+
+        .team-name {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .team-role {
+            font-size: 0.85rem;
+            color: var(--accent);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.8rem;
+        }
+
+        .team-bio {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        /* PAGE 4: GALLERY PAGE STYLES */
+        .gallery-top {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .gallery-top h2 {
+            font-size: 2.8rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .gallery-top p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            grid-auto-rows: 280px;
+            gap: 1.5rem;
+        }
+
+        .gallery-item {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            cursor: pointer;
+            border: 1px solid var(--panel-border);
+            transition: all 0.4s var(--transition-timing);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.8s ease;
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(18, 14, 12, 0.8);
+            opacity: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 1.5rem;
+            text-align: center;
+            transition: opacity 0.4s ease;
+        }
+
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .gallery-overlay i {
+            font-size: 2rem;
+            color: var(--accent);
+            margin-bottom: 0.8rem;
+            transform: translateY(15px);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .gallery-item:hover .gallery-overlay i {
+            transform: translateY(0);
+        }
+
+        .gallery-overlay h3 {
+            font-size: 1.2rem;
+            color: #ffffff;
+            margin-bottom: 0.4rem;
+        }
+
+        .gallery-overlay p {
+            font-size: 0.85rem;
+            color: #d7ccc8;
+        }
+
+        /* Lightbox modal overlay */
+        .lightbox-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(9, 7, 6, 0.95);
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            transition: opacity 0.4s ease;
+        }
+
+        .lightbox-modal.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .lightbox-content {
+            position: relative;
+            max-width: 900px;
+            max-height: 80vh;
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid var(--panel-border);
+            transform: scale(0.9);
+            transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+
+        .lightbox-modal.active .lightbox-content {
+            transform: scale(1);
+        }
+
+        .lightbox-content img {
+            width: 100%;
+            height: 100%;
+            max-height: 80vh;
+            object-fit: contain;
+            display: block;
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: -50px;
+            right: 0;
+            background: none;
+            border: none;
+            color: #ffffff;
+            font-size: 2rem;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .lightbox-close:hover {
+            color: var(--accent);
+        }
+
+        /* PAGE 5: CONTACT PAGE STYLES */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 0.92fr 1.08fr;
+            gap: 3.5rem;
+            align-items: flex-start;
+        }
+
+        .contact-info-panel {
+            padding: 2.5rem;
+        }
+
+        .contact-info-panel h2 {
+            font-size: 2.4rem;
+            margin-bottom: 1rem;
+        }
+
+        .contact-subtitle {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        .contact-methods {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .contact-method-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .contact-icon-box {
+            background: var(--accent-glow);
+            border: 1px solid var(--panel-border);
+            color: var(--accent);
+            width: 50px;
+            height: 50px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+        }
+
+        .contact-method-text h4 {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .contact-method-text p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .mock-map {
+            width: 100%;
+            height: 220px;
+            border-radius: 18px;
+            border: 1px solid var(--panel-border);
+            overflow: hidden;
+            position: relative;
+            background: var(--form-bg);
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.2);
+        }
+
+        .map-mesh {
+            width: 100%;
+            height: 100%;
+            opacity: 0.15;
+            background-image: radial-gradient(var(--text-secondary) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+
+        .map-card {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 1.2rem;
+            text-align: center;
+            border-radius: 14px;
+            border: 1px solid var(--panel-border);
+            background: var(--toast-bg);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+
+        .map-card i {
+            color: var(--accent);
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            animation: bounce 2s infinite;
+        }
+
+        .map-card p {
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .contact-form-panel {
+            padding: 3rem;
+        }
+
+        .contact-form-panel h3 {
+            font-size: 1.6rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .form-input {
+            width: 100%;
+            background: var(--form-bg);
+            border: 1px solid var(--panel-border);
+            color: var(--text-primary);
+            padding: 0.9rem 1.2rem;
+            border-radius: 12px;
+            font-family: var(--font-body);
+            font-size: 0.95rem;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 4px var(--accent-glow);
+        }
+
+        .form-error {
+            font-size: 0.8rem;
+            color: #d32f2f;
+            margin-top: 0.4rem;
+            display: none;
+        }
+
+        .form-input.invalid {
+            border-color: #d32f2f;
+        }
+
+        /* Glassmorphic Auth Modal for Login/Register */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-card {
+            width: 100%;
+            max-width: 440px;
+            padding: 2.5rem;
+            position: relative;
+            transform: scale(0.9);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .modal-overlay.active .modal-card {
+            transform: scale(1);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1.2rem;
+            right: 1.5rem;
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.6rem;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .modal-close:hover {
+            color: var(--text-primary);
+        }
+
+        /* Modal Tabs */
+        .auth-tabs {
+            display: flex;
+            gap: 1rem;
+            border-bottom: 1px solid var(--panel-border);
+            margin-bottom: 2rem;
+            padding-bottom: 0.5rem;
+        }
+
+        .auth-tab {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-family: var(--font-headings);
+            font-size: 1.3rem;
+            font-weight: 600;
+            cursor: pointer;
+            padding-bottom: 0.4rem;
+            position: relative;
+            transition: color 0.3s;
+        }
+
+        .auth-tab.active {
+            color: var(--text-primary);
+        }
+
+        .auth-tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -0.6rem;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+
+        /* Simulated Submissions Inbox Drawer */
+        .inbox-toggle-btn {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 99;
+            background: var(--btn-bg);
+            color: var(--btn-text);
+            border: none;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: var(--shadow-primary);
+            transition: all 0.3s ease;
+        }
+
+        .inbox-toggle-btn:hover {
+            background: var(--btn-hover);
+            transform: translateY(-5px) scale(1.05);
+        }
+
+        .inbox-badge {
+            position: absolute;
+            top: -2px;
+            right: -2px;
+            background: var(--success-color);
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            font-size: 0.65rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .inbox-drawer {
+            position: fixed;
+            top: 0;
+            right: -420px;
+            width: 400px;
+            height: 100vh;
+            background: var(--toast-bg);
+            border-left: 1px solid var(--panel-border);
+            z-index: 500;
+            box-shadow: -10px 0 30px rgba(0, 0, 0, 0.4);
+            display: flex;
+            flex-direction: column;
+            padding: 2rem;
+            transition: right 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+
+        .inbox-drawer.active {
+            right: 0;
+        }
+
+        .inbox-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--panel-border);
+            padding-bottom: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .inbox-close-btn {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+
+        .inbox-list {
+            flex-grow: 1;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            padding-right: 0.5rem;
+        }
+
+        .inbox-card {
+            background: var(--form-bg);
+            border: 1px solid var(--panel-border);
+            border-radius: 14px;
+            padding: 1.2rem;
+            position: relative;
+        }
+
+        .inbox-card h4 {
+            font-size: 1rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .inbox-card-email {
+            font-size: 0.8rem;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+
+        .inbox-card-msg {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            word-break: break-word;
+        }
+
+        .inbox-card-delete {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .inbox-card-delete:hover {
+            color: #d32f2f;
+        }
+
+        .inbox-empty {
+            text-align: center;
+            color: var(--text-muted);
+            margin-top: 5rem;
+        }
+
+        .inbox-empty i {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Alerts Toast structures */
+        .toast-container {
+            position: fixed;
+            bottom: 2rem;
+            left: 2rem;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .toast-box {
+            background: var(--toast-bg);
+            border-left: 4px solid var(--accent-solid);
+            color: var(--text-primary);
+            padding: 1rem 1.5rem;
+            border-radius: 0 14px 14px 0;
+            border-top: 1px solid var(--panel-border);
+            border-bottom: 1px solid var(--panel-border);
+            border-right: 1px solid var(--panel-border);
+            box-shadow: var(--shadow-primary);
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            font-size: 0.95rem;
+            transform: translateX(-120%);
+            animation: slideInToast 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
+        .toast-box.toast-success {
+            border-left-color: var(--success-color);
+        }
+
+        .toast-box i {
+            font-size: 1.15rem;
+        }
+
+        .toast-success i {
+            color: var(--success-color);
+        }
+
+        @keyframes slideInToast {
+            to {
+                transform: translateX(0);
+            }
+        }
+
+        /* Footer block */
+        footer {
+            margin-top: auto;
+            border-top: 1px solid var(--panel-border);
+            padding: 2.5rem 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        .footer-logo i {
+            color: var(--accent);
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 1.2rem;
+        }
+
+        .footer-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-btn {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            transition: color 0.3s, transform 0.3s;
+        }
+
+        .social-btn:hover {
+            color: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        /* Utility Keyframes */
+        @keyframes pulse-dot {
+            0% {
+                transform: scale(0.95);
+                box-shadow: 0 0 0 0 rgba(123, 168, 127, 0.7);
+            }
+            70% {
+                transform: scale(1);
+                box-shadow: 0 0 0 10px rgba(123, 168, 127, 0);
+            }
+            100% {
+                transform: scale(0.95);
+                box-shadow: 0 0 0 0 rgba(123, 168, 127, 0);
+            }
+        }
+
+        @keyframes pulse-scale {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-10px);
+            }
+            60% {
+                transform: translateY(-5px);
+            }
+        }
+
+        /* Responsiveness Media queries */
+        @media (max-width: 968px) {
+            .app-container {
+                padding: 0 1.2rem;
+            }
+            
+            .home-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+                text-align: center;
+            }
+            
+            .hero-content {
+                padding: 2rem 1.5rem;
+            }
+            
+            .hero-description {
+                margin-left: auto;
+                margin-right: auto;
+            }
+            
+            .hero-actions {
+                justify-content: center;
+            }
+
+            .hero-canvas-spacer {
+                height: 300px;
+            }
+            
+            .about-story {
+                grid-template-columns: 1fr;
+                gap: 2.5rem;
+            }
+            
+            .contact-grid {
+                grid-template-columns: 1fr;
+                gap: 2.5rem;
+            }
+
+            .cozy-hours-row {
+                grid-template-columns: 1fr;
+                gap: 2.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                top: 0.5rem;
+                margin-top: 0.5rem;
+            }
+
+            .navbar {
+                padding: 0.8rem 1.2rem;
+            }
+
+            .hamburger-btn {
+                display: flex;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 5.5rem;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 6rem);
+                background: var(--toast-bg);
+                backdrop-filter: blur(25px);
+                -webkit-backdrop-filter: blur(25px);
+                flex-direction: column;
+                padding: 3rem 2rem;
+                border-radius: 20px;
+                border: 1px solid var(--panel-border);
+                align-items: stretch;
+                box-shadow: var(--shadow-primary);
+                transition: left 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+            }
+
+            .nav-links.active {
+                left: 0;
+            }
+
+            .nav-links a {
+                padding: 1rem;
+                text-align: center;
+                font-size: 1.1rem;
+            }
+
+            .nav-links a::after {
+                bottom: 5px;
+            }
+
+            .newsletter-form {
+                flex-direction: column;
+                gap: 0.8rem;
+            }
+
+            footer {
+                flex-direction: column;
+                gap: 1.5rem;
+                text-align: center;
+            }
+            
+            .inbox-drawer {
+                width: 100%;
+                right: -100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 3D background canvas for ThreeJS representation -->
+    <canvas id="three-bg"></canvas>
+    
+    <!-- Depth grid pattern overlay -->
+    <div class="ambient-grid"></div>
+
+    <!-- Centralised Application Shell -->
+    <div class="app-container">
+        
+        <!-- Interactive Sticky Header -->
+        <header>
+            <nav class="navbar glass-card">
+                <a href="#home" class="logo-container">
+                    <!-- Dynamic Professional Brand SVG Logo Cup -->
+                    <svg class="logo-svg-icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Cup base shadow border -->
+                        <path d="M12 26C12 44.5 19 49 32 49C45 49 52 44.5 52 26H12Z" fill="var(--accent-glow)" stroke="var(--accent)" stroke-width="3.5" stroke-linejoin="round"/>
+                        <!-- Cup handle -->
+                        <path d="M52 32.5C57.5 32.5 59.5 35.5 59.5 39C59.5 42.5 55.5 44 52 44" stroke="var(--accent)" stroke-width="3.5" stroke-linecap="round"/>
+                        <!-- Saucer base line -->
+                        <path d="M8 55H56" stroke="var(--accent)" stroke-width="4" stroke-linecap="round"/>
+                        <!-- Steam rising paths -->
+                        <path d="M22 17C22 12.5 25 11 25 7" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round"/>
+                        <path d="M32 19C32 14.5 35 13 35 7" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round"/>
+                        <path d="M42 17C42 12.5 45 11 45 7" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round"/>
+                    </svg>
+                    <h1 class="logo-text">BREW<span>HAVEN</span></h1>
+                </a>
+                
+                <!-- Navbar navigation -->
+                <ul class="nav-links" id="menu-drawer">
+                    <li><a href="#home" class="nav-link active">Home</a></li>
+                    <li><a href="#menu" class="nav-link">Menu</a></li>
+                    <li><a href="#about" class="nav-link">About</a></li>
+                    <li><a href="#gallery" class="nav-link">Gallery</a></li>
+                    <li><a href="#contact" class="nav-link">Contact</a></li>
+                </ul>
+                
+                <!-- Controls and mobile actions -->
+                <div class="nav-controls">
+                    <!-- Light / Dark toggle -->
+                    <button class="icon-btn" id="theme-toggle" title="Switch Theme">
+                        <i class="fa-solid fa-moon"></i>
+                    </button>
+                    
+                    <!-- Simulated Cart badge -->
+                    <button class="icon-btn" id="cart-toggle" title="Mock Cart">
+                        <i class="fa-solid fa-bag-shopping"></i>
+                        <span class="cart-badge" id="cart-counter" style="display: none;">0</span>
+                    </button>
+                    
+                    <!-- User account control block -->
+                    <div class="user-menu-wrapper" id="navbar-auth-section">
+                        <!-- Simulated Sign In triggers dynamic javascript account injection -->
+                        <button class="user-profile-btn" id="nav-signin-btn">
+                            <i class="fa-solid fa-circle-user"></i> Sign In
+                        </button>
+                    </div>
+                    
+                    <!-- Mobile Hamburger -->
+                    <button class="icon-btn hamburger-btn" id="burger-toggle" title="Toggle Menu">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                </div>
+            </nav>
+        </header>
+
+        <!-- SPA VIEWS -->
+
+        <!-- PAGE 1: HOME PAGE (EXTENDED WITH DETAILED BLOCKS) -->
+        <section id="home" class="page-section active">
+            <div class="home-grid">
+                <!-- Large hero card -->
+                <div class="hero-content glass-card">
+                    <div class="hero-badge">
+                        <i class="fa-solid fa-award"></i> Premium Micro-batch Specialty Roastery
+                    </div>
+                    <h2 class="hero-title">Elevate Your Day,<br>One <span>Artisan Cup</span> at a Time.</h2>
+                    <p class="hero-description">Welcome to Brew Haven. We select organic, ethically grown beans, roasting them slowly in small batches to capture the absolute peak of origin flavor expression.</p>
+                    <div class="hero-actions">
+                        <a href="#menu" class="btn-primary"><i class="fa-solid fa-mug-saucer"></i> View Coffee Menu</a>
+                        <a href="#contact" class="btn-outline">Find Roastery</a>
+                    </div>
+                </div>
+                
+                <!-- Empty spacer where ThreeJS cup floats -->
+                <div class="hero-canvas-spacer"></div>
+            </div>
+
+            <!-- EXTENDED BLOCK: ROASTING PROCESS TIMELINE -->
+            <div class="timeline-section">
+                <div class="section-header">
+                    <h2>The Brew Haven Process</h2>
+                    <p>How we bring premium, ethically sourced coffees from high-altitude slopes straight to your cup.</p>
+                </div>
+                
+                <div class="timeline-container">
+                    <!-- Step 1 -->
+                    <div class="timeline-item">
+                        <div class="timeline-badge">Step 01</div>
+                        <h3 class="timeline-title">Ethical Direct Sourcing</h3>
+                        <p class="timeline-desc">We travel directly to equatorial micro-lots in Ethiopia, Colombia, and Sumatra. By purchasing directly from farmer cooperatives, we pay 35% above fair-trade thresholds to foster direct, generational sustainability.</p>
+                    </div>
+                    <!-- Step 2 -->
+                    <div class="timeline-item">
+                        <div class="timeline-badge">Step 02</div>
+                        <h3 class="timeline-title">Micro-Batch Roasting</h3>
+                        <p class="timeline-desc">Every green bean batch is roasted in our custom fluid-bed roaster in batches under 15 lbs. We monitor convective airflow and heat margins precisely to develop fruit notes and round sugars without roasting char.</p>
+                    </div>
+                    <!-- Step 3 -->
+                    <div class="timeline-item">
+                        <div class="timeline-badge">Step 03</div>
+                        <h3 class="timeline-title">Sensory Profiling</h3>
+                        <p class="timeline-desc">Our certified sensory baristas sample and cup each roast batch daily. We calibrate extraction ratios, dissolved solids, and taste logs to verify flavor notes like orange citrus, hazelnut caramel, and stone fruit.</p>
+                    </div>
+                    <!-- Step 4 -->
+                    <div class="timeline-item">
+                        <div class="timeline-badge">Step 04</div>
+                        <h3 class="timeline-title">The Perfect Extraction</h3>
+                        <p class="timeline-desc">Whether choosing a rich 9bar double espresso pull, an 18-hour cold brew draft, or a custom slow hand-pour V60, our water chemistry and grind scales are structured to yield the perfect cup.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Brew Favorites Card layout -->
+            <div class="featured-header">
+                <div class="featured-title-area">
+                    <h2>Our Brew Favorites</h2>
+                    <p>High-end specialty signature blends curated by our head sensory barista</p>
+                </div>
+                <a href="#menu" class="btn-outline">Open Full Menu</a>
+            </div>
+            
+            <div class="featured-grid" id="featured-items-container">
+                <!-- Javascript will inject list cards here dynamically -->
+            </div>
+
+            <!-- EXTENDED BLOCK: COMMUNITY REVIEWS / TESTIMONIALS -->
+            <div class="testimonials-section">
+                <div class="section-header">
+                    <h2>Loved by Coffee Creatives</h2>
+                    <p>What neighborhood locals, remote developers, and sensory critics say about their Brew Haven moments.</p>
+                </div>
+                
+                <div class="testimonials-grid">
+                    <!-- Card 1 -->
+                    <div class="testimonial-card glass-card">
+                        <div class="testimonial-rating">
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                        </div>
+                        <p class="testimonial-text">"Brew Haven has changed my work routine. The Rosemary Honey Flat White is spectacular and the glassmorphic ambient layout in their lobby is a developer's dream."</p>
+                        <div class="testimonial-author">
+                            <img class="testimonial-avatar" src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=200" alt="Audrey Vance Developer">
+                            <div class="testimonial-meta">
+                                <h4>Audrey Vance</h4>
+                                <p>Software Engineer</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Card 2 -->
+                    <div class="testimonial-card glass-card">
+                        <div class="testimonial-rating">
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                        </div>
+                        <p class="testimonial-text">"As a coffee roaster critic, their Panama Geisha V60 was a masterpiece. Delicate jasmine aromas, clean stone fruit notes, and zero roast defects. Truly micro-batch craft."</p>
+                        <div class="testimonial-author">
+                            <img class="testimonial-avatar" src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=200" alt="Arthur Pendelton Sensory Specialist">
+                            <div class="testimonial-meta">
+                                <h4>Arthur Pendelton</h4>
+                                <p>SCAA Certified Cupper</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Card 3 -->
+                    <div class="testimonial-card glass-card">
+                        <div class="testimonial-rating">
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                        </div>
+                        <p class="testimonial-text">"Cozy atmosphere, exceptionally fast internet, and the cardamom croissants are fresh out of the deck oven daily. It is literally my second home."</p>
+                        <div class="testimonial-author">
+                            <img class="testimonial-avatar" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=200" alt="Elena Vasquez Designer">
+                            <div class="testimonial-meta">
+                                <h4>Elena Vasquez</h4>
+                                <p>Brand Art Director</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- EXTENDED BLOCK: NEWSLETTER SIGNUP -->
+            <div class="newsletter-card glass-card">
+                <h3>Join the Coffee Circle</h3>
+                <p>Subscribe to receive micro-lot roast drop alerts, barista recipes, brewing tutorials, and private tasting invites.</p>
+                <form class="newsletter-form" id="newsletter-form">
+                    <input type="email" class="newsletter-input" id="newsletter-email" placeholder="Enter your email address" required>
+                    <button type="submit" class="btn-primary">Subscribe</button>
+                </form>
+            </div>
+
+            <!-- Cozy Hours Section & Quick Widget -->
+            <div class="cozy-hours-row">
+                <!-- Today Opening status -->
+                <div class="widget-hours glass-card">
+                    <h3>
+                        <i class="fa-solid fa-clock"></i> Cozy Roastery Hours 
+                        <span class="badge-live" title="We are currently open!"></span>
+                    </h3>
+                    <ul class="hours-list">
+                        <li class="hours-row" id="day-mon"><span>Monday - Friday</span> <strong>7:00 AM - 7:00 PM</strong></li>
+                        <li class="hours-row" id="day-sat"><span>Saturday</span> <strong>8:00 AM - 8:00 PM</strong></li>
+                        <li class="hours-row" id="day-sun"><span>Sunday</span> <strong>8:00 AM - 6:00 PM</strong></li>
+                    </ul>
+                </div>
+                
+                <!-- Signature specialty callout -->
+                <div class="widget-hours glass-card" style="height: 100%; display: flex; flex-direction: column; justify-content: center;">
+                    <h3 style="border-bottom: 1px dashed var(--panel-border); padding-bottom: 0.8rem; margin-bottom: 1rem;"><i class="fa-solid fa-quote-left"></i> The Roaster's Philosophy</h3>
+                    <p style="font-size: 1.05rem; color: var(--text-secondary); font-style: italic;">"Coffee is not merely caffeine delivery. It is an evolutionary crop, a reflection of volcanic soil, high altitudes, and the care of micro-lot families. We roast to honor their craft."</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- PAGE 2: MENU PAGE -->
+        <section id="menu" class="page-section">
+            <div class="menu-top">
+                <h2>Our Crafted Menu</h2>
+                <p>Select roasted espressos, precise slow manual drip pour-overs, and locally sourced bakery items.</p>
+                
+                <!-- Filter Pills -->
+                <div class="menu-filters">
+                    <button class="filter-btn active" data-filter="all">All Items</button>
+                    <button class="filter-btn" data-filter="espresso">Espresso</button>
+                    <button class="filter-btn" data-filter="filter">Slow Brew</button>
+                    <button class="filter-btn" data-filter="signature">Signatures</button>
+                    <button class="filter-btn" data-filter="bakery">Bakery</button>
+                </div>
+            </div>
+            
+            <!-- Filterable product grid -->
+            <div class="menu-grid" id="menu-items-container">
+                <!-- Javascript will inject list cards here dynamically -->
+            </div>
+        </section>
+
+        <!-- PAGE 3: ABOUT PAGE -->
+        <section id="about" class="page-section">
+            <div class="about-story">
+                <div class="story-content">
+                    <h2>Our Journey & Philosophy</h2>
+                    <p class="story-text">Founded in 2021, Brew Haven began as a small roasting project in a vintage brick warehouse. Our vision was simple: to create a sanctuary where masterfully crafted coffee acts as a catalyst for creative community and cozy rest.</p>
+                    <p class="story-text">We build deep relationships with our farmers across Central America and East Africa, paying well above fair-trade standards to support sustainable agricultural communities. Every bean is roasted in our custom fluid-bed roaster, monitored precisely by our certified roasters.</p>
+                    <div style="margin-top: 1.5rem;">
+                        <a href="#contact" class="btn-primary">Learn More / Join Us</a>
+                    </div>
+                </div>
+                
+                <div class="about-photo-wrapper">
+                    <img src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?q=80&w=800" alt="Brew Haven roasting team space">
+                </div>
+            </div>
+
+            <!-- Coffee shop core principles -->
+            <div class="values-grid">
+                <div class="value-card glass-card">
+                    <i class="fa-solid fa-leaf value-icon"></i>
+                    <h3>Ethical Sourcing</h3>
+                    <p>100% traceabilities back to micro-lot cooperatives. Supporting organic agricultural communities.</p>
+                </div>
+                <div class="value-card glass-card">
+                    <i class="fa-solid fa-fire-burner value-icon"></i>
+                    <h3>Micro-Batch Roasting</h3>
+                    <p>Roasting under strict temperature profiling ensures optimal origin character profiles.</p>
+                </div>
+                <div class="value-card glass-card">
+                    <i class="fa-solid fa-people-roof value-icon"></i>
+                    <h3>Inclusive Community</h3>
+                    <p>Providing a cozy shelter with power outlets, custom reading books, and friendly smiles.</p>
+                </div>
+            </div>
+
+            <!-- Professional team profiles -->
+            <h2 class="team-title">Our Craft Artisans</h2>
+            <div class="team-grid">
+                <!-- Artisan 1 -->
+                <div class="team-card glass-card">
+                    <div class="team-photo-container">
+                        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=600" alt="Elena Rostova Head Roaster">
+                    </div>
+                    <div class="team-info">
+                        <h3 class="team-name">Elena Rostova</h3>
+                        <p class="team-role">Head Roaster & Co-Founder</p>
+                        <p class="team-bio">With over 12 years of coffee profiling experience, Elena leads our roasting quality and direct farm green bean acquisitions.</p>
+                    </div>
+                </div>
+                
+                <!-- Artisan 2 -->
+                <div class="team-card glass-card">
+                    <div class="team-photo-container">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=600" alt="Marcus Vance Lead Barista">
+                    </div>
+                    <div class="team-info">
+                        <h3 class="team-name">Marcus Vance</h3>
+                        <p class="team-role">Lead Barista & Sensory Specialist</p>
+                        <p class="team-bio">Marcus is a champion barista, designing our signature milk textures, flavor formulations, and teaching team extractions.</p>
+                    </div>
+                </div>
+                
+                <!-- Artisan 3 -->
+                <div class="team-card glass-card">
+                    <div class="team-photo-container">
+                        <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=600" alt="Sarah Lin Cafe Director">
+                    </div>
+                    <div class="team-info">
+                        <h3 class="team-name">Sarah Lin</h3>
+                        <p class="team-role">Cafe Experience Director</p>
+                        <p class="team-bio">Sarah designs our physical layout atmospheres, lighting balance, acoustics, and ensures top hospitality levels.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PAGE 4: GALLERY PAGE -->
+        <section id="gallery" class="page-section">
+            <div class="gallery-top">
+                <h2>Moments inside Brew Haven</h2>
+                <p>Step inside our physical cozy spaces, brewing operations, and artisan pastries.</p>
+            </div>
+            
+            <div class="gallery-grid" id="gallery-grid-container">
+                <!-- Javascript dynamic injection for modular Unsplash images -->
+            </div>
+        </section>
+
+        <!-- PAGE 5: CONTACT PAGE -->
+        <section id="contact" class="page-section">
+            <div class="contact-grid">
+                
+                <!-- Left info column -->
+                <div class="contact-info-panel glass-card">
+                    <h2>Reach Our Haven</h2>
+                    <p class="contact-subtitle">We would love to hear from you. Stop by our roasting room or reach out online.</p>
+                    
+                    <div class="contact-methods">
+                        <div class="contact-method-item">
+                            <div class="contact-icon-box">
+                                <i class="fa-solid fa-location-dot"></i>
+                            </div>
+                            <div class="contact-method-text">
+                                <h4>Physical Address</h4>
+                                <p>420 Espresso Lane, Brickwood Arts District</p>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-method-item">
+                            <div class="contact-icon-box">
+                                <i class="fa-solid fa-phone"></i>
+                            </div>
+                            <div class="contact-method-text">
+                                <h4>Direct Line</h4>
+                                <p>+1 (555) 782-4283</p>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-method-item">
+                            <div class="contact-icon-box">
+                                <i class="fa-solid fa-envelope"></i>
+                            </div>
+                            <div class="contact-method-text">
+                                <h4>Online Support</h4>
+                                <p>hello@brewhaven.cafe</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Simulated Google Map frame styled beautifully in CSS -->
+                    <div class="mock-map">
+                        <div class="map-mesh"></div>
+                        <div class="map-card glass-card">
+                            <i class="fa-solid fa-location-crosshairs"></i>
+                            <p><strong>Brew Haven Roastery</strong></p>
+                            <p style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 2px;">Tap to navigate via Google Maps</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Right contact form panel -->
+                <div class="contact-form-panel glass-card">
+                    <h3>Send a Note</h3>
+                    <form id="contact-form" novalidate>
+                        <div class="form-group">
+                            <label for="form-name" class="form-label">Full Name</label>
+                            <input type="text" id="form-name" class="form-input" placeholder="e.g., Jean Valjean" required>
+                            <div class="form-error" id="error-name">Please provide your name.</div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="form-email" class="form-label">Email Address</label>
+                            <input type="email" id="form-email" class="form-input" placeholder="e.g., jean@haven.com" required>
+                            <div class="form-error" id="error-email">Please provide a valid email address.</div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="form-subject" class="form-label">Subject</label>
+                            <input type="text" id="form-subject" class="form-input" placeholder="Feedback, bean supply, etc.">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="form-message" class="form-label">Your Message</label>
+                            <textarea id="form-message" class="form-input" rows="5" placeholder="Tell us about your experience..." required style="resize: none;"></textarea>
+                            <div class="form-error" id="error-message">Message body cannot be left blank.</div>
+                        </div>
+                        
+                        <button type="submit" class="btn-primary" style="width: 100%; justify-content: center; margin-top: 1rem;">
+                            <i class="fa-solid fa-paper-plane"></i> Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- FOOTER BLOCK -->
+        <footer>
+            <a href="#home" class="footer-logo">
+                <i class="fa-solid fa-mug-hot"></i> BREW HAVEN
+            </a>
+            
+            <div class="footer-links">
+                <a href="#menu">Coffee Menu</a>
+                <a href="#about">Story</a>
+                <a href="#gallery">Gallery</a>
+                <a href="#contact">Contact</a>
+            </div>
+            
+            <div class="social-icons">
+                <a href="#" class="social-btn" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                <a href="#" class="social-btn" title="Facebook"><i class="fa-brands fa-facebook"></i></a>
+                <a href="#" class="social-btn" title="X / Twitter"><i class="fa-brands fa-x-twitter"></i></a>
+                <a href="#" class="social-btn" title="Pinterest"><i class="fa-brands fa-pinterest"></i></a>
+            </div>
+        </footer>
+    </div>
+
+    <!-- GLASSMORPHIC AUTHENTICATION MODAL (LOGIN & CREATE ACCOUNT) -->
+    <div class="modal-overlay" id="auth-modal">
+        <div class="modal-card glass-card">
+            <button class="modal-close" id="auth-close-btn"><i class="fa-solid fa-xmark"></i></button>
+            
+            <!-- Dynamic Authentication Tabs -->
+            <div class="auth-tabs">
+                <button class="auth-tab active" id="auth-tab-signin">Sign In</button>
+                <button class="auth-tab" id="auth-tab-signup">Join Haven</button>
+            </div>
+            
+            <!-- Sign In Panel -->
+            <div id="auth-panel-signin">
+                <form id="signin-form" novalidate>
+                    <div class="form-group">
+                        <label for="signin-email" class="form-label">Email Address</label>
+                        <input type="email" id="signin-email" class="form-input" placeholder="e.g., jean@haven.com" required>
+                        <div class="form-error" id="error-signin-email">Please provide a valid email address.</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="signin-pass" class="form-label">Password</label>
+                        <input type="password" id="signin-pass" class="form-input" placeholder="Enter password" required>
+                        <div class="form-error" id="error-signin-pass">Password cannot be left blank.</div>
+                    </div>
+                    <button type="submit" class="btn-primary" style="width: 100%; justify-content: center; margin-top: 1rem;">
+                        <i class="fa-solid fa-right-to-bracket"></i> Sign In
+                    </button>
+                </form>
+                <p style="text-align: center; margin-top: 1.5rem; font-size: 0.88rem; color: var(--text-secondary);">
+                    Don't have an account? <a href="#" id="auth-switch-to-signup" style="color: var(--accent); text-decoration: none; font-weight: 600;">Join Haven</a>
+                </p>
+            </div>
+            
+            <!-- Create Account Panel -->
+            <div id="auth-panel-signup" style="display: none;">
+                <form id="signup-form" novalidate>
+                    <div class="form-group">
+                        <label for="signup-name" class="form-label">Full Name</label>
+                        <input type="text" id="signup-name" class="form-input" placeholder="e.g., Jean Valjean" required>
+                        <div class="form-error" id="error-signup-name">Please enter your name.</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-email" class="form-label">Email Address</label>
+                        <input type="email" id="signup-email" class="form-input" placeholder="e.g., jean@haven.com" required>
+                        <div class="form-error" id="error-signup-email">Please provide a valid email address.</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-pass" class="form-label">Password</label>
+                        <input type="password" id="signup-pass" class="form-input" placeholder="Create robust password" required>
+                        <div class="form-error" id="error-signup-pass">Password must be at least 6 characters.</div>
+                    </div>
+                    <button type="submit" class="btn-primary" style="width: 100%; justify-content: center; margin-top: 1rem;">
+                        <i class="fa-solid fa-user-plus"></i> Create Account
+                    </button>
+                </form>
+                <p style="text-align: center; margin-top: 1.5rem; font-size: 0.88rem; color: var(--text-secondary);">
+                    Already have an account? <a href="#" id="auth-switch-to-signin" style="color: var(--accent); text-decoration: none; font-weight: 600;">Sign In</a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- MOCK INBOX DRAWER (Viewing Local Storage form messages) -->
+    <button class="inbox-toggle-btn" id="inbox-drawer-btn" title="Submissions Inbox (Simulated Backend)">
+        <i class="fa-solid fa-inbox"></i>
+        <span class="inbox-badge" id="inbox-counter" style="display: none;">0</span>
+    </button>
+    
+    <div class="inbox-drawer" id="submissions-drawer">
+        <div class="inbox-header">
+            <h3><i class="fa-solid fa-envelope-open-text"></i> Message Inbox</h3>
+            <button class="inbox-close-btn" id="inbox-drawer-close">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+        <div class="inbox-list" id="inbox-cards-list">
+            <!-- Dynamically populated -->
+        </div>
+    </div>
+
+    <!-- Lightbox Modal Overlay for Image Expand -->
+    <div class="lightbox-modal" id="image-lightbox">
+        <div class="lightbox-content">
+            <button class="lightbox-close" id="lightbox-close-btn"><i class="fa-solid fa-circle-xmark"></i></button>
+            <img src="" alt="Expanded preview image" id="lightbox-img">
+        </div>
+    </div>
+
+    <!-- Dynamic Alert Toasts -->
+    <div class="toast-container" id="toast-bin"></div>
+
+    <!-- CDNS Loading: ThreeJS for background graphics -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <!-- Embedded Engine scripts -->
+    <script>
+        /* ==========================================================================
+           1. SIMULATED MENU AND GALLERY DATABASES
+           ========================================================================== */
+        const MENU_DATA = [
+            {
+                id: 1,
+                name: "Haven Cappuccino",
+                category: "espresso",
+                price: 4.75,
+                description: "Double shot of house signature espresso blended with velvety, micro-foamed organic whole milk, completed with a light dusting of 100% cocoa.",
+                badge: "Popular",
+                icon: "fa-solid fa-mug-saucer"
+            },
+            {
+                id: 2,
+                name: "Bourbon Vanilla Latte",
+                category: "espresso",
+                price: 5.50,
+                description: "Bold artisan espresso combined with house-steeped Madagascar vanilla bean syrup, micro-textured warm oat milk, and a pinch of ground nutmeg.",
+                badge: "Favorite",
+                icon: "fa-solid fa-cookie"
+            },
+            {
+                id: 3,
+                name: "Nitro Draft Cold Brew",
+                category: "espresso",
+                price: 5.25,
+                description: "Single-origin beans slow steeped in cold filtered water for 18 hours, infused with pure nitrogen for a thick, velvety draught foam head.",
+                badge: "Cold",
+                icon: "fa-solid fa-droplet"
+            },
+            {
+                id: 4,
+                name: "Gibraltar Cortado",
+                category: "espresso",
+                price: 4.25,
+                description: "Equal proportions of robust house espresso and warm, velvety texturized milk, served at the perfect temperature in a traditional Gibraltar glass.",
+                badge: "Classic",
+                icon: "fa-solid fa-wine-glass"
+            },
+            {
+                id: 5,
+                name: "Ethiopian Pour-Over",
+                category: "filter",
+                price: 5.00,
+                description: "V60 single-origin hand pour-over yielding bright, floral tasting profiles of jasmine tea, bergamot orange, and sweet peach undertones.",
+                badge: "Bright",
+                icon: "fa-solid fa-filter"
+            },
+            {
+                id: 6,
+                name: "Panama Geisha French Press",
+                category: "filter",
+                price: 7.50,
+                description: "An exceptionally rare micro-lot coffee brewed in a custom glass press, showing intense floral aromatics, mango sweetness, and jasmine notes.",
+                badge: "Exclusive",
+                icon: "fa-solid fa-glass-water"
+            },
+            {
+                id: 7,
+                name: "Rosemary Honey Flat White",
+                category: "signature",
+                price: 5.75,
+                description: "Gently steamed milk combined with fresh local rosemary-infused wildflower honey, poured over a robust double shot of espresso.",
+                badge: "Award Winner",
+                icon: "fa-solid fa-wand-magic-sparkles"
+            },
+            {
+                id: 8,
+                name: "Spiced Orange Mocha",
+                category: "signature",
+                price: 6.00,
+                description: "Deep dark chocolate shavings melted in rich espresso shots, infused with cold-pressed orange zest essence and organic cinnamon dust.",
+                badge: "Signature",
+                icon: "fa-solid fa-snowflake"
+            },
+            {
+                id: 9,
+                name: "Pistachio Cardamom Croissant",
+                category: "bakery",
+                price: 4.50,
+                description: "Double-baked buttery laminated French croissant filled with rich organic ground pistachio pastry cream and freshly milled green cardamom.",
+                badge: "Fresh Baked",
+                icon: "fa-solid fa-bread-slice"
+            },
+            {
+                id: 10,
+                name: "Whipped Avocado Sourdough",
+                category: "bakery",
+                price: 6.50,
+                description: "Thick golden slice of wild-fermented local sourdough, topped with whipped avocado mousse, organic cherry tomato halves, and smoked maldon sea salt.",
+                badge: "Healthy",
+                icon: "fa-solid fa-utensils"
+            },
+            {
+                id: 11,
+                name: "Salted Caramel Pecan Tart",
+                category: "bakery",
+                price: 5.25,
+                description: "A crisp golden-baked butter crust base filled with rich, soft, salted caramel cream and covered with toasted premium Georgia pecans.",
+                badge: "Sweet",
+                icon: "fa-solid fa-pie-chart"
+            }
+        ];
+
+        const GALLERY_DATA = [
+            {
+                url: "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?q=80&w=800",
+                title: "Physical Cozy Spaces",
+                category: "Atmosphere"
+            },
+            {
+                url: "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?q=80&w=800",
+                title: "Drip Pour-Over Crafts",
+                category: "Slow Bar"
+            },
+            {
+                url: "https://images.unsplash.com/photo-1541167760496-1628856ab772?q=80&w=800",
+                title: "Madagascar Vanilla Latte",
+                category: "Espresso"
+            },
+            {
+                url: "https://images.unsplash.com/photo-1447933601403-0c6688de566e?q=80&w=800",
+                title: "Single Origin Green Selection",
+                category: "Ethical Sourcing"
+            },
+            {
+                url: "https://images.unsplash.com/photo-1511920170033-f8396924c348?q=80&w=800",
+                title: "Cozy Corner Lounge",
+                category: "Physical Haven"
+            },
+            {
+                url: "https://images.unsplash.com/photo-1570968915860-54d5c301fc9f?q=80&w=800",
+                title: "Micro-lot Roast Extraction",
+                category: "Crafting"
+            }
+        ];
+
+        /* ==========================================================================
+           2. THEME STORAGE & CONFIG
+           ========================================================================== */
+        const themeToggle = document.getElementById("theme-toggle");
+        const bodyEl = document.body;
+
+        let currentTheme = localStorage.getItem("brewhaven-theme") || "dark";
+        bodyEl.setAttribute("data-theme", currentTheme);
+        updateThemeToggleIcon(currentTheme);
+
+        themeToggle.addEventListener("click", () => {
+            currentTheme = currentTheme === "dark" ? "light" : "dark";
+            bodyEl.setAttribute("data-theme", currentTheme);
+            localStorage.setItem("brewhaven-theme", currentTheme);
+            updateThemeToggleIcon(currentTheme);
+            triggerToast(`Switched to ${currentTheme} theme mode!`, "info");
+            window.dispatchEvent(new CustomEvent('themeChanged', { detail: { theme: currentTheme } }));
+        });
+
+        function updateThemeToggleIcon(theme) {
+            const icon = themeToggle.querySelector("i");
+            if (theme === "dark") {
+                icon.className = "fa-solid fa-sun";
+                themeToggle.title = "Switch to Light Theme";
+            } else {
+                icon.className = "fa-solid fa-moon";
+                themeToggle.title = "Switch to Dark Theme";
+            }
+        }
+
+        /* ==========================================================================
+           3. THREE.JS 3D COFFEE CUP BACKGROUND ENGINE
+           ========================================================================== */
+        const canvas = document.getElementById("three-bg");
+        let scene, camera, renderer;
+        let particles, geometryNodes = [];
+        let coffeeCupGroup; // Custom 3D entity group
+        let mouseX = 0, mouseY = 0;
+        let targetX = 0, targetY = 0;
+
+        initThree();
+        animateThree();
+
+        function initThree() {
+            scene = new THREE.Scene();
+            camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 100);
+            camera.position.z = 22;
+
+            renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+            // Floating Steam Particles Setup
+            const particleCount = 120;
+            const particleGeo = new THREE.BufferGeometry();
+            const positions = new Float32Array(particleCount * 3);
+
+            for (let i = 0; i < particleCount; i++) {
+                positions[i * 3] = (Math.random() - 0.5) * 45;
+                positions[i * 3 + 1] = (Math.random() - 0.5) * 30;
+                positions[i * 3 + 2] = (Math.random() - 0.5) * 20;
+            }
+            particleGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+
+            const initialColor = currentTheme === "dark" ? 0xd89f76 : 0x8c4f2b;
+            const pMaterial = new THREE.PointsMaterial({
+                color: initialColor,
+                size: 0.12,
+                transparent: true,
+                opacity: currentTheme === "dark" ? 0.35 : 0.20,
+                blending: THREE.AdditiveBlending
+            });
+
+            particles = new THREE.Points(particleGeo, pMaterial);
+            scene.add(particles);
+
+            // ==========================================
+            // BUILD MATHEMATICAL 3D COFFEE CUP GROUP
+            // ==========================================
+            coffeeCupGroup = new THREE.Group();
+
+            // Materials
+            const ceramicColor = currentTheme === "dark" ? 0xbaa89a : 0x6d4c41;
+            const cupMaterial = new THREE.MeshPhongMaterial({
+                color: ceramicColor,
+                shininess: 90,
+                specular: 0xffffff,
+                transparent: true,
+                opacity: 0.88,
+                side: THREE.DoubleSide
+            });
+
+            const coffeeMaterial = new THREE.MeshPhongMaterial({
+                color: 0x22130b, // Deep rich espresso liquid
+                shininess: 120,
+                specular: 0xd89f76
+            });
+
+            // 1. Cup body
+            const cupGeo = new THREE.CylinderGeometry(2.2, 1.7, 3.4, 32, 1, true); // open-ended cylinder
+            const cupMesh = new THREE.Mesh(cupGeo, cupMaterial);
+            coffeeCupGroup.add(cupMesh);
+
+            // 2. Cup bottom disk
+            const bottomGeo = new THREE.CylinderGeometry(1.7, 1.7, 0.1, 32);
+            const bottomMesh = new THREE.Mesh(bottomGeo, cupMaterial);
+            bottomMesh.position.y = -1.7;
+            coffeeCupGroup.add(bottomMesh);
+
+            // 3. Cup Handle
+            const handleGeo = new THREE.TorusGeometry(0.9, 0.28, 16, 32, Math.PI * 1.25);
+            const handleMesh = new THREE.Mesh(handleGeo, cupMaterial);
+            handleMesh.position.set(1.9, 0.1, 0);
+            handleMesh.rotation.z = -Math.PI * 0.65;
+            coffeeCupGroup.add(handleMesh);
+
+            // 4. Coffee Liquid surface plane
+            const coffeeGeo = new THREE.CylinderGeometry(2.1, 2.1, 0.15, 32);
+            const coffeeMesh = new THREE.Mesh(coffeeGeo, coffeeMaterial);
+            coffeeMesh.position.y = 1.4; // Nested inside
+            coffeeCupGroup.add(coffeeMesh);
+
+            // 5. Saucer plate
+            const saucerGeo = new THREE.CylinderGeometry(3.3, 2.3, 0.3, 32);
+            const saucerMesh = new THREE.Mesh(saucerGeo, cupMaterial);
+            saucerMesh.position.y = -1.9;
+            coffeeCupGroup.add(saucerMesh);
+
+            // Positioning cup appropriately on desktop viewport side
+            positionCupEntity();
+            scene.add(coffeeCupGroup);
+
+            // ==========================================
+            // LIGHTING CONFIGS FOR HIGH-END SPECULARITY
+            // ==========================================
+            const dirLight = new THREE.DirectionalLight(0xffffff, 1.4);
+            dirLight.position.set(6, 12, 8);
+            scene.add(dirLight);
+
+            const amberLight = new THREE.PointLight(0xd89f76, 1.6, 25);
+            amberLight.position.set(-6, 4, 6);
+            scene.add(amberLight);
+
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.55);
+            scene.add(ambientLight);
+
+            // Listeners
+            window.addEventListener('mousemove', onMouseMove);
+            window.addEventListener('resize', onWindowResize);
+            
+            // Dynamic theme transition updates
+            window.addEventListener('themeChanged', (e) => {
+                const isDark = e.detail.theme === "dark";
+                pMaterial.color.setHex(isDark ? 0xd89f76 : 0x8c4f2b);
+                pMaterial.opacity = isDark ? 0.35 : 0.20;
+                cupMaterial.color.setHex(isDark ? 0xbaa89a : 0x6d4c41);
+            });
+        }
+
+        // Dynamically positions coffee cup entity relative to window breakpoints
+        function positionCupEntity() {
+            if (window.innerWidth <= 968) {
+                // Sit centrally and lower down behind content on mobile
+                coffeeCupGroup.position.set(0, -5, -4);
+                coffeeCupGroup.scale.set(0.9, 0.9, 0.9);
+            } else {
+                // Wide screen desktop alignment right
+                coffeeCupGroup.position.set(6.5, 0.5, 0);
+                coffeeCupGroup.scale.set(1.2, 1.2, 1.2);
+            }
+        }
+
+        function onMouseMove(event) {
+            mouseX = (event.clientX - window.innerWidth / 2) / 110;
+            mouseY = (event.clientY - window.innerHeight / 2) / 110;
+        }
+
+        function onWindowResize() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            positionCupEntity();
+        }
+
+        function animateThree() {
+            requestAnimationFrame(animateThree);
+
+            // 1. Steam rise updates
+            const positions = particles.geometry.attributes.position.array;
+            for (let i = 0; i < positions.length; i += 3) {
+                positions[i + 1] += 0.012;
+                positions[i] += Math.sin(positions[i + 1] * 0.1) * 0.004;
+
+                if (positions[i + 1] > 18) {
+                    positions[i + 1] = -18;
+                    positions[i] = (Math.random() - 0.5) * 45;
+                }
+            }
+            particles.geometry.attributes.position.needsUpdate = true;
+
+            // 2. Coffee Cup floating drift & rotation
+            const time = Date.now() * 0.001;
+            coffeeCupGroup.rotation.y = time * 0.15; // Slow rotation spin
+            coffeeCupGroup.rotation.x = Math.sin(time * 0.2) * 0.08; // Subtle rock
+            
+            // Soft floating drift
+            coffeeCupGroup.position.y += Math.sin(time * 1.5) * 0.004;
+
+            // 3. Camera mouse parallax lerp
+            targetX += (mouseX - targetX) * 0.05;
+            targetY += (mouseY - targetY) * 0.05;
+
+            camera.position.x = targetX;
+            camera.position.y = -targetY;
+            camera.lookAt(scene.position);
+
+            renderer.render(scene, camera);
+        }
+
+        /* ==========================================================================
+           4. SPA ROUTER CONTROLLER (WINDOW HASH ROUTER)
+           ========================================================================== */
+        const navLinks = document.querySelectorAll(".nav-link");
+        const sections = document.querySelectorAll(".page-section");
+        const menuDrawer = document.getElementById("menu-drawer");
+        const burgerToggle = document.getElementById("burger-toggle");
+
+        function handleRouting() {
+            let activeHash = window.location.hash || "#home";
+            if (!activeHash.startsWith("#")) activeHash = "#home";
+
+            const activeSection = document.querySelector(activeHash);
+            if (activeSection) {
+                sections.forEach(sec => sec.classList.remove("active"));
+                activeSection.classList.add("active");
+
+                navLinks.forEach(link => {
+                    if (link.getAttribute("href") === activeHash) {
+                        link.classList.add("active");
+                    } else {
+                        link.classList.remove("active");
+                    }
+                });
+
+                // Adjust cup view dynamically to not block lists on other pages
+                if (activeHash !== "#home") {
+                    // Push the cup deep back and lower on other views
+                    coffeeCupGroup.position.set(6, -6, -10);
+                } else {
+                    positionCupEntity();
+                }
+
+                window.scrollTo({ top: 0, behavior: "smooth" });
+            }
+
+            menuDrawer.classList.remove("active");
+            burgerToggle.querySelector("i").className = "fa-solid fa-bars";
+        }
+
+        window.addEventListener("hashchange", handleRouting);
+        window.addEventListener("load", handleRouting);
+
+        burgerToggle.addEventListener("click", () => {
+            const isOpen = menuDrawer.classList.toggle("active");
+            burgerToggle.querySelector("i").className = isOpen 
+                ? "fa-solid fa-xmark" 
+                : "fa-solid fa-bars";
+        });
+
+        /* ==========================================================================
+           5. DATA RENDERING: MENU AND GALLERY TEMPLATE PIPELINES
+           ========================================================================== */
+        const featuredContainer = document.getElementById("featured-items-container");
+        const menuContainer = document.getElementById("menu-items-container");
+        const galleryContainer = document.getElementById("gallery-grid-container");
+
+        function renderFeaturedItems() {
+            const favorites = MENU_DATA.filter(item => item.badge === "Popular" || item.badge === "Favorite" || item.badge === "Award Winner").slice(0, 3);
+            let html = "";
+
+            favorites.forEach(item => {
+                html += `
+                <div class="menu-card glass-card">
+                    <div class="menu-card-top">
+                        <span class="menu-item-badge">${item.badge}</span>
+                        <div class="menu-item-icon"><i class="${item.icon}"></i></div>
+                        <h3 class="menu-item-title">${item.name}</h3>
+                        <p class="menu-item-desc">${item.description}</p>
+                    </div>
+                    <div class="menu-card-bottom">
+                        <span class="menu-item-price">$${item.price.toFixed(2)}</span>
+                        <button class="menu-add-btn" onclick="addToMockCart(${item.id})" title="Add to Cart">
+                            <i class="fa-solid fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+                `;
+            });
+            featuredContainer.innerHTML = html;
+        }
+
+        function renderMenu(filter = "all") {
+            const filteredData = filter === "all" 
+                ? MENU_DATA 
+                : MENU_DATA.filter(item => item.category === filter);
+
+            let html = "";
+            if (filteredData.length === 0) {
+                html = `<p style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 4rem 0;">No items found.</p>`;
+            } else {
+                filteredData.forEach(item => {
+                    html += `
+                    <div class="menu-card glass-card">
+                        <div class="menu-card-top">
+                            ${item.badge ? `<span class="menu-item-badge">${item.badge}</span>` : ""}
+                            <div class="menu-item-icon"><i class="${item.icon}"></i></div>
+                            <h3 class="menu-item-title">${item.name}</h3>
+                            <p class="menu-item-desc">${item.description}</p>
+                        </div>
+                        <div class="menu-card-bottom">
+                            <span class="menu-item-price">$${item.price.toFixed(2)}</span>
+                            <button class="menu-add-btn" onclick="addToMockCart(${item.id})" title="Add to Order">
+                                <i class="fa-solid fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    `;
+                });
+            }
+            menuContainer.innerHTML = html;
+        }
+
+        const filterBtns = document.querySelectorAll(".filter-btn");
+        filterBtns.forEach(btn => {
+            btn.addEventListener("click", () => {
+                filterBtns.forEach(b => b.classList.remove("active"));
+                btn.classList.add("active");
+
+                const filterType = btn.getAttribute("data-filter");
+                menuContainer.style.opacity = 0;
+                menuContainer.style.transform = "translateY(10px)";
+                setTimeout(() => {
+                    renderMenu(filterType);
+                    menuContainer.style.opacity = 1;
+                    menuContainer.style.transform = "translateY(0)";
+                }, 200);
+            });
+        });
+
+        function renderGallery() {
+            let html = "";
+            GALLERY_DATA.forEach((item, idx) => {
+                html += `
+                <div class="gallery-item" onclick="openLightbox(${idx})">
+                    <img src="${item.url}" alt="${item.title}">
+                    <div class="gallery-overlay">
+                        <i class="fa-solid fa-expand"></i>
+                        <h3>${item.title}</h3>
+                        <p>${item.category}</p>
+                    </div>
+                </div>
+                `;
+            });
+            galleryContainer.innerHTML = html;
+        }
+
+        renderFeaturedItems();
+        renderMenu();
+        renderGallery();
+
+        /* ==========================================================================
+           6. GALLERY LIGHTBOX MODAL
+           ========================================================================== */
+        const lightbox = document.getElementById("image-lightbox");
+        const lightboxImg = document.getElementById("lightbox-img");
+        const lightboxClose = document.getElementById("lightbox-close-btn");
+
+        function openLightbox(index) {
+            const data = GALLERY_DATA[index];
+            if (data) {
+                lightboxImg.src = data.url;
+                lightboxImg.alt = data.title;
+                lightbox.classList.add("active");
+                bodyEl.style.overflow = "hidden";
+            }
+        }
+
+        function closeLightbox() {
+            lightbox.classList.remove("active");
+            bodyEl.style.overflow = "";
+        }
+
+        lightboxClose.addEventListener("click", closeLightbox);
+        lightbox.addEventListener("click", (e) => {
+            if (e.target === lightbox) closeLightbox();
+        });
+
+        /* ==========================================================================
+           7. PERSISTENT AUTHENTICATION (LOGIN / ACCOUNT CREATION) SYSTEM
+           ========================================================================== */
+        const authModal = document.getElementById("auth-modal");
+        const signInBtn = document.getElementById("nav-signin-btn");
+        const authCloseBtn = document.getElementById("auth-close-btn");
+        
+        // Modal switch tab buttons
+        const tabSignIn = document.getElementById("auth-tab-signin");
+        const tabSignUp = document.getElementById("auth-tab-signup");
+        const panelSignIn = document.getElementById("auth-panel-signin");
+        const panelSignUp = document.getElementById("auth-panel-signup");
+        
+        const switchToSignUp = document.getElementById("auth-switch-to-signup");
+        const switchToSignIn = document.getElementById("auth-switch-to-signin");
+        
+        // Form references
+        const formSignIn = document.getElementById("signin-form");
+        const formSignUp = document.getElementById("signup-form");
+        const navbarAuthSection = document.getElementById("navbar-auth-section");
+
+        // Seed default testing account
+        function seedMockAccounts() {
+            const accounts = JSON.parse(localStorage.getItem("brewhaven-accounts")) || [];
+            const hasAdmin = accounts.some(acc => acc.email === "admin@haven.com");
+            if (!hasAdmin) {
+                accounts.push({
+                    name: "Admin Roaster",
+                    email: "admin@haven.com",
+                    password: "password123"
+                });
+                localStorage.setItem("brewhaven-accounts", JSON.stringify(accounts));
+            }
+        }
+        seedMockAccounts();
+
+        // Refresh navbar login state
+        function renderNavbarAuth() {
+            const session = JSON.parse(localStorage.getItem("brewhaven-session"));
+            if (session) {
+                navbarAuthSection.innerHTML = `
+                    <div class="user-menu-wrapper">
+                        <button class="user-profile-btn" id="user-profile-dropdown-btn">
+                            <i class="fa-solid fa-circle-user"></i> Hi, ${escapeHTML(session.name.split(' ')[0])} <i class="fa-solid fa-angle-down" style="font-size: 0.75rem;"></i>
+                        </button>
+                        <div class="user-dropdown" id="user-profile-dropdown">
+                            <div class="user-dropdown-info">
+                                <p>${escapeHTML(session.name)}</p>
+                                <span>${escapeHTML(session.email)}</span>
+                            </div>
+                            <button class="user-dropdown-action" onclick="handleLogout()">
+                                <i class="fa-solid fa-right-from-bracket"></i> Sign Out
+                            </button>
+                        </div>
+                    </div>
+                `;
+
+                // Set up profile dropdown listener
+                const dropdownBtn = document.getElementById("user-profile-dropdown-btn");
+                const dropdownPanel = document.getElementById("user-profile-dropdown");
+                
+                dropdownBtn.addEventListener("click", (e) => {
+                    e.stopPropagation();
+                    dropdownPanel.classList.toggle("active");
+                });
+
+                document.addEventListener("click", () => {
+                    dropdownPanel.classList.remove("active");
+                });
+            } else {
+                navbarAuthSection.innerHTML = `
+                    <button class="user-profile-btn" id="nav-signin-btn">
+                        <i class="fa-solid fa-circle-user"></i> Sign In
+                    </button>
+                `;
+                // Rebind listener
+                document.getElementById("nav-signin-btn").addEventListener("click", openAuthModal);
+            }
+        }
+
+        function openAuthModal() {
+            authModal.classList.add("active");
+            bodyEl.style.overflow = "hidden";
+            showSignInPanel();
+        }
+
+        function closeAuthModal() {
+            authModal.classList.remove("active");
+            bodyEl.style.overflow = "";
+        }
+
+        function showSignInPanel() {
+            tabSignIn.classList.add("active");
+            tabSignUp.classList.remove("active");
+            panelSignIn.style.display = "block";
+            panelSignUp.style.display = "none";
+        }
+
+        function showSignUpPanel() {
+            tabSignUp.classList.add("active");
+            tabSignIn.classList.remove("active");
+            panelSignUp.style.display = "block";
+            panelSignIn.style.display = "none";
+        }
+
+        // Bind basic triggers
+        signInBtn.addEventListener("click", openAuthModal);
+        authCloseBtn.addEventListener("click", closeAuthModal);
+        
+        tabSignIn.addEventListener("click", showSignInPanel);
+        tabSignUp.addEventListener("click", showSignUpPanel);
+        
+        switchToSignUp.addEventListener("click", (e) => { e.preventDefault(); showSignUpPanel(); });
+        switchToSignIn.addEventListener("click", (e) => { e.preventDefault(); showSignInPanel(); });
+
+        authModal.addEventListener("click", (e) => {
+            if (e.target === authModal) closeAuthModal();
+        });
+
+        // Sign In Form Action
+        formSignIn.addEventListener("submit", (e) => {
+            e.preventDefault();
+            const emailInput = document.getElementById("signin-email");
+            const passInput = document.getElementById("signin-pass");
+            
+            let isValid = true;
+            
+            // Check blank email
+            if (!emailInput.value.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailInput.value)) {
+                showInputError(emailInput, "error-signin-email");
+                isValid = false;
+            } else {
+                hideInputError(emailInput, "error-signin-email");
+            }
+
+            // Check blank pass
+            if (!passInput.value.trim()) {
+                showInputError(passInput, "error-signin-pass");
+                isValid = false;
+            } else {
+                hideInputError(passInput, "error-signin-pass");
+            }
+
+            if (isValid) {
+                const accounts = JSON.parse(localStorage.getItem("brewhaven-accounts")) || [];
+                const matched = accounts.find(acc => acc.email.toLowerCase() === emailInput.value.trim().toLowerCase() && acc.password === passInput.value.trim());
+
+                if (matched) {
+                    localStorage.setItem("brewhaven-session", JSON.stringify({
+                        name: matched.name,
+                        email: matched.email
+                    }));
+                    triggerToast(`Welcome back, ${matched.name}!`, "success");
+                    formSignIn.reset();
+                    closeAuthModal();
+                    renderNavbarAuth();
+                } else {
+                    triggerToast("Invalid credentials. Try admin@haven.com / password123", "error");
+                }
+            }
+        });
+
+        // Sign Up / Registration form action
+        formSignUp.addEventListener("submit", (e) => {
+            e.preventDefault();
+            const nameInput = document.getElementById("signup-name");
+            const emailInput = document.getElementById("signup-email");
+            const passInput = document.getElementById("signup-pass");
+
+            let isValid = true;
+
+            // Name
+            if (!nameInput.value.trim()) {
+                showInputError(nameInput, "error-signup-name");
+                isValid = false;
+            } else {
+                hideInputError(nameInput, "error-signup-name");
+            }
+
+            // Email
+            if (!emailInput.value.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailInput.value)) {
+                showInputError(emailInput, "error-signup-email");
+                isValid = false;
+            } else {
+                hideInputError(emailInput, "error-signup-email");
+            }
+
+            // Password strength (len >= 6)
+            if (passInput.value.trim().length < 6) {
+                showInputError(passInput, "error-signup-pass");
+                isValid = false;
+            } else {
+                hideInputError(passInput, "error-signup-pass");
+            }
+
+            if (isValid) {
+                const accounts = JSON.parse(localStorage.getItem("brewhaven-accounts")) || [];
+                const alreadyExists = accounts.some(acc => acc.email.toLowerCase() === emailInput.value.trim().toLowerCase());
+
+                if (alreadyExists) {
+                    triggerToast("This email is already registered in our coffee circle.", "error");
+                } else {
+                    const newAcc = {
+                        name: nameInput.value.trim(),
+                        email: emailInput.value.trim(),
+                        password: passInput.value.trim()
+                    };
+                    accounts.push(newAcc);
+                    localStorage.setItem("brewhaven-accounts", JSON.stringify(accounts));
+                    
+                    // Log user in automatically
+                    localStorage.setItem("brewhaven-session", JSON.stringify({
+                        name: newAcc.name,
+                        email: newAcc.email
+                    }));
+
+                    triggerToast(`Welcome to Brew Haven, ${newAcc.name}!`, "success");
+                    formSignUp.reset();
+                    closeAuthModal();
+                    renderNavbarAuth();
+                }
+            }
+        });
+
+        window.handleLogout = function() {
+            localStorage.removeItem("brewhaven-session");
+            triggerToast("You have logged out successfully.", "info");
+            renderNavbarAuth();
+        };
+
+        renderNavbarAuth(); // Initial state check
+
+        /* ==========================================================================
+           8. DYNAMIC TOAST NOTIFICATION ENGINE
+           ========================================================================== */
+        const toastBin = document.getElementById("toast-bin");
+
+        function triggerToast(message, type = "success") {
+            const toast = document.createElement("div");
+            toast.className = `toast-box toast-${type}`;
+            
+            const icon = type === "success" 
+                ? "fa-solid fa-circle-check" 
+                : (type === "error" ? "fa-solid fa-triangle-exclamation" : "fa-solid fa-circle-info");
+            
+            toast.innerHTML = `
+                <i class="${icon}"></i>
+                <span>${message}</span>
+            `;
+            
+            toastBin.appendChild(toast);
+
+            setTimeout(() => {
+                toast.style.animation = "slideOutToast 0.5s forwards";
+                toast.addEventListener("animationend", () => toast.remove());
+            }, 3000);
+        }
+
+        const styleSheet = document.createElement("style");
+        styleSheet.innerText = `
+            @keyframes slideOutToast {
+                to {
+                    transform: translateX(-120%);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(styleSheet);
+
+        /* ==========================================================================
+           9. SIMULATED BACKEND: CONTACT submissions & newsletter loggers
+           ========================================================================== */
+        const contactForm = document.getElementById("contact-form");
+        const newsletterForm = document.getElementById("newsletter-form");
+        const inboxToggleBtn = document.getElementById("inbox-drawer-btn");
+        const inboxDrawer = document.getElementById("submissions-drawer");
+        const inboxCloseBtn = document.getElementById("inbox-drawer-close");
+        const inboxCardsList = document.getElementById("inbox-cards-list");
+        const inboxBadge = document.getElementById("inbox-counter");
+
+        const nameInput = document.getElementById("form-name");
+        const emailInput = document.getElementById("form-email");
+        const messageInput = document.getElementById("form-message");
+
+        updateInboxUI();
+
+        // Contact Note Submitter
+        contactForm.addEventListener("submit", (e) => {
+            e.preventDefault();
+            let isValid = true;
+            
+            if (!nameInput.value.trim()) {
+                showInputError(nameInput, "error-name");
+                isValid = false;
+            } else {
+                hideInputError(nameInput, "error-name");
+            }
+
+            if (!emailInput.value.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailInput.value)) {
+                showInputError(emailInput, "error-email");
+                isValid = false;
+            } else {
+                hideInputError(emailInput, "error-email");
+            }
+
+            if (!messageInput.value.trim()) {
+                showInputError(messageInput, "error-message");
+                isValid = false;
+            } else {
+                hideInputError(messageInput, "error-message");
+            }
+
+            if (isValid) {
+                const newMessage = {
+                    id: Date.now(),
+                    name: nameInput.value.trim(),
+                    email: emailInput.value.trim(),
+                    subject: document.getElementById("form-subject").value.trim() || "General Inquiry",
+                    message: messageInput.value.trim(),
+                    timestamp: new Date().toLocaleString()
+                };
+
+                const currentInbox = JSON.parse(localStorage.getItem("brewhaven-inbox")) || [];
+                currentInbox.push(newMessage);
+                localStorage.setItem("brewhaven-inbox", JSON.stringify(currentInbox));
+
+                triggerToast("Thank you! Your message was received successfully.", "success");
+                contactForm.reset();
+                updateInboxUI();
+            }
+        });
+
+        // Newsletter Signup Submitter
+        newsletterForm.addEventListener("submit", (e) => {
+            e.preventDefault();
+            const newsEmailInput = document.getElementById("newsletter-email");
+            
+            if (newsEmailInput.value.trim() && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(newsEmailInput.value)) {
+                const newSubscription = {
+                    id: Date.now(),
+                    name: "Newsletter Subscriber",
+                    email: newsEmailInput.value.trim(),
+                    subject: "Newsletter Circle Join",
+                    message: `User subscribed to Brew Haven drops via newsletter form. Send sensory roasting details.`,
+                    timestamp: new Date().toLocaleString()
+                };
+
+                const currentInbox = JSON.parse(localStorage.getItem("brewhaven-inbox")) || [];
+                currentInbox.push(newSubscription);
+                localStorage.setItem("brewhaven-inbox", JSON.stringify(currentInbox));
+
+                triggerToast("Perfect! You've joined the Coffee Circle drops.", "success");
+                newsletterForm.reset();
+                updateInboxUI();
+            } else {
+                triggerToast("Please provide a valid email to subscribe.", "error");
+            }
+        });
+
+        function showInputError(input, errorId) {
+            input.classList.add("invalid");
+            document.getElementById(errorId).style.display = "block";
+        }
+
+        function hideInputError(input, errorId) {
+            input.classList.remove("invalid");
+            document.getElementById(errorId).style.display = "none";
+        }
+
+        nameInput.addEventListener("input", () => hideInputError(nameInput, "error-name"));
+        emailInput.addEventListener("input", () => hideInputError(emailInput, "error-email"));
+        messageInput.addEventListener("input", () => hideInputError(messageInput, "error-message"));
+
+        function updateInboxUI() {
+            const inboxMessages = JSON.parse(localStorage.getItem("brewhaven-inbox")) || [];
+            const count = inboxMessages.length;
+
+            if (count > 0) {
+                inboxBadge.innerText = count;
+                inboxBadge.style.display = "flex";
+            } else {
+                inboxBadge.style.display = "none";
+            }
+
+            if (count === 0) {
+                inboxCardsList.innerHTML = `
+                    <div class="inbox-empty">
+                        <i class="fa-solid fa-folder-open"></i>
+                        <p>No messages received yet.</p>
+                        <p style="font-size: 0.8rem; margin-top: 5px;">Submit the contact form or join the newsletter to populate this inbox!</p>
+                    </div>
+                `;
+            } else {
+                let html = "";
+                [...inboxMessages].reverse().forEach(msg => {
+                    html += `
+                        <div class="inbox-card">
+                            <button class="inbox-card-delete" onclick="deleteInboxMessage(${msg.id})" title="Delete Message">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                            <h4>${escapeHTML(msg.name)}</h4>
+                            <div class="inbox-card-email">${escapeHTML(msg.email)}</div>
+                            <p style="font-size: 0.8rem; color: var(--accent); margin-bottom: 0.3rem;"><strong>Sub:</strong> ${escapeHTML(msg.subject)}</p>
+                            <p class="inbox-card-msg">${escapeHTML(msg.message)}</p>
+                            <div style="font-size: 0.7rem; color: var(--text-muted); margin-top: 0.8rem; text-align: right;">${msg.timestamp}</div>
+                        </div>
+                    `;
+                });
+                inboxCardsList.innerHTML = html;
+            }
+        }
+
+        function escapeHTML(str) {
+            return str.replace(/[&<>'"]/g, 
+                tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)
+            );
+        }
+
+        window.deleteInboxMessage = function(id) {
+            let currentInbox = JSON.parse(localStorage.getItem("brewhaven-inbox")) || [];
+            currentInbox = currentInbox.filter(msg => msg.id !== id);
+            localStorage.setItem("brewhaven-inbox", JSON.stringify(currentInbox));
+            
+            triggerToast("Submission cleared.", "info");
+            updateInboxUI();
+        };
+
+        inboxToggleBtn.addEventListener("click", () => {
+            inboxDrawer.classList.toggle("active");
+        });
+
+        inboxCloseBtn.addEventListener("click", () => {
+            inboxDrawer.classList.remove("active");
+        });
+
+        document.addEventListener("mousedown", (e) => {
+            if (!inboxDrawer.contains(e.target) && !inboxToggleBtn.contains(e.target) && inboxDrawer.classList.contains("active")) {
+                inboxDrawer.classList.remove("active");
+            }
+        });
+
+        /* ==========================================================================
+           10. SIMULATED CART SYSTEM (Navbar shopping counter)
+           ========================================================================== */
+        let cartItems = [];
+        const cartCounter = document.getElementById("cart-counter");
+
+        window.addToMockCart = function(itemId) {
+            const item = MENU_DATA.find(p => p.id === itemId);
+            if (item) {
+                cartItems.push(item);
+                cartCounter.innerText = cartItems.length;
+                cartCounter.style.display = "flex";
+                triggerToast(`Added ${item.name} to order.`, "success");
+            }
+        };
+
+        document.getElementById("cart-toggle").addEventListener("click", () => {
+            if (cartItems.length === 0) {
+                triggerToast("Your mock cart is empty.", "info");
+            } else {
+                const total = cartItems.reduce((acc, current) => acc + current.price, 0);
+                triggerToast(`Mock Checkout: ${cartItems.length} items. Total: $${total.toFixed(2)}`, "success");
+            }
+        });
+
+        /* ==========================================================================
+           11. COZY HOURS LIVE HIGHLIGHT
+           ========================================================================== */
+        function updateOpeningHours() {
+            const now = new Date();
+            const day = now.getDay();
+            
+            document.querySelectorAll(".hours-row").forEach(row => row.classList.remove("today"));
+            
+            if (day >= 1 && day <= 5) {
+                document.getElementById("day-mon").classList.add("today");
+            } else if (day === 6) {
+                document.getElementById("day-sat").classList.add("today");
+            } else if (day === 0) {
+                document.getElementById("day-sun").classList.add("today");
+            }
+        }
+        updateOpeningHours();
+    </script>
+</body>
+</html>

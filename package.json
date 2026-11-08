@@ -1,0 +1,25 @@
+{
+  "name": "maison-ndamen-peintre-prof",
+  "version": "2.0.0",
+  "description": "Maison Ndamen — Peintre Professionnel & Maître Artisan Staffeur d'Exception au Cameroun (Douala, Yaoundé, Kribi, Limbe).",
+  "scripts": {
+    "start": "npx serve . -l 3000",
+    "serve": "npx serve . -l 3000",
+    "dev:next": "next dev",
+    "build:next": "next build"
+  },
+  "keywords": [
+    "peintre-professionnel",
+    "maison-ndamen",
+    "cameroun",
+    "douala",
+    "yaounde",
+    "staff",
+    "stuc-venitien",
+    "peinture-tropicalisee",
+    "vue3",
+    "tailwind"
+  ],
+  "author": "Jean-Paul Ndamen & Maison Ndamen",
+  "license": "MIT"
+}

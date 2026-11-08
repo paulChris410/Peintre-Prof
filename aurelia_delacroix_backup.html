@@ -1,0 +1,1340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aurelia Delacroix | Contemporary Painter & Colorist (Vue.js 3 Edition)</title>
+  
+  <!-- SEO & OpenGraph Meta -->
+  <meta name="description" content="Portfolio of Aurelia Delacroix built with Vue.js 3 and Three.js. Contemporary abstract and figurative painter working with French Ultramarine, Cadmium Yellow, Rose Madder, and Viridian Green on traditional cool gesso grounds. Interactive 3D canvas studio, motion frames, and museum archive.">
+  <meta name="keywords" content="Aurelia Delacroix, contemporary painter, fine art portfolio, vue js portfolio, three.js 3d canvas, oil on linen, gouache, large scale paintings, ultramarine, cadmium yellow, rose madder, viridian green">
+  <meta name="author" content="Aurelia Delacroix Studio">
+  
+  <!-- Google Fonts: Instrument Serif (Headings) & Hanken Grotesk (Body) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,300..800;1,300..800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  
+  <!-- Vue.js 3 Production Runtime -->
+  <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+  
+  <!-- Three.js for 3D Blob & 3D Canvas Studio Inspector -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="styles.css">
+  
+  <!-- Structured Data Schema for VisualArtist -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Aurelia Delacroix",
+    "jobTitle": "Contemporary Visual Artist & Painter",
+    "knowsAbout": ["Oil Painting", "Gouache", "Mineral Pigments", "Large-scale Installations", "Cold Wax Impasto"],
+    "workLocation": ["Paris, France", "Berlin, Germany"]
+  }
+  </script>
+</head>
+<body>
+
+  <!-- ========================================================================
+       VUE.JS 3 ROOT MOUNT
+       ======================================================================== -->
+  <div id="app" v-cloak>
+    
+    <!-- Site Header / Navigation -->
+    <header class="site-header" role="banner">
+      <div class="container nav-wrapper">
+        <a href="#hero" class="artist-monogram" aria-label="Aurelia Delacroix Portfolio Home">
+          <span class="monogram-mark">AD</span>
+          <span class="artist-name-nav">{{ artistName }}</span>
+        </a>
+
+        <nav aria-label="Main Navigation">
+          <ul class="nav-links" :class="{ 'mobile-open': isMobileNavOpen }">
+            <li><a href="#motion-frame" class="nav-link" @click="isMobileNavOpen = false">Motion Frame</a></li>
+            <li><a href="#works" class="nav-link" @click="isMobileNavOpen = false">Selected Works</a></li>
+            <li><a href="#canvas-studio" class="nav-link" @click="isMobileNavOpen = false">3D Studio</a></li>
+            <li><a href="#about" class="nav-link" @click="isMobileNavOpen = false">About</a></li>
+            <li><a href="#alchemy" class="nav-link" @click="isMobileNavOpen = false">Pigments</a></li>
+            <li><a href="#process" class="nav-link" @click="isMobileNavOpen = false">Process</a></li>
+            <li><a href="#exhibitions" class="nav-link" @click="isMobileNavOpen = false">Exhibitions</a></li>
+            <li><a href="#commissions" class="nav-link" @click="isMobileNavOpen = false">Commissions</a></li>
+            <li><a href="#contact" class="nav-link" @click="isMobileNavOpen = false">Contact</a></li>
+          </ul>
+        </nav>
+
+        <div class="nav-actions">
+          <!-- Light / Dark Mode Toggle -->
+          <button @click="toggleTheme" class="icon-btn" aria-label="Toggle light and dark color mode" title="Toggle Light / Dark Gesso">
+            <svg v-if="isDarkMode" viewBox="0 0 24 24">
+              <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+            </svg>
+            <svg v-else viewBox="0 0 24 24">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+            </svg>
+          </button>
+
+          <!-- Reduced Motion Manual Control -->
+          <button @click="toggleMotion" class="badge-pill-btn" aria-label="Toggle animation motion" title="Toggle 3D and Scroll Motion">
+            <span class="badge-dot"></span>
+            <span>Motion: {{ isReducedMotion ? 'Off' : 'On' }}</span>
+          </button>
+
+          <!-- Artist Customizer Trigger (Live Personalization) -->
+          <button @click="isCustomizerOpen = true" class="icon-btn" aria-label="Personalize artist placeholders" title="Personalize Artist Details & Palette">
+            <svg viewBox="0 0 24 24">
+              <path d="M12 20h9"/>
+              <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
+            </svg>
+          </button>
+
+          <!-- Mobile Drawer Hamburger -->
+          <button @click="isMobileNavOpen = !isMobileNavOpen" class="mobile-toggle" aria-label="Toggle navigation menu" :aria-expanded="isMobileNavOpen">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <!-- ======================================================================
+           HERO SECTION WITH 3D THREE.JS BLOB & RISING LETTER TITLE
+           ====================================================================== -->
+      <section id="hero" class="hero-section" aria-label="Hero Overview">
+        <div id="hero-three-canvas-wrap" class="hero-canvas-container" aria-hidden="true"></div>
+
+        <div class="container hero-content">
+          <div class="hero-tag">
+            <span class="palette-dots">
+              <span class="dot ultramarine" title="French Ultramarine"></span>
+              <span class="dot cadmium" title="Cadmium Yellow"></span>
+              <span class="dot madder" title="Rose Madder"></span>
+              <span class="dot viridian" title="Viridian Green"></span>
+            </span>
+            <span>Vue.js 3 • Four Pigment Synthesis</span>
+          </div>
+
+          <!-- Artist Title with Letter-by-Letter Rising Animation -->
+          <h1 class="artist-hero-title">
+            <span v-for="(word, wIdx) in titleWords" :key="wIdx" class="title-line">
+              <span v-for="item in word" :key="item.index" class="char-wrap">
+                <span class="char" :style="{'--char-index': item.index}">{{ item.char }}</span>
+              </span>
+              <span class="char-wrap">&nbsp;</span>
+            </span>
+          </h1>
+
+          <p class="hero-subtitle">
+            Contemporary painter investigating <em>chromodynamics</em> and tactile optical resonance across French Ultramarine, Cadmium Yellow, Rose Madder, and Viridian Green on traditional rabbit-skin gesso grounds.
+          </p>
+
+          <div class="hero-actions">
+            <a href="#works" class="btn-primary">
+              Explore Selected Works
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+            </a>
+            <a href="#canvas-studio" class="btn-outline">
+              Interactive 3D Canvas
+            </a>
+            <a href="#motion-frame" class="btn-outline">
+              Time-Lapse Studio
+            </a>
+          </div>
+
+          <div class="hero-meta-bar">
+            <div class="meta-item">
+              <span class="meta-label">Primary Representation</span>
+              <span class="meta-val">Galerie Vivienne, Paris</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">Current Exhibition</span>
+              <span class="meta-val">Palais de Tokyo (Room 4)</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">Active Studios</span>
+              <span class="meta-val">Paris IV • Berlin Kreuzberg</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-scene-hint" aria-hidden="true">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M12 8v8M8 12h8"/>
+          </svg>
+          <span>Interactive 3D Fluid Mesh • Drag & Tilt</span>
+        </div>
+      </section>
+
+      <!-- ======================================================================
+           SCROLLING TICKER OF MEDIUMS
+           ====================================================================== -->
+      <div class="ticker-section" aria-label="Artist Mediums Marquee">
+        <div class="ticker-track">
+          <div class="ticker-content">
+            <span class="ticker-item">OIL ON BELGIAN LINEN <span class="ticker-separator">✦</span></span>
+            <span class="ticker-item">COLD WAX MEDIUM <span class="ticker-separator">✦</span></span>
+            <span class="ticker-item">OPAQUE GOUACHE ON ARCHIVAL RAG <span class="ticker-separator">✦</span></span>
+            <span class="ticker-item">HAND-MULLED MINERAL PIGMENTS <span class="ticker-separator">✦</span></span>
+            <span class="ticker-item">LARGE SCALE TRIPTYCHS <span class="ticker-separator">✦</span></span>
+            <span class="ticker-item">TRADITIONAL CHALK GESSO GROUNDS <span class="ticker-separator">✦</span></span>
+            <span class="ticker-item">FRENCH ULTRAMARINE LAPIS <span class="ticker-separator">✦</span></span>
+            <span class="ticker-item">CADMIUM SULFIDE <span class="ticker-separator">✦</span></span>
+            <span class="ticker-item">NATURAL ROSE MADDER LAKE <span class="ticker-separator">✦</span></span>
+            <span class="ticker-item">HYDRATED CHROMIUM VIRIDIAN <span class="ticker-separator">✦</span></span>
+          </div>
+          <div class="ticker-content" aria-hidden="true">
+            <span class="ticker-item">OIL ON BELGIAN LINEN <span class="ticker-separator">✦</span></span>
+            <span class="ticker-item">COLD WAX MEDIUM <span class="ticker-separator">✦</span></span>
+            <span class="ticker-item">OPAQUE GOUACHE ON ARCHIVAL RAG <span class="ticker-separator">✦</span></span>
+            <span class="ticker-item">HAND-MULLED MINERAL PIGMENTS <span class="ticker-separator">✦</span></span>
+            <span class="ticker-item">LARGE SCALE TRIPTYCHS <span class="ticker-separator">✦</span></span>
+            <span class="ticker-item">TRADITIONAL CHALK GESSO GROUNDS <span class="ticker-separator">✦</span></span>
+            <span class="ticker-item">FRENCH ULTRAMARINE LAPIS <span class="ticker-separator">✦</span></span>
+            <span class="ticker-item">CADMIUM SULFIDE <span class="ticker-separator">✦</span></span>
+            <span class="ticker-item">NATURAL ROSE MADDER LAKE <span class="ticker-separator">✦</span></span>
+            <span class="ticker-item">HYDRATED CHROMIUM VIRIDIAN <span class="ticker-separator">✦</span></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ======================================================================
+           MOTION FRAME / PAINTING TIME-LAPSE STUDIO
+           ====================================================================== -->
+      <section id="motion-frame" class="section" aria-labelledby="motion-frame-title">
+        <div class="container">
+          <div class="section-header">
+            <span class="section-eyebrow">Interactive Motion Frame</span>
+            <h2 id="motion-frame-title" class="section-title">
+              <span>The Anatomy of a Painting</span>
+              <div class="brush-stroke-wrap" aria-hidden="true">
+                <svg class="brush-stroke-svg" viewBox="0 0 420 24" fill="none" preserveAspectRatio="none">
+                  <path d="M 4,14 C 110,5 240,20 416,12" class="brush-stroke-path"/>
+                  <path d="M 14,18 C 120,8 260,22 408,15" class="brush-stroke-path-secondary"/>
+                </svg>
+              </div>
+            </h2>
+            <p class="section-description">
+              Experience the frame-by-frame anatomical creation of a master oil canvas. Press play or drag the scrubber to watch raw stretched Belgian linen transform through imprimatura, knife block-in, and final crystalline dammar glaze.
+            </p>
+          </div>
+
+          <div class="motion-frame-stage">
+            <div class="motion-frame-grid">
+              <!-- Left: Easel Frame with stacked canvas layers -->
+              <div class="easel-frame-outer">
+                <div class="easel-frame-inner">
+                  <!-- Layer 01: Ground -->
+                  <div class="motion-canvas-layer" :class="{ active: activeStageIndex === 0 }">
+                    <svg viewBox="0 0 800 640" xmlns="http://www.w3.org/2000/svg">
+                      <rect width="800" height="640" fill="#dedbd2" />
+                      <rect x="20" y="20" width="760" height="600" fill="#f0f2ed" stroke="#c4cac0" stroke-width="2"/>
+                      <g stroke="#e2e6de" stroke-width="1.5" opacity="0.6">
+                        <line x1="20" y1="120" x2="780" y2="120"/>
+                        <line x1="20" y1="240" x2="780" y2="240"/>
+                        <line x1="20" y1="360" x2="780" y2="360"/>
+                        <line x1="20" y1="480" x2="780" y2="480"/>
+                      </g>
+                    </svg>
+                  </div>
+
+                  <!-- Layer 02: Charcoal -->
+                  <div class="motion-canvas-layer" :class="{ active: activeStageIndex === 1 }">
+                    <svg viewBox="0 0 800 640" xmlns="http://www.w3.org/2000/svg">
+                      <rect width="800" height="640" fill="#dedbd2" />
+                      <rect x="20" y="20" width="760" height="600" fill="#f0f2ed"/>
+                      <g stroke="#3a3e44" stroke-width="2.5" stroke-linecap="round" opacity="0.75" stroke-dasharray="8 4">
+                        <line x1="80" y1="380" x2="720" y2="360"/>
+                        <circle cx="480" cy="280" r="140" fill="none" stroke-width="2"/>
+                        <path d="M 120,540 C 260,420 540,580 700,440" fill="none" stroke-width="3"/>
+                        <line x1="300" y1="60" x2="300" y2="580" stroke-dasharray="4 4"/>
+                      </g>
+                    </svg>
+                  </div>
+
+                  <!-- Layer 03: Imprimatura -->
+                  <div class="motion-canvas-layer" :class="{ active: activeStageIndex === 2 }">
+                    <svg viewBox="0 0 800 640" xmlns="http://www.w3.org/2000/svg">
+                      <rect width="800" height="640" fill="#dedbd2" />
+                      <rect x="20" y="20" width="760" height="600" fill="#f0f2ed"/>
+                      <rect x="20" y="20" width="760" height="340" fill="#1837b9" opacity="0.45" />
+                      <path d="M 20,320 C 220,260 480,380 780,300 L 780,620 L 20,620 Z" fill="#1b7a58" opacity="0.5" />
+                      <circle cx="480" cy="280" r="140" fill="#ffc300" opacity="0.3" />
+                    </svg>
+                  </div>
+
+                  <!-- Layer 04: Block-In -->
+                  <div class="motion-canvas-layer" :class="{ active: activeStageIndex === 3 }">
+                    <svg viewBox="0 0 800 640" xmlns="http://www.w3.org/2000/svg">
+                      <rect width="800" height="640" fill="#dedbd2" />
+                      <rect x="20" y="20" width="760" height="600" fill="#1837b9" opacity="0.8" />
+                      <path d="M 20,320 C 220,260 480,380 780,300 L 780,620 L 20,620 Z" fill="#1b7a58" opacity="0.85" />
+                      <polygon points="120,180 340,110 520,280 260,340" fill="#cf385b" opacity="0.9" />
+                      <circle cx="500" cy="280" r="120" fill="#ffc300" opacity="0.95" />
+                    </svg>
+                  </div>
+
+                  <!-- Layer 05: Sgraffito -->
+                  <div class="motion-canvas-layer" :class="{ active: activeStageIndex === 4 }">
+                    <svg viewBox="0 0 800 640" xmlns="http://www.w3.org/2000/svg">
+                      <rect width="800" height="640" fill="#dedbd2" />
+                      <rect x="20" y="20" width="760" height="600" fill="#1837b9" opacity="0.9" />
+                      <path d="M 20,320 C 220,260 480,380 780,300 L 780,620 L 20,620 Z" fill="#1b7a58" opacity="0.9" />
+                      <polygon points="120,180 340,110 520,280 260,340" fill="#cf385b" opacity="0.9" />
+                      <circle cx="500" cy="280" r="120" fill="#ffc300" opacity="0.95" />
+                      <line x1="60" y1="220" x2="740" y2="220" stroke="#f0f2ed" stroke-width="2.5" stroke-dasharray="14 6"/>
+                    </svg>
+                  </div>
+
+                  <!-- Layer 06: Final Masterpiece -->
+                  <div class="motion-canvas-layer" :class="{ active: activeStageIndex === 5 }">
+                    <img src="images/work-oil-horizon.jpg" alt="Final Cured Masterpiece" class="artwork-image">
+                  </div>
+
+                  <!-- Painter Brush Cursor Indicator -->
+                  <div class="painter-brush-cursor" :style="brushCursorStyle" :class="{ painting: isPlayingTimeLapse }">
+                    <svg width="44" height="44" viewBox="0 0 24 24" fill="none">
+                      <path d="M18.364 5.636a9 9 0 010 12.728M15.536 8.464a5 5 0 010 7.072M12 12h.01" stroke="var(--cadmium-yellow)" stroke-width="3" stroke-linecap="round"/>
+                      <path d="M4 20l5-5 3 3-5 5H4v-3z" fill="#9e7b57" stroke="#483424" stroke-width="1.5"/>
+                      <polygon points="9,15 14,10 17,13 12,18" fill="var(--ultramarine)"/>
+                    </svg>
+                  </div>
+                </div>
+
+                <!-- Controls Under Canvas -->
+                <div class="motion-controls-wrap">
+                  <div class="scrubber-bar-row">
+                    <button @click="togglePlayTimeLapse" class="play-pause-btn" :aria-label="isPlayingTimeLapse ? 'Pause time-lapse' : 'Play time-lapse'">
+                      <svg v-if="isPlayingTimeLapse" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                        <rect x="6" y="4" width="4" height="16"/>
+                        <rect x="14" y="4" width="4" height="16"/>
+                      </svg>
+                      <svg v-else width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                        <polygon points="5 3 19 12 5 21 5 3"/>
+                      </svg>
+                    </button>
+                    <input type="range" class="timeline-scrubber" min="0" max="5" step="1" v-model.number="activeStageIndex" @input="isPlayingTimeLapse = false" aria-label="Scrub painting creation frames">
+                  </div>
+
+                  <div class="frame-pills-row">
+                    <button v-for="(st, idx) in motionStages" :key="idx" class="frame-pill" :class="{ active: activeStageIndex === idx }" @click="setStage(idx)">
+                      0{{ idx + 1 }}. {{ st.title.split(' ')[0] }}
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Right: Dynamic Stage Documentation Card -->
+              <div class="motion-frame-data-card">
+                <span class="stage-number-tag">{{ activeStageData.stepNum }}</span>
+                <h3 class="stage-name-heading">{{ activeStageData.title }}</h3>
+                <p class="stage-desc-text">{{ activeStageData.description }}</p>
+
+                <div class="stage-specs-box">
+                  <div class="spec-entry">
+                    <span class="spec-entry-label">Substrate / Support</span>
+                    <span class="spec-entry-val">{{ activeStageData.substrate }}</span>
+                  </div>
+                  <div class="spec-entry">
+                    <span class="spec-entry-label">Curing Duration</span>
+                    <span class="spec-entry-val">{{ activeStageData.dryingTime }}</span>
+                  </div>
+                  <div class="spec-entry">
+                    <span class="spec-entry-label">Application Tools</span>
+                    <span class="spec-entry-val">{{ activeStageData.tools }}</span>
+                  </div>
+                  <div class="spec-entry">
+                    <span class="spec-entry-label">Layer Thickness</span>
+                    <span class="spec-entry-val">{{ activeStageData.layerThickness }}</span>
+                  </div>
+                </div>
+
+                <div>
+                  <a href="#works" class="btn-outline">
+                    Browse All Curated Works
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ======================================================================
+           SELECTED WORKS (GALLERY WITH FILTERS, 3D TILT & DETAIL VIEW)
+           ====================================================================== -->
+      <section id="works" class="section" aria-labelledby="works-title">
+        <div class="container">
+          <div class="section-header">
+            <span class="section-eyebrow">Curated Portfolio</span>
+            <h2 id="works-title" class="section-title">
+              <span>Selected Works</span>
+              <div class="brush-stroke-wrap" aria-hidden="true">
+                <svg class="brush-stroke-svg" viewBox="0 0 340 24" fill="none" preserveAspectRatio="none">
+                  <path d="M 4,12 C 85,3 190,19 336,11" class="brush-stroke-path"/>
+                  <path d="M 12,16 C 95,7 210,21 328,14" class="brush-stroke-path-secondary"/>
+                </svg>
+              </div>
+            </h2>
+            <p class="section-description">
+              Paintings documented in museum high-resolution photography and vector SVG. Hover to examine in 3D perspective, or select any piece for curatorial analysis and acquisition details.
+            </p>
+          </div>
+
+          <!-- Filter Controls -->
+          <div class="gallery-controls">
+            <div class="filter-pills" role="tablist" aria-label="Filter Paintings by Medium">
+              <button class="filter-btn" :class="{ active: activeCategory === 'all' }" @click="activeCategory = 'all'">All Works ({{ paintings.length }})</button>
+              <button class="filter-btn" :class="{ active: activeCategory === 'oil' }" @click="activeCategory = 'oil'">Oil on Linen (4)</button>
+              <button class="filter-btn" :class="{ active: activeCategory === 'gouache' }" @click="activeCategory = 'gouache'">Gouache on Rag (3)</button>
+              <button class="filter-btn" :class="{ active: activeCategory === 'large' }" @click="activeCategory = 'large'">Large Scale (3)</button>
+              <button class="filter-btn" :class="{ active: activeCategory === 'prints' }" @click="activeCategory = 'prints'">Collector Prints (2)</button>
+            </div>
+            <span class="gallery-count">Showing {{ filteredPaintings.length }} of {{ paintings.length }} artworks</span>
+          </div>
+
+          <!-- 3D Tilt Artwork Grid -->
+          <div class="paintings-grid" role="region" aria-live="polite">
+            <article
+              v-for="artwork in filteredPaintings"
+              :key="artwork.id"
+              class="artwork-card"
+              tabindex="0"
+              role="button"
+              :aria-label="'View details of ' + artwork.title"
+              @mousemove="handleCardMouseMove"
+              @mouseleave="handleCardMouseLeave"
+              @click="openArtworkModal(artwork)"
+            >
+              <div class="artwork-glare"></div>
+              <div class="artwork-media-wrap">
+                <span class="artwork-badge">{{ artwork.category.toUpperCase() }}</span>
+                <img v-if="artwork.imageUrl" :src="artwork.imageUrl" :alt="artwork.title" class="artwork-image" loading="lazy">
+                <div v-else v-html="artwork.svgContent"></div>
+              </div>
+              <div class="artwork-info">
+                <div class="artwork-meta-top">
+                  <span class="artwork-year">{{ artwork.year }}</span>
+                  <span class="artwork-status">{{ artwork.status }}</span>
+                </div>
+                <h3 class="artwork-title">{{ artwork.title }}</h3>
+                <p class="artwork-medium">{{ artwork.medium }}</p>
+                <p class="artwork-dimensions">{{ artwork.dimensions }}</p>
+                <div class="artwork-footer">
+                  <span class="artwork-price">{{ artwork.price }}</span>
+                  <span class="artwork-inspect-cta">
+                    Inspect Piece
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                      <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
+                  </span>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- ======================================================================
+           3D CANVAS STUDIO / VIRTUAL GALLERY INSPECTOR (THREE.JS)
+           ====================================================================== -->
+      <section id="canvas-studio" class="section" style="background-color: var(--bg-surface);" aria-labelledby="studio-title">
+        <div class="container">
+          <div class="section-header">
+            <span class="section-eyebrow">3D WebGL Studio Inspector</span>
+            <h2 id="studio-title" class="section-title">
+              <span>Inspect the Stretched Canvas in 3D</span>
+              <div class="brush-stroke-wrap" aria-hidden="true">
+                <svg class="brush-stroke-svg" viewBox="0 0 450 24" fill="none" preserveAspectRatio="none">
+                  <path d="M 4,14 C 120,5 280,20 446,12" class="brush-stroke-path"/>
+                  <path d="M 14,18 C 140,8 300,22 438,15" class="brush-stroke-path-secondary"/>
+                </svg>
+              </div>
+            </h2>
+            <p class="section-description">
+              Rotate the physical 3D stretched canvas in real-time space. Inspect the raw Belgian linen wrapped edges, the cross-braced tulipwood stretcher bars on the reverse, and switch gallery lighting modes.
+            </p>
+          </div>
+
+          <div class="canvas-studio-container">
+            <div class="canvas-studio-header">
+              <div class="studio-lighting-pills">
+                <span style="font-size: 0.82rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); align-self: center; margin-right: 0.5rem;">
+                  Gallery Lighting:
+                </span>
+                <button class="light-mode-btn" :class="{ active: studioLightingMode === 'museum' }" @click="selectStudioLighting('museum')">🏛️ Museum Spotlight (3200K)</button>
+                <button class="light-mode-btn" :class="{ active: studioLightingMode === 'daylight' }" @click="selectStudioLighting('daylight')">☀️ Studio Daylight (5500K)</button>
+                <button class="light-mode-btn" :class="{ active: studioLightingMode === 'raking' }" @click="selectStudioLighting('raking')">🌙 Impasto Raking Light</button>
+              </div>
+
+              <div>
+                <button @click="resetStudioView" class="badge-pill-btn">Reset View</button>
+              </div>
+            </div>
+
+            <div class="canvas-studio-viewport">
+              <div id="canvas-studio-webgl"></div>
+              <div class="studio-overlay-hint">
+                <span>✦ Click & Drag to Rotate Canvas in 3D • Scroll Wheel to Zoom</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ======================================================================
+           ABOUT SECTION: ARTIST PHILOSOPHY & REAL ATELIER PHOTOGRAPHY
+           ====================================================================== -->
+      <section id="about" class="section" aria-labelledby="about-title">
+        <div class="container">
+          <div class="about-grid">
+            <div class="about-visual-column">
+              <div class="studio-illustration-card">
+                <img src="images/artist-studio-paris.jpg" alt="Aurelia Delacroix painting at the easel in her Paris atelier" class="artwork-image" style="border-radius: 6px;">
+                <div class="studio-caption">
+                  <span>The Marais Atelier, Paris — Working on 'The Deep Horizon' canvas</span>
+                  <span>Studio Archive Plate</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="about-text-column">
+              <span class="section-eyebrow">Studio Tenets & Bio</span>
+              <h2 id="about-title" class="section-title">
+                <span>The Alchemy of Four Pigments</span>
+                <div class="brush-stroke-wrap" aria-hidden="true">
+                  <svg class="brush-stroke-svg" viewBox="0 0 380 24" fill="none" preserveAspectRatio="none">
+                    <path d="M 4,14 C 95,5 220,20 376,12" class="brush-stroke-path"/>
+                    <path d="M 14,18 C 110,8 240,22 368,15" class="brush-stroke-path-secondary"/>
+                  </svg>
+                </div>
+              </h2>
+
+              <p style="margin-bottom: 1.25rem;">
+                {{ artistName }} (b. 1988) works between Paris and Berlin. Her practice operates at the intersection of historical pigment chemistry and radical chromatic reduction. Rather than using an endless wheel of commercial tube colors, her entire studio output is restricted to four pure elemental pigments suspended in cold wax and walnut oil over traditional rabbit-skin gesso grounds.
+              </p>
+              <p style="margin-bottom: 1.75rem;">
+                “Limiting the palette to Ultramarine, Cadmium, Rose Madder, and Viridian is not a constraint—it is an amplification. In their optical tension lies the entire spectrum of psychological atmosphere: the nocturnal depth of lapis lazuli, the solar combustion of cadmium, the organic warmth of madder root, and the geological stability of chromium.”
+              </p>
+
+              <div class="pigment-cards-grid">
+                <div class="pigment-chip">
+                  <span class="pigment-swatch" style="background-color: var(--ultramarine);"></span>
+                  <div>
+                    <h4 class="pigment-chip-title">French Ultramarine</h4>
+                    <p class="pigment-chip-desc">Synthesized complex sodium polysulfide. Deep optical recession and spiritual silence.</p>
+                  </div>
+                </div>
+
+                <div class="pigment-chip">
+                  <span class="pigment-swatch" style="background-color: var(--cadmium-yellow);"></span>
+                  <div>
+                    <h4 class="pigment-chip-title">Cadmium Yellow</h4>
+                    <p class="pigment-chip-desc">Pure cadmium sulfide. Aggressive solar warmth that physically leaps from the canvas.</p>
+                  </div>
+                </div>
+
+                <div class="pigment-chip">
+                  <span class="pigment-swatch" style="background-color: var(--rose-madder);"></span>
+                  <div>
+                    <h4 class="pigment-chip-title">Rose Madder Genuine</h4>
+                    <p class="pigment-chip-desc">Natural alizarin rubia tinctorum lake. Translucent, flesh-like biological resonance.</p>
+                  </div>
+                </div>
+
+                <div class="pigment-chip">
+                  <span class="pigment-swatch" style="background-color: var(--viridian-green);"></span>
+                  <div>
+                    <h4 class="pigment-chip-title">Viridian Green</h4>
+                    <p class="pigment-chip-desc">Hydrated chromium sesquioxide. Cool, oceanic transparency that anchors the ground.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                <button onclick="window.print()" class="btn-primary">
+                  Download Curriculum Vitae (PDF)
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/>
+                  </svg>
+                </button>
+                <a href="#alchemy" class="btn-outline">
+                  Test Pigment Mixer
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ======================================================================
+           INTERACTIVE PIGMENT ALCHEMY STUDIO
+           ====================================================================== -->
+      <section id="alchemy" class="section" style="background-color: var(--bg-surface);" aria-labelledby="alchemy-title">
+        <div class="container">
+          <div class="section-header">
+            <span class="section-eyebrow">Interactive Studio Workbench</span>
+            <h2 id="alchemy-title" class="section-title">
+              <span>Pigment Alchemy Mixer</span>
+              <div class="brush-stroke-wrap" aria-hidden="true">
+                <svg class="brush-stroke-svg" viewBox="0 0 380 24" fill="none" preserveAspectRatio="none">
+                  <path d="M 4,14 C 95,5 220,20 376,12" class="brush-stroke-path"/>
+                  <path d="M 14,18 C 110,8 240,22 368,15" class="brush-stroke-path-secondary"/>
+                </svg>
+              </div>
+            </h2>
+            <p class="section-description">
+              Select two or three raw pigment wells from the atelier workbench to calculate their optical mixture, transparency rating, and chemical resonance.
+            </p>
+          </div>
+
+          <div class="pigment-mixer-card">
+            <div class="mixer-grid">
+              <div>
+                <h3 style="font-family: var(--font-serif); font-size: 1.5rem; margin-bottom: 1rem;">Select Pigments to Blend:</h3>
+                <div class="pigment-wells-grid">
+                  <div
+                    v-for="pigment in pigmentDatabase"
+                    :key="pigment.id"
+                    class="pigment-well-item"
+                    :class="{ selected: selectedPigmentIds.includes(pigment.id) }"
+                    @click="togglePigmentWell(pigment.id)"
+                  >
+                    <span class="well-dot" :style="{ backgroundColor: pigment.hex, border: pigment.id === 'white' ? '1px solid #ccc' : 'none' }"></span>
+                    <div>
+                      <div class="well-title">{{ pigment.name }}</div>
+                      <div class="well-code">{{ pigment.code }} • {{ Math.round(pigment.opacity * 100) }}% Opacity</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="mixing-dish-result">
+                <div class="dish-swatch-circle" :style="{ backgroundColor: mixtureResult.hex }"></div>
+                <div>
+                  <h4 class="dish-blend-title">{{ mixtureResult.name }}</h4>
+                  <div style="font-size: 0.85rem; font-weight: 700; color: var(--ultramarine); letter-spacing: 0.1em; margin-bottom: 0.75rem;">
+                    {{ mixtureResult.hex }}
+                  </div>
+                  <p style="font-size: 0.95rem; color: var(--text-secondary); max-width: 440px; margin: 0 auto 0.75rem;">
+                    {{ mixtureResult.desc }}
+                  </p>
+                  <div style="font-size: 0.8rem; color: var(--text-muted); font-weight: 600;">
+                    Optical Opacity: {{ mixtureResult.opacityPercent }}% • Active Pigments: {{ mixtureResult.codes }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ======================================================================
+           PROCESS: SCROLL-FILLING TIMELINE
+           ====================================================================== -->
+      <section id="process" class="section" aria-labelledby="process-title">
+        <div class="container">
+          <div class="section-header" style="text-align: center; margin-left: auto; margin-right: auto;">
+            <span class="section-eyebrow">Studio Methodology</span>
+            <h2 id="process-title" class="section-title">
+              <span>The Five Stages of Making</span>
+              <div class="brush-stroke-wrap" aria-hidden="true">
+                <svg class="brush-stroke-svg" viewBox="0 0 380 24" fill="none" preserveAspectRatio="none">
+                  <path d="M 4,14 C 95,5 220,20 376,12" class="brush-stroke-path"/>
+                  <path d="M 14,18 C 110,8 240,22 368,15" class="brush-stroke-path-secondary"/>
+                </svg>
+              </div>
+            </h2>
+            <p class="section-description" style="max-width: 650px; margin: 0 auto;">
+              Scroll to follow the dynamic progression of pure mineral raw materials into archival museum canvases. The conduit fills with pigment as you explore each step.
+            </p>
+          </div>
+
+          <div class="process-wrapper">
+            <div class="timeline-track" aria-hidden="true">
+              <div class="timeline-progress-fill"></div>
+            </div>
+
+            <div class="process-step">
+              <div class="step-marker">01</div>
+              <div class="step-card">
+                <span class="step-eyebrow">Raw Material Synthesis</span>
+                <h3 class="step-title">Pigment Sourcing & Stone Mulling</h3>
+                <p class="step-body">
+                  Before a brush touches linen, pure dry mineral crystals are weighed on jeweler's balances. Using a heavy optical glass muller on a chilled Carrara marble slab, pigments are mulled with cold-pressed Swedish walnut oil and bleached beeswax until a buttery, stringy paste forms.
+                </p>
+              </div>
+            </div>
+
+            <div class="process-step">
+              <div class="step-marker">02</div>
+              <div class="step-card">
+                <span class="step-eyebrow">Substrate Architecture</span>
+                <h3 class="step-title">Traditional Rabbit-Skin Gesso Grounds</h3>
+                <p class="step-body">
+                  Belgian flax linen (460 gsm) is stretched across custom-milled tulipwood stretcher bars. Eight alternating coats of hot rabbit-skin glue and Bolognese chalk are applied, then hand-sanded with water stones to yield a cool, absorbent ivory gesso surface that breathes like marble.
+                </p>
+              </div>
+            </div>
+
+            <div class="process-step">
+              <div class="step-marker">03</div>
+              <div class="step-card">
+                <span class="step-eyebrow">Tonal Foundation</span>
+                <h3 class="step-title">Charcoal Cartoons & Imprimatura Wash</h3>
+                <p class="step-body">
+                  Compositions are conceived through vine charcoal drawings scored directly into the chalk. A dilute wash of raw viridian and French ultramarine (the imprimatura) is wiped across the canvas with linen rags, establishing the harmonic shadows and light hierarchy.
+                </p>
+              </div>
+            </div>
+
+            <div class="process-step">
+              <div class="step-marker">04</div>
+              <div class="step-card">
+                <span class="step-eyebrow">Chromatic Execution</span>
+                <h3 class="step-title">Cold Wax Glazing, Scumbling & Sgraffito</h3>
+                <p class="step-body">
+                  Using Japanese steel palette knives and hog-bristle brushes, dense impasto slabs of cadmium yellow and rose madder are laid down. Cold wax glazes build optical depth, while razor blades carve delicate sgraffito incisions through wet paint into the cool white gesso substrate beneath.
+                </p>
+              </div>
+            </div>
+
+            <div class="process-step">
+              <div class="step-marker">05</div>
+              <div class="step-card">
+                <span class="step-eyebrow">Archival Preservation</span>
+                <h3 class="step-title">Dammar Varnish & Twelve-Month Curing</h3>
+                <p class="step-body">
+                  Completed canvases cure in climate-controlled studio racks for twelve months. A breathable isolation coat of retoucher's dammar is applied to equalize sheen and seal the four pigments, ensuring saturation and lightfastness for generations of museum display.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ======================================================================
+           EXHIBITIONS SECTION
+           ====================================================================== -->
+      <section id="exhibitions" class="section" style="background-color: var(--bg-surface);" aria-labelledby="exhibitions-title">
+        <div class="container">
+          <div class="section-header">
+            <span class="section-eyebrow">Selected Record</span>
+            <h2 id="exhibitions-title" class="section-title">
+              <span>Exhibitions & Surveys</span>
+              <div class="brush-stroke-wrap" aria-hidden="true">
+                <svg class="brush-stroke-svg" viewBox="0 0 350 24" fill="none" preserveAspectRatio="none">
+                  <path d="M 4,14 C 95,5 200,20 346,12" class="brush-stroke-path"/>
+                  <path d="M 14,18 C 110,8 220,22 338,15" class="brush-stroke-path-secondary"/>
+                </svg>
+              </div>
+            </h2>
+            <p class="section-description">
+              Selected museum retrospectives, institutional solo exhibitions, and international biennials.
+            </p>
+          </div>
+
+          <div class="exhibitions-container">
+            <div>
+              <h3 class="exhibition-column-title">Solo Exhibitions</h3>
+              <ul class="exhibition-list">
+                <li class="exhibition-item">
+                  <div class="exhibition-header">
+                    <span class="exhibition-year">2025</span>
+                    <span class="exhibition-city">Paris, France</span>
+                  </div>
+                  <div class="exhibition-name">Chromodynamics: The Four Elementals</div>
+                  <div class="exhibition-institution">Palais de Tokyo (Room 4) • Curated by Élodie Laurent</div>
+                  <a href="#contact" class="exhibition-catalog-link">Download Exhibition Catalog (PDF) →</a>
+                </li>
+
+                <li class="exhibition-item">
+                  <div class="exhibition-header">
+                    <span class="exhibition-year">2024</span>
+                    <span class="exhibition-city">Zurich, Switzerland</span>
+                  </div>
+                  <div class="exhibition-name">Nocturnes in Viridian and Lapis</div>
+                  <div class="exhibition-institution">Kunsthalle Zurich West • Galerie Vivienne Pavilion</div>
+                  <a href="#contact" class="exhibition-catalog-link">View Curatorial Essay →</a>
+                </li>
+
+                <li class="exhibition-item">
+                  <div class="exhibition-header">
+                    <span class="exhibition-year">2023</span>
+                    <span class="exhibition-city">London, UK</span>
+                  </div>
+                  <div class="exhibition-name">Gesso & Sgraffito: Material Tensions</div>
+                  <div class="exhibition-institution">Hayward Project Space, Southbank Centre</div>
+                  <a href="#contact" class="exhibition-catalog-link">Exhibition Archive →</a>
+                </li>
+
+                <li class="exhibition-item">
+                  <div class="exhibition-header">
+                    <span class="exhibition-year">2022</span>
+                    <span class="exhibition-city">Berlin, Germany</span>
+                  </div>
+                  <div class="exhibition-name">Cadmium Solar Drift</div>
+                  <div class="exhibition-institution">Galerie Bastian Kreuzberg • Solo Debut</div>
+                  <a href="#contact" class="exhibition-catalog-link">Press Kit & Monograph →</a>
+                </li>
+              </ul>
+            </div>
+
+            <div>
+              <h3 class="exhibition-column-title">Selected Group & Biennials</h3>
+              <ul class="exhibition-list">
+                <li class="exhibition-item">
+                  <div class="exhibition-header">
+                    <span class="exhibition-year">2025</span>
+                    <span class="exhibition-city">Venice, Italy</span>
+                  </div>
+                  <div class="exhibition-name">Venice Biennale: Collateral Chromatics</div>
+                  <div class="exhibition-institution">Palazzo Bembo • Curated International Showcase</div>
+                  <span class="exhibition-catalog-link" style="color: var(--text-muted);">Biennale Pavilion Catalog</span>
+                </li>
+
+                <li class="exhibition-item">
+                  <div class="exhibition-header">
+                    <span class="exhibition-year">2024</span>
+                    <span class="exhibition-city">Basel, Switzerland</span>
+                  </div>
+                  <div class="exhibition-name">Art Basel: Statements & Features</div>
+                  <div class="exhibition-institution">Messe Basel • Booth 4G with Galerie Vivienne</div>
+                  <span class="exhibition-catalog-link" style="color: var(--text-muted);">Art Basel Archive</span>
+                </li>
+
+                <li class="exhibition-item">
+                  <div class="exhibition-header">
+                    <span class="exhibition-year">2023</span>
+                    <span class="exhibition-city">New York, USA</span>
+                  </div>
+                  <div class="exhibition-name">New Abstraction in Post-Digital Painting</div>
+                  <div class="exhibition-institution">The Drawing Center, SoHo, NY</div>
+                  <span class="exhibition-catalog-link" style="color: var(--text-muted);">Curatorial Book (Yale Press)</span>
+                </li>
+
+                <li class="exhibition-item">
+                  <div class="exhibition-header">
+                    <span class="exhibition-year">2021</span>
+                    <span class="exhibition-city">Milan, Italy</span>
+                  </div>
+                  <div class="exhibition-name">Acquisitions Survey: New European Voices</div>
+                  <div class="exhibition-institution">Fondazione Prada, Largo Isarco</div>
+                  <span class="exhibition-catalog-link" style="color: var(--text-muted);">Permanent Collection Inclusion</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ======================================================================
+           PRESS & CRITICAL REVIEWS
+           ====================================================================== -->
+      <section id="press" class="section" aria-labelledby="press-title">
+        <div class="container">
+          <div class="section-header">
+            <span class="section-eyebrow">Critical Acclaim</span>
+            <h2 id="press-title" class="section-title">
+              <span>Press & Reviews</span>
+              <div class="brush-stroke-wrap" aria-hidden="true">
+                <svg class="brush-stroke-svg" viewBox="0 0 280 24" fill="none" preserveAspectRatio="none">
+                  <path d="M 4,14 C 75,5 160,20 276,12" class="brush-stroke-path"/>
+                  <path d="M 12,18 C 85,8 180,22 268,15" class="brush-stroke-path-secondary"/>
+                </svg>
+              </div>
+            </h2>
+            <p class="section-description">
+              Writings and reviews from international art periodicals and curatorial journals.
+            </p>
+          </div>
+
+          <div class="press-grid">
+            <div class="press-card">
+              <div>
+                <div class="press-quote-mark">“</div>
+                <blockquote class="press-quote">
+                  Delacroix’s mastery of the ultramarine-viridian spectrum creates an almost gravitational pull on the gallery floor. Her paintings refuse to remain inert surfaces.
+                </blockquote>
+              </div>
+              <div class="press-attribution">
+                <span class="press-publication">Artforum International</span>
+                <span class="press-date">October 2025</span>
+              </div>
+            </div>
+
+            <div class="press-card">
+              <div>
+                <div class="press-quote-mark" style="color: var(--ultramarine);">“</div>
+                <blockquote class="press-quote">
+                  One of the most compelling investigations into historical pigment chemistry operating in contemporary European abstraction today.
+                </blockquote>
+              </div>
+              <div class="press-attribution">
+                <span class="press-publication">Frieze Magazine</span>
+                <span class="press-date">May 2025</span>
+              </div>
+            </div>
+
+            <div class="press-card">
+              <div>
+                <div class="press-quote-mark" style="color: var(--viridian-green);">“</div>
+                <blockquote class="press-quote">
+                  A luminous conversation between the deep biological earthiness of rose madder and the searing solar clarity of cadmium yellow.
+                </blockquote>
+              </div>
+              <div class="press-attribution">
+                <span class="press-publication">The Brooklyn Rail</span>
+                <span class="press-date">January 2024</span>
+              </div>
+            </div>
+
+            <div class="press-card">
+              <div>
+                <div class="press-quote-mark" style="color: var(--cadmium-yellow-warm);">“</div>
+                <blockquote class="press-quote">
+                  A triumphant solo survey that reasserts the physical power of the painted ground in an era of disembodied digital imagery.
+                </blockquote>
+              </div>
+              <div class="press-attribution">
+                <span class="press-publication">Apollo Magazine</span>
+                <span class="press-date">November 2024</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ======================================================================
+           COMMISSIONS SECTION & BESPOKE COST ESTIMATOR
+           ====================================================================== -->
+      <section id="commissions" class="section" style="background-color: var(--bg-surface);" aria-labelledby="commissions-title">
+        <div class="container">
+          <div class="commissions-banner">
+            <div class="commissions-status-pill">
+              <span class="pulse-dot"></span>
+              <span>Atelier Status: 2 Private Commission Openings for Autumn 2026</span>
+            </div>
+
+            <h2 id="commissions-title" class="section-title">
+              <span>Bespoke Architectural & Private Commissions</span>
+              <div class="brush-stroke-wrap" aria-hidden="true">
+                <svg class="brush-stroke-svg" viewBox="0 0 540 24" fill="none" preserveAspectRatio="none">
+                  <path d="M 4,14 C 140,5 340,20 536,12" class="brush-stroke-path"/>
+                  <path d="M 14,18 C 160,8 360,22 524,15" class="brush-stroke-path-secondary"/>
+                </svg>
+              </div>
+            </h2>
+
+            <p style="max-width: 780px; margin-bottom: 2rem;">
+              Aurelia Delacroix undertakes a limited number of bespoke commissions each calendar year for private residences, institutional collections, and architectural spaces. Each commission is developed through material consultation, site-specific lighting studies, and customized linen stretchers tailored to your interior.
+            </p>
+
+            <!-- Interactive Commission Calculator -->
+            <div class="estimator-container">
+              <div>
+                <h3 style="font-family: var(--font-serif); font-size: 1.6rem; margin-bottom: 1.25rem;">Interactive Dimension & Cost Calculator</h3>
+
+                <div class="slider-row">
+                  <div class="slider-label-val">
+                    <span>Canvas Width:</span>
+                    <span>{{ commWidth }} cm</span>
+                  </div>
+                  <input type="range" class="timeline-scrubber" min="40" max="300" step="10" v-model.number="commWidth">
+                </div>
+
+                <div class="slider-row">
+                  <div class="slider-label-val">
+                    <span>Canvas Height:</span>
+                    <span>{{ commHeight }} cm</span>
+                  </div>
+                  <input type="range" class="timeline-scrubber" min="40" max="250" step="10" v-model.number="commHeight">
+                </div>
+
+                <div class="form-grid" style="margin-bottom: 0;">
+                  <div class="form-group">
+                    <label class="form-label">Substrate</label>
+                    <select v-model="commSubstrate" class="form-select">
+                      <option value="linen">Belgian Flax Linen (460gsm)</option>
+                      <option value="panel">Marine Birch Wood Panel</option>
+                      <option value="sailcloth">Heavy Architectural Sailcloth</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Framing Presentation</label>
+                    <select v-model="commFraming" class="form-select">
+                      <option value="unframed">Gallery Wrapped Edge (Unframed)</option>
+                      <option value="oak">Natural European Oak Float Frame</option>
+                      <option value="walnut">American Walnut Shadowbox</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Price Output & Apply Button -->
+              <div class="estimator-output-box">
+                <span style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); font-weight: 700;">Calculated Atelier Estimate</span>
+                <div class="estimator-price-tag">{{ commissionEstimate.priceFormatted }}</div>
+                <div style="font-size: 0.88rem; color: var(--viridian-green); font-weight: 600;">Estimated Execution: {{ commissionEstimate.weeksFormatted }}</div>
+                <button @click="applyCommissionToForm" class="btn-primary" style="margin-top: 0.75rem; justify-content: center;">
+                  Reserve This Commission
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M5 12h14M12 5l7 7-7 7"/>
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ======================================================================
+           CONTACT SECTION & FORM
+           ====================================================================== -->
+      <section id="contact" class="section" aria-labelledby="contact-title">
+        <div class="container">
+          <div class="contact-layout">
+            <div>
+              <span class="section-eyebrow">Direct Contact</span>
+              <h2 id="contact-title" class="section-title">
+                <span>Connect with the Atelier</span>
+                <div class="brush-stroke-wrap" aria-hidden="true">
+                  <svg class="brush-stroke-svg" viewBox="0 0 380 24" fill="none" preserveAspectRatio="none">
+                    <path d="M 4,14 C 95,5 220,20 376,12" class="brush-stroke-path"/>
+                    <path d="M 14,18 C 110,8 240,22 368,15" class="brush-stroke-path-secondary"/>
+                  </svg>
+                </div>
+              </h2>
+              <p class="section-description">
+                For acquisition inquiries, gallery representation, curatorial loans, or studio visits in Paris or Berlin, please reach out via the form or contact the atelier directly.
+              </p>
+
+              <div class="contact-info-list">
+                <div class="contact-info-item">
+                  <div class="contact-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                      <polyline points="22,6 12,13 2,6"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <div class="contact-label">Direct Atelier Email</div>
+                    <div class="contact-value">
+                      <a href="mailto:atelier@aureliadelacroix.com">atelier@aureliadelacroix.com</a>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="contact-info-item">
+                  <div class="contact-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                      <circle cx="12" cy="10" r="3"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <div class="contact-label">Paris Atelier</div>
+                    <div class="contact-value">Rue des Rosiers, 75004 Paris, France</div>
+                  </div>
+                </div>
+
+                <div class="contact-info-item">
+                  <div class="contact-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                      <circle cx="12" cy="10" r="3"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <div class="contact-label">Berlin Studio</div>
+                    <div class="contact-value">Oranienstraße, 10999 Berlin-Kreuzberg</div>
+                  </div>
+                </div>
+
+                <div class="contact-info-item">
+                  <div class="contact-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <circle cx="12" cy="12" r="10"/>
+                      <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <div class="contact-label">Representation</div>
+                    <div class="contact-value">Galerie Vivienne, 4 Rue des Petits-Champs, Paris</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Interactive Form -->
+            <div class="contact-form-card">
+              <form @submit.prevent="submitInquiry" novalidate>
+                <div class="form-grid">
+                  <div class="form-group">
+                    <label class="form-label">Your Full Name *</label>
+                    <input type="text" class="form-input" v-model="formName" placeholder="e.g. Marcella Fontaine" required>
+                  </div>
+
+                  <div class="form-group">
+                    <label class="form-label">Email Address *</label>
+                    <input type="email" class="form-input" v-model="formEmail" placeholder="e.g. marcella@example.com" required>
+                  </div>
+
+                  <div class="form-group">
+                    <label class="form-label">Inquiry Nature</label>
+                    <select class="form-select" v-model="formType">
+                      <option value="acquisition">Artwork Acquisition / Purchase</option>
+                      <option value="commission">Bespoke Commission Inquiry</option>
+                      <option value="prints">Collector Edition Print Purchase</option>
+                      <option value="institutional">Institutional / Museum Loan</option>
+                      <option value="press">Press & Curatorial Interview</option>
+                      <option value="studio-visit">Private Studio Visit</option>
+                    </select>
+                  </div>
+
+                  <div class="form-group">
+                    <label class="form-label">Estimated Budget Scale</label>
+                    <select class="form-select" v-model="formBudget">
+                      <option value="under-5k">$2,500 – $5,000 (Studies & Gouache)</option>
+                      <option value="5k-10k">$5,000 – $10,000 (Medium Canvases)</option>
+                      <option value="10k-25k">$10,000 – $25,000 (Major Works)</option>
+                      <option value="above-25k">$25,000+ (Monumental / Triptychs)</option>
+                    </select>
+                  </div>
+
+                  <div class="form-group full-width">
+                    <label class="form-label">Your Message / Specific Artwork of Interest *</label>
+                    <textarea class="form-textarea" v-model="formMessage" placeholder="Describe your inquiry, preferred dimensions, or reference an existing work from the portfolio..." required></textarea>
+                  </div>
+                </div>
+
+                <button type="submit" class="btn-primary" style="width: 100%; justify-content: center;" :disabled="isSubmitting">
+                  <span v-if="isSubmitting">Transmitting to Atelier...</span>
+                  <span v-else style="display: inline-flex; align-items: center; gap: 0.5rem;">
+                    Transmitting Inquiry to Studio
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <line x1="22" y1="2" x2="11" y2="13"/>
+                      <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+                    </svg>
+                  </span>
+                </button>
+
+                <div v-if="formToast.show" class="form-toast-msg show" :class="formToast.type" aria-live="polite">
+                  {{ formToast.message }}
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- ========================================================================
+         ARTWORK DETAIL MODAL
+         ======================================================================== -->
+    <div v-if="activeModalArtwork" class="modal-overlay open" role="dialog" aria-modal="true" @click.self="closeArtworkModal">
+      <div class="modal-dialog">
+        <button class="modal-close-btn" @click="closeArtworkModal" aria-label="Close artwork detail view">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"/>
+            <line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+
+        <div class="modal-body">
+          <div class="modal-media-column">
+            <img v-if="activeModalArtwork.imageUrl" :src="activeModalArtwork.imageUrl" :alt="activeModalArtwork.title" class="artwork-image">
+            <div v-else v-html="activeModalArtwork.svgContent"></div>
+          </div>
+
+          <div class="modal-info-column">
+            <div class="modal-nav-arrows">
+              <button class="modal-nav-btn" @click="prevModalArtwork">← Previous Piece</button>
+              <button class="modal-nav-btn" @click="nextModalArtwork">Next Piece →</button>
+            </div>
+
+            <h2 class="modal-title">{{ activeModalArtwork.title }}</h2>
+
+            <div class="modal-spec-row">
+              <div><strong>Year:</strong> <span>{{ activeModalArtwork.year }}</span></div>
+              <div><strong>Status:</strong> <span style="color: var(--viridian-green);">{{ activeModalArtwork.status }}</span></div>
+              <div><strong>Price:</strong> <span style="font-family: var(--font-serif); font-size: 1.15rem;">{{ activeModalArtwork.price }}</span></div>
+            </div>
+
+            <p style="font-size: 0.95rem; color: var(--text-primary); margin-bottom: 0.25rem; font-weight: 500;">
+              {{ activeModalArtwork.medium }}
+            </p>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.25rem;">
+              {{ activeModalArtwork.dimensions }}
+            </p>
+            <p style="margin-bottom: 1.5rem;">
+              {{ activeModalArtwork.description }}
+            </p>
+
+            <div style="background-color: var(--bg-card); padding: 1.25rem; border-radius: 8px; border: 1px solid var(--border-subtle); margin-bottom: 1.5rem;">
+              <h4 style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--ultramarine); margin-bottom: 0.5rem; font-weight: 700;">
+                Curatorial Analysis
+              </h4>
+              <p style="font-size: 0.9rem; font-style: italic;">
+                {{ activeModalArtwork.curatorialNote }}
+              </p>
+            </div>
+
+            <div style="margin-bottom: 1.5rem;">
+              <h4 style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); margin-bottom: 0.5rem; font-weight: 700;">
+                Pigment Chemistry Breakdown
+              </h4>
+              <div class="modal-palette-chips">
+                <div v-for="(p, idx) in activeModalArtwork.palette" :key="idx" class="modal-swatch-row">
+                  <span class="modal-swatch-dot" :style="{ backgroundColor: p.hex }"></span>
+                  <div>
+                    <strong>{{ p.name }}</strong> <span style="color: var(--text-muted); font-size: 0.8rem;">({{ p.hex }})</span>: {{ p.role }}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 2rem;">
+              <strong>Provenance:</strong> <span>{{ activeModalArtwork.provenance }}</span>
+            </div>
+
+            <button class="btn-primary" style="margin-top: auto; justify-content: center;" @click="inquireModalArtwork(activeModalArtwork)">
+              Inquire About This Piece
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========================================================================
+         ARTIST CUSTOMIZER DRAWER (LIVE PERSONALIZATION)
+         ======================================================================== -->
+    <aside class="customizer-drawer" :class="{ open: isCustomizerOpen }" role="dialog" aria-modal="true" aria-label="Artist Customization Assistant">
+      <div class="customizer-header">
+        <h3 style="font-family: var(--font-serif); font-size: 1.4rem;">Vue.js Live Personalizer</h3>
+        <button class="icon-btn" @click="isCustomizerOpen = false" aria-label="Close customizer">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"/>
+            <line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+      </div>
+
+      <div class="customizer-body">
+        <div class="customizer-banner">
+          <strong>✦ Vue.js 3 Reactive Binding:</strong><br>
+          Type your real artist name below. Watch the hero letter animation and entire site update reactively in real time!
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Artist Name (Live Vue 3 v-model)</label>
+          <input type="text" class="form-input" v-model="artistName" placeholder="Type your artist name...">
+          <span style="font-size: 0.75rem; color: var(--text-muted);">Re-renders letter rising physics on every key stroke.</span>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Active Pigment Palette</label>
+          <div style="display: flex; gap: 0.5rem; margin-top: 0.25rem;">
+            <div style="flex: 1; height: 32px; background: var(--ultramarine); border-radius: 4px;" title="Ultramarine"></div>
+            <div style="flex: 1; height: 32px; background: var(--cadmium-yellow); border-radius: 4px;" title="Cadmium Yellow"></div>
+            <div style="flex: 1; height: 32px; background: var(--rose-madder); border-radius: 4px;" title="Rose Madder"></div>
+            <div style="flex: 1; height: 32px; background: var(--viridian-green); border-radius: 4px;" title="Viridian Green"></div>
+          </div>
+        </div>
+
+        <div style="margin-top: 1rem;">
+          <button onclick="window.print()" class="btn-outline" style="width: 100%; justify-content: center;">
+            Print / Export Artist CV
+          </button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ========================================================================
+         FOOTER
+         ======================================================================== -->
+    <footer class="site-footer" role="contentinfo">
+      <div class="container">
+        <div class="footer-top">
+          <div class="footer-brand">
+            <div class="artist-monogram" style="margin-bottom: 1rem;">
+              <span class="monogram-mark">AD</span>
+              <span class="footer-artist-name">{{ artistName }}</span>
+            </div>
+            <p style="font-size: 0.95rem;">
+              Contemporary painter investigating pure chromodynamics on cool gesso. Paris & Berlin. Powered by Vue.js 3 & Three.js.
+            </p>
+          </div>
+
+          <div>
+            <h4 style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--text-muted); margin-bottom: 1rem; font-weight: 700;">Navigation</h4>
+            <ul style="list-style: none; display: flex; flex-direction: column; gap: 0.6rem; font-size: 0.9rem;">
+              <li><a href="#motion-frame" class="nav-link">Motion Frame Studio</a></li>
+              <li><a href="#works" class="nav-link">Selected Works</a></li>
+              <li><a href="#canvas-studio" class="nav-link">3D Canvas Studio</a></li>
+              <li><a href="#about" class="nav-link">About & Tenets</a></li>
+              <li><a href="#alchemy" class="nav-link">Pigment Alchemy</a></li>
+              <li><a href="#process" class="nav-link">Studio Process</a></li>
+              <li><a href="#exhibitions" class="nav-link">Exhibitions</a></li>
+              <li><a href="#press" class="nav-link">Press Quotes</a></li>
+              <li><a href="#commissions" class="nav-link">Commissions & Calculator</a></li>
+              <li><a href="#contact" class="nav-link">Atelier Contact</a></li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--text-muted); margin-bottom: 1rem; font-weight: 700;">Four Signature Pigments</h4>
+            <ul style="list-style: none; display: flex; flex-direction: column; gap: 0.6rem; font-size: 0.9rem;">
+              <li><span style="color: var(--ultramarine);">●</span> French Ultramarine (PB29)</li>
+              <li><span style="color: var(--cadmium-yellow-warm);">●</span> Cadmium Yellow Medium (PY35)</li>
+              <li><span style="color: var(--rose-madder);">●</span> Rose Madder Genuine (NR9)</li>
+              <li><span style="color: var(--viridian-green);">●</span> Viridian Hydrated Oxide (PG18)</li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--text-muted); margin-bottom: 1rem; font-weight: 700;">Social & External</h4>
+            <ul style="list-style: none; display: flex; flex-direction: column; gap: 0.6rem; font-size: 0.9rem;">
+              <li><a href="#" class="nav-link" target="_blank" rel="noopener">Instagram (@aureliadelacroix.studio)</a></li>
+              <li><a href="#" class="nav-link" target="_blank" rel="noopener">Artsy Artist Profile</a></li>
+              <li><a href="#" class="nav-link" target="_blank" rel="noopener">Substack: Letters from the Easel</a></li>
+              <li><a href="#" class="nav-link" target="_blank" rel="noopener">Galerie Vivienne Representation</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <div>
+            © 2026 {{ artistName }}. Built with Vue.js 3 & Three.js. Set in Instrument Serif & Hanken Grotesk.
+          </div>
+          <div style="display: flex; gap: 1.5rem; align-items: center;">
+            <a href="#hero" style="color: var(--ultramarine); font-weight: 600; display: inline-flex; align-items: center; gap: 0.35rem;">
+              Back to Top
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M18 15l-6-6-6 6"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- Scripts -->
+  <script src="paintings-data.js"></script>
+  <script src="vue-app.js"></script>
+</body>
+</html>
