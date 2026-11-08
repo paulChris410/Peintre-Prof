@@ -1005,26 +1005,26 @@ onUnmounted(() => {
     <!-- FLOATING NAVBAR + BILINGUAL SWITCHER + SCROLL PROGRESS BAR -->
     <header
       :class="[
-        'fixed top-0 inset-x-0 z-50 transition-all duration-500 backdrop-blur-xl bg-slate-950/85 border-b border-amber-500/20',
-        isScrolled ? 'py-3 shadow-2xl shadow-black/80' : 'py-5'
+        'fixed top-0 inset-x-0 z-50 transition-all duration-300 backdrop-blur-xl bg-slate-950/90 border-b border-amber-500/20',
+        isScrolled ? 'py-2.5 sm:py-3 shadow-2xl shadow-black/80' : 'py-3 sm:py-4 lg:py-5'
       ]"
     >
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-3">
+      <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 flex items-center justify-between gap-2 sm:gap-4">
         <a
           href="#accueil"
           @click.prevent="scrollToSection('accueil')"
-          class="group flex items-center gap-3 focus:outline-none shrink-0"
+          class="group flex items-center gap-2.5 sm:gap-3 focus:outline-none shrink-0"
         >
-          <div class="relative w-11 h-11 rounded-xl bg-gradient-to-br from-amber-400 via-amber-500 to-amber-700 p-[1px] shadow-lg shadow-amber-500/20 group-hover:shadow-amber-500/40 transition-all duration-300">
+          <div class="relative w-9 h-9 sm:w-11 sm:h-11 rounded-xl bg-gradient-to-br from-amber-400 via-amber-500 to-amber-700 p-[1px] shadow-lg shadow-amber-500/20 group-hover:shadow-amber-500/40 transition-all duration-300 shrink-0">
             <div class="w-full h-full bg-slate-950 rounded-[11px] flex items-center justify-center relative overflow-hidden">
-              <span class="text-amber-400 font-serif font-bold text-lg">N</span>
+              <span class="text-amber-400 font-serif font-bold text-base sm:text-lg">N</span>
             </div>
           </div>
-          <div>
-            <span class="block text-base sm:text-lg font-serif tracking-[0.18em] text-white font-semibold">
+          <div class="min-w-0">
+            <span class="block text-sm sm:text-lg font-serif tracking-[0.14em] sm:tracking-[0.18em] text-white font-semibold whitespace-nowrap">
               MAISON <span class="text-amber-400">NDAMEN</span>
             </span>
-            <span class="block text-[10px] uppercase tracking-[0.2em] text-amber-300/80">
+            <span class="hidden sm:block text-[10px] uppercase tracking-[0.2em] text-amber-300/80 truncate">
               {{ t.brandSubtitle }}
             </span>
           </div>
@@ -1047,35 +1047,33 @@ onUnmounted(() => {
           </a>
         </nav>
 
-        <div class="flex items-center gap-2.5">
+        <div class="flex items-center gap-2 sm:gap-2.5 shrink-0">
           <button
             @click="toggleLanguage"
             type="button"
-            data-interactive
-            class="inline-flex items-center gap-1.5 px-3 py-2 rounded-full bg-slate-900/90 border border-amber-500/35 hover:border-amber-400 text-xs font-bold tracking-wider uppercase text-amber-300 transition-all shadow-inner"
+            class="inline-flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-full bg-slate-900/90 border border-amber-500/35 hover:border-amber-400 text-[11px] sm:text-xs font-bold tracking-wider uppercase text-amber-300 transition-all shadow-inner shrink-0"
             :title="lang === 'fr' ? 'Switch to English' : 'Passer en Français'"
           >
-            <span class="text-sm">🇨🇲</span>
-            <span :class="lang === 'fr' ? 'text-white underline decoration-amber-400 underline-offset-4' : 'text-slate-400'">FR</span>
+            <span class="text-xs sm:text-sm">🇨🇲</span>
+            <span :class="lang === 'fr' ? 'text-white underline decoration-amber-400 underline-offset-2' : 'text-slate-400'">FR</span>
             <span class="text-slate-600">/</span>
-            <span :class="lang === 'en' ? 'text-white underline decoration-amber-400 underline-offset-4' : 'text-slate-400'">EN</span>
+            <span :class="lang === 'en' ? 'text-white underline decoration-amber-400 underline-offset-2' : 'text-slate-400'">EN</span>
           </button>
 
           <button
             @click="scrollToSection('consultation')"
-            class="relative group overflow-hidden rounded-full px-5 py-2.5 text-xs font-semibold uppercase tracking-wider text-slate-950 bg-gradient-to-r from-amber-300 via-amber-400 to-amber-500 shadow-[0_0_25px_rgba(245,158,11,0.4)] hover:shadow-[0_0_35px_rgba(245,158,11,0.75)] transition-all duration-300 transform hover:-translate-y-0.5 active:translate-y-0"
+            class="hidden sm:inline-flex relative group overflow-hidden rounded-full px-4 sm:px-5 py-2 sm:py-2.5 text-xs font-semibold uppercase tracking-wider text-slate-950 bg-gradient-to-r from-amber-300 via-amber-400 to-amber-500 shadow-[0_0_20px_rgba(245,158,11,0.35)] hover:shadow-[0_0_30px_rgba(245,158,11,0.6)] transition-all duration-300 shrink-0"
           >
-            <span class="relative z-10 flex items-center gap-2">
+            <span class="relative z-10 flex items-center gap-1.5 sm:gap-2">
               <Sparkles class="w-3.5 h-3.5" />
-              <span class="hidden sm:inline">{{ t.navCta }}</span>
-              <span class="sm:hidden">{{ t.navCtaShort }}</span>
+              <span>{{ t.navCta }}</span>
             </span>
           </button>
 
           <button
             @click="toggleMobileMenu"
             type="button"
-            class="xl:hidden w-10 h-10 rounded-xl bg-slate-900/90 border border-amber-500/30 flex items-center justify-center text-amber-400 hover:bg-amber-500 hover:text-slate-950 transition-colors"
+            class="xl:hidden w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-slate-900/90 border border-amber-500/30 flex items-center justify-center text-amber-400 hover:bg-amber-500 hover:text-slate-950 transition-colors shrink-0"
             aria-label="Menu"
           >
             <Menu v-if="!mobileMenuOpen" class="w-5 h-5" />
@@ -1096,19 +1094,23 @@ onUnmounted(() => {
     <Transition name="fade-slide">
       <div
         v-if="mobileMenuOpen"
-        class="fixed inset-0 z-40 xl:hidden bg-slate-950/95 backdrop-blur-2xl pt-24 px-6 pb-10 flex flex-col justify-between overflow-y-auto"
+        class="fixed inset-0 z-40 xl:hidden bg-slate-950/98 backdrop-blur-2xl pt-20 sm:pt-24 px-4 sm:px-8 pb-8 flex flex-col justify-between overflow-y-auto"
       >
-        <div class="space-y-2">
-          <p class="text-xs uppercase tracking-[0.25em] text-amber-400 font-semibold mb-4">
-            {{ t.mobileNavTitle }}
-          </p>
+        <div class="space-y-2 max-w-lg mx-auto w-full pt-4">
+          <div class="flex items-center justify-between pb-3 border-b border-white/10 mb-4">
+            <p class="text-xs uppercase tracking-[0.25em] text-amber-400 font-semibold">
+              {{ t.mobileNavTitle }}
+            </p>
+            <span class="text-xs text-slate-400 font-mono">MAISON NDAMEN</span>
+          </div>
+
           <a
             v-for="link in navLinks"
             :key="link.id"
             :href="link.href"
             @click.prevent="scrollToSection(link.id)"
             :class="[
-              'flex items-center justify-between py-3.5 px-4 rounded-2xl text-lg font-serif font-semibold border transition-all',
+              'flex items-center justify-between py-3 px-4 rounded-2xl text-base sm:text-lg font-serif font-semibold border transition-all',
               activeSection === link.id
                 ? 'bg-amber-500/15 border-amber-400/50 text-amber-300'
                 : 'border-white/5 text-slate-200 hover:border-amber-500/30'
@@ -1117,16 +1119,24 @@ onUnmounted(() => {
             <span>{{ link.label }}</span>
             <ArrowRight class="w-4 h-4 text-amber-400" />
           </a>
+
+          <button
+            @click="scrollToSection('consultation')"
+            class="w-full mt-3 py-3.5 rounded-xl bg-gradient-to-r from-amber-300 via-amber-400 to-amber-500 text-slate-950 font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg"
+          >
+            <Calendar class="w-4 h-4" />
+            <span>{{ t.heroPrimaryCta }}</span>
+          </button>
         </div>
 
-        <div class="pt-6 border-t border-amber-500/20 space-y-4">
-          <div class="flex items-center justify-between p-4 rounded-2xl bg-slate-900/90 border border-amber-500/30">
+        <div class="pt-6 border-t border-amber-500/20 space-y-3 max-w-lg mx-auto w-full">
+          <div class="flex items-center justify-between p-3.5 rounded-2xl bg-slate-900/90 border border-amber-500/30">
             <span class="text-xs uppercase tracking-wider text-slate-300">{{ lang === 'fr' ? 'Langue (Cameroun)' : 'Language (Cameroon)' }}</span>
             <button
               @click="toggleLanguage"
-              class="px-4 py-1.5 rounded-full bg-amber-500 text-slate-950 text-xs font-bold uppercase"
+              class="px-3.5 py-1.5 rounded-full bg-amber-500 text-slate-950 text-xs font-bold uppercase"
             >
-              {{ lang === 'fr' ? 'Switch to English (EN)' : 'Passer en Français (FR)' }}
+              {{ lang === 'fr' ? 'English (EN)' : 'Français (FR)' }}
             </button>
           </div>
           <a
@@ -1143,16 +1153,16 @@ onUnmounted(() => {
     </Transition>
 
     <!-- 1. HERO SECTION -->
-    <section id="accueil" class="relative pt-32 pb-20 md:pt-40 md:pb-28 overflow-hidden z-10 scene-3d">
+    <section id="accueil" class="relative pt-28 pb-16 sm:pt-36 sm:pb-24 lg:pt-40 lg:pb-28 overflow-hidden z-10 scene-3d">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-10 items-center">
-          <div class="lg:col-span-7 space-y-7">
-            <div class="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs uppercase tracking-[0.2em] font-medium">
-              <span class="w-2 h-2 rounded-full bg-amber-400 animate-ping"></span>
-              <span>{{ t.heroBadge }}</span>
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-10 items-center">
+          <div class="lg:col-span-7 space-y-6 sm:space-y-7">
+            <div class="inline-flex max-w-full flex-wrap sm:flex-nowrap items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-300 text-[11px] sm:text-xs uppercase tracking-[0.08em] sm:tracking-[0.18em] font-medium">
+              <span class="w-2 h-2 rounded-full bg-amber-400 animate-ping shrink-0"></span>
+              <span class="truncate">{{ t.heroBadge }}</span>
             </div>
 
-            <h1 class="text-4xl sm:text-6xl lg:text-[4.15rem] font-serif font-bold tracking-tight text-white leading-[1.07]">
+            <h1 class="text-3xl sm:text-5xl md:text-6xl lg:text-[4.15rem] font-serif font-bold tracking-tight text-white leading-[1.12] sm:leading-[1.07] break-words">
               {{ t.heroTitleLine1 }}
               <span class="block mt-1 bg-gradient-to-r from-amber-200 via-amber-400 to-amber-500 bg-clip-text text-transparent">
                 {{ t.heroTitleHighlight }}
@@ -1160,13 +1170,13 @@ onUnmounted(() => {
               {{ t.heroTitleLine3 }}
             </h1>
 
-            <p class="text-base sm:text-lg text-slate-300 leading-relaxed max-w-2xl font-normal">
+            <p class="text-sm sm:text-base md:text-lg text-slate-300 leading-relaxed max-w-2xl font-normal">
               {{ t.heroDescription }}
             </p>
 
-            <div class="p-4 rounded-2xl bg-slate-900/85 border border-amber-500/30 flex flex-col sm:flex-row sm:items-center gap-3.5 max-w-2xl shadow-lg">
-              <div class="w-11 h-11 rounded-xl bg-amber-500/15 border border-amber-400/40 flex items-center justify-center text-amber-400 shrink-0">
-                <ShieldCheck class="w-6 h-6" />
+            <div class="p-3.5 sm:p-4 rounded-2xl bg-slate-900/85 border border-amber-500/30 flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-3.5 max-w-2xl shadow-lg">
+              <div class="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-amber-500/15 border border-amber-400/40 flex items-center justify-center text-amber-400 shrink-0">
+                <ShieldCheck class="w-5 h-5 sm:w-6 sm:h-6" />
               </div>
               <div>
                 <p class="text-xs font-bold uppercase tracking-wider text-amber-300">
@@ -1178,10 +1188,10 @@ onUnmounted(() => {
               </div>
             </div>
 
-            <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-1">
+            <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 pt-1">
               <button
                 @click="scrollToSection('consultation')"
-                class="group inline-flex items-center justify-center gap-3 px-8 py-4 rounded-full text-sm font-bold uppercase tracking-wider text-slate-950 bg-gradient-to-r from-amber-300 via-amber-400 to-amber-500 shadow-[0_0_30px_rgba(245,158,11,0.35)] hover:shadow-[0_0_45px_rgba(245,158,11,0.65)] transition-all duration-300 transform hover:-translate-y-0.5"
+                class="group inline-flex items-center justify-center gap-3 px-6 sm:px-8 py-3.5 sm:py-4 rounded-full text-xs sm:text-sm font-bold uppercase tracking-wider text-slate-950 bg-gradient-to-r from-amber-300 via-amber-400 to-amber-500 shadow-[0_0_30px_rgba(245,158,11,0.35)] hover:shadow-[0_0_45px_rgba(245,158,11,0.65)] transition-all duration-300 transform hover:-translate-y-0.5"
               >
                 <Calendar class="w-4 h-4" />
                 <span>{{ t.heroPrimaryCta }}</span>
@@ -1190,36 +1200,36 @@ onUnmounted(() => {
 
               <button
                 @click="scrollToSection('apropos')"
-                class="inline-flex items-center justify-center gap-3 px-7 py-4 rounded-full text-sm font-semibold uppercase tracking-wider text-white bg-slate-900/90 hover:bg-slate-800 border border-amber-500/30 hover:border-amber-400 transition-all duration-300"
+                class="inline-flex items-center justify-center gap-3 px-5 sm:px-7 py-3.5 sm:py-4 rounded-full text-xs sm:text-sm font-semibold uppercase tracking-wider text-white bg-slate-900/90 hover:bg-slate-800 border border-amber-500/30 hover:border-amber-400 transition-all duration-300"
               >
                 <User class="w-4 h-4 text-amber-400" />
                 <span>{{ t.heroSecondaryCta }}</span>
               </button>
             </div>
 
-            <div class="pt-6 border-t border-white/10 grid grid-cols-3 gap-6 max-w-xl">
+            <div class="pt-5 sm:pt-6 border-t border-white/10 grid grid-cols-3 gap-3 sm:gap-6 max-w-xl">
               <div>
-                <p class="text-2xl sm:text-3xl font-serif font-bold text-amber-400">15+ {{ lang === 'fr' ? 'Ans' : 'Yrs' }}</p>
-                <p class="text-xs text-slate-300 uppercase tracking-wider mt-1">{{ t.stat1Label }}</p>
+                <p class="text-xl sm:text-3xl font-serif font-bold text-amber-400">15+ {{ lang === 'fr' ? 'Ans' : 'Yrs' }}</p>
+                <p class="text-[10px] sm:text-xs text-slate-300 uppercase tracking-wider mt-1 leading-snug">{{ t.stat1Label }}</p>
               </div>
               <div>
-                <p class="text-2xl sm:text-3xl font-serif font-bold text-white">180+</p>
-                <p class="text-xs text-slate-300 uppercase tracking-wider mt-1">{{ t.stat2Label }}</p>
+                <p class="text-xl sm:text-3xl font-serif font-bold text-white">180+</p>
+                <p class="text-[10px] sm:text-xs text-slate-300 uppercase tracking-wider mt-1 leading-snug">{{ t.stat2Label }}</p>
               </div>
               <div>
-                <p class="text-2xl sm:text-3xl font-serif font-bold text-amber-400">100%</p>
-                <p class="text-xs text-slate-300 uppercase tracking-wider mt-1">{{ t.stat3Label }}</p>
+                <p class="text-xl sm:text-3xl font-serif font-bold text-amber-400">100%</p>
+                <p class="text-[10px] sm:text-xs text-slate-300 uppercase tracking-wider mt-1 leading-snug">{{ t.stat3Label }}</p>
               </div>
             </div>
           </div>
 
           <!-- Right Column: 3D Showcase -->
           <div
-            class="lg:col-span-5 relative scene-3d"
+            class="lg:col-span-5 relative scene-3d max-w-md sm:max-w-lg lg:max-w-none mx-auto w-full"
             @mousemove="handleCardMouseMove($event, 'hero3d')"
             @mouseleave="handleCardMouseLeave('hero3d')"
           >
-            <div class="pointer-events-none absolute -inset-6 rounded-full border border-amber-400/20 orbit-ring-3d"></div>
+            <div class="pointer-events-none hidden sm:block absolute -inset-6 rounded-full border border-amber-400/20 orbit-ring-3d"></div>
 
             <div
               class="relative rounded-3xl p-2 bg-gradient-to-b from-amber-500/40 via-amber-500/10 to-transparent border border-amber-500/30 shadow-2xl shadow-black card-3d transition-transform duration-200 ease-out"
@@ -1238,52 +1248,55 @@ onUnmounted(() => {
                 />
                 <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/25 to-transparent"></div>
 
-                <div class="absolute bottom-5 left-5 right-5 p-4 rounded-2xl backdrop-blur-xl bg-slate-950/85 border border-amber-500/30 depth-z-35">
-                  <div class="flex items-center justify-between text-xs text-amber-400 uppercase tracking-widest mb-1">
+                <div class="absolute bottom-4 left-4 right-4 sm:bottom-5 sm:left-5 sm:right-5 p-3.5 sm:p-4 rounded-2xl backdrop-blur-xl bg-slate-950/85 border border-amber-500/30 depth-z-35">
+                  <div class="flex items-center justify-between text-[11px] sm:text-xs text-amber-400 uppercase tracking-widest mb-1">
                     <span>{{ t.heroCardTag }}</span>
                     <span>Douala • Bonapriso</span>
                   </div>
-                  <p class="text-sm font-serif text-white font-medium">
+                  <p class="text-xs sm:text-sm font-serif text-white font-medium">
                     {{ t.heroCardCaption }}
                   </p>
                 </div>
               </div>
 
-              <div class="floating-3d-slow absolute -top-5 -left-4 sm:-left-7 z-30 px-4 py-3 rounded-2xl backdrop-blur-xl bg-slate-950/95 border border-amber-400/40 shadow-xl flex items-center gap-3">
-                <div class="w-10 h-10 rounded-xl bg-amber-500/20 border border-amber-400/40 flex items-center justify-center text-amber-300 font-bold">
-                  🇨🇲
+              <div class="floating-3d-slow absolute top-3 left-3 sm:-top-5 sm:-left-6 z-30 px-3 sm:px-4 py-2 sm:py-3 rounded-2xl backdrop-blur-xl bg-slate-950/95 border border-amber-400/40 shadow-xl flex items-center gap-2.5 sm:gap-3">
+                <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-amber-500/20 border border-amber-400/40 flex items-center justify-center text-amber-300 font-bold">
+                  <span class="text-base sm:xl">🇨🇲</span>
                 </div>
                 <div>
-                  <p class="text-xs font-bold uppercase tracking-wider text-white">{{ t.heroFloat1Title }}</p>
-                  <p class="text-[11px] text-amber-300">{{ t.heroFloat1Sub }}</p>
+                  <p class="text-[11px] sm:text-xs font-bold uppercase tracking-wider text-white">{{ t.heroFloat1Title }}</p>
+                  <p class="text-[10px] sm:text-[11px] text-amber-300">{{ t.heroFloat1Sub }}</p>
                 </div>
               </div>
 
-              <div class="floating-3d-delayed absolute top-1/3 -right-4 sm:-right-6 z-30 px-4 py-3 rounded-2xl backdrop-blur-xl bg-slate-950/95 border border-amber-400/40 shadow-xl flex items-center gap-3">
-                <div class="w-10 h-10 rounded-xl bg-amber-500/20 border border-amber-400/40 flex items-center justify-center text-amber-300">
-                  <Crown class="w-5 h-5" />
+              <div class="floating-3d-delayed absolute bottom-24 right-3 sm:top-1/3 sm:-right-6 sm:bottom-auto z-30 px-3 sm:px-4 py-2 sm:py-3 rounded-2xl backdrop-blur-xl bg-slate-950/95 border border-amber-400/40 shadow-xl flex items-center gap-2.5 sm:gap-3">
+                <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-amber-500/20 border border-amber-400/40 flex items-center justify-center text-amber-300">
+                  <Crown class="w-4 h-4 sm:w-5 sm:h-5" />
                 </div>
                 <div>
-                  <p class="text-xs font-bold uppercase tracking-wider text-white">{{ t.heroFloat2Title }}</p>
-                  <p class="text-[11px] text-amber-300">{{ t.heroFloat2Sub }}</p>
+                  <p class="text-[11px] sm:text-xs font-bold uppercase tracking-wider text-white">{{ t.heroFloat2Title }}</p>
+                  <p class="text-[10px] sm:text-[11px] text-amber-300">{{ t.heroFloat2Sub }}</p>
                 </div>
               </div>
             </div>
           </div>
         </div>
 
-        <div class="mt-16 pt-8 border-t border-amber-500/15">
-          <p class="text-center text-xs uppercase tracking-[0.25em] text-slate-400 mb-6">
+        <div class="mt-12 sm:mt-16 pt-6 sm:pt-8 border-t border-amber-500/15">
+          <p class="text-center text-xs uppercase tracking-[0.25em] text-slate-400 mb-5 sm:mb-6">
             {{ t.locationsHeading }}
           </p>
-          <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3.5">
+          <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2.5 sm:gap-3.5">
             <div
-              v-for="loc in cameroonZones"
+              v-for="(loc, lIdx) in cameroonZones"
               :key="loc.name"
-              class="px-4 py-3 rounded-2xl bg-slate-900/60 border border-amber-500/15 hover:border-amber-500/40 transition-all text-center"
+              :class="[
+                'px-3 sm:px-4 py-2.5 sm:py-3 rounded-2xl bg-slate-900/60 border border-amber-500/15 hover:border-amber-500/40 transition-all text-center',
+                lIdx === 4 ? 'col-span-2 sm:col-span-1' : ''
+              ]"
             >
-              <p class="text-sm font-serif font-bold tracking-[0.15em] text-amber-300">{{ loc.name }}</p>
-              <p class="text-[11px] text-slate-400 mt-0.5">{{ loc.desc }}</p>
+              <p class="text-xs sm:text-sm font-serif font-bold tracking-[0.12em] sm:tracking-[0.15em] text-amber-300">{{ loc.name }}</p>
+              <p class="text-[10px] sm:text-[11px] text-slate-400 mt-0.5">{{ loc.desc }}</p>
             </div>
           </div>
         </div>
