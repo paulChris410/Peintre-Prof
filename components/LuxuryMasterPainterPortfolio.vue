@@ -1073,10 +1073,20 @@ onUnmounted(() => {
             <span :class="lang === 'en' ? 'text-white underline decoration-amber-400 underline-offset-2' : 'text-slate-400'">EN</span>
           </button>
 
-          <!-- Header CTA Button (100% visible on laptops, tablets and computers) -->
+          <!-- Mobile Quick 1-Tap CTA Icon (Visible on phones < sm, so mobile users have immediate access without header cramp) -->
           <button
             @click="scrollToSection('consultation')"
-            class="inline-flex relative group overflow-hidden rounded-full px-3.5 sm:px-4 xl:px-5 py-2 sm:py-2.5 text-[11px] sm:text-xs font-semibold uppercase tracking-wider text-slate-950 bg-gradient-to-r from-amber-300 via-amber-400 to-amber-500 shadow-[0_0_20px_rgba(245,158,11,0.35)] hover:shadow-[0_0_30px_rgba(245,158,11,0.6)] transition-all duration-300 shrink-0 whitespace-nowrap"
+            class="sm:hidden w-8 h-8 rounded-xl bg-gradient-to-r from-amber-300 via-amber-400 to-amber-500 text-slate-950 flex items-center justify-center shadow-md shadow-amber-500/30 shrink-0"
+            :title="t.navCta"
+            aria-label="Rendez-Vous Privé"
+          >
+            <Sparkles class="w-4 h-4 text-slate-950" />
+          </button>
+
+          <!-- Header CTA Button (100% visible on laptops, tablets and computers >= sm) -->
+          <button
+            @click="scrollToSection('consultation')"
+            class="hidden sm:inline-flex relative group overflow-hidden rounded-full px-3.5 sm:px-4 xl:px-5 py-2 sm:py-2.5 text-[11px] sm:text-xs font-semibold uppercase tracking-wider text-slate-950 bg-gradient-to-r from-amber-300 via-amber-400 to-amber-500 shadow-[0_0_20px_rgba(245,158,11,0.35)] hover:shadow-[0_0_30px_rgba(245,158,11,0.6)] transition-all duration-300 shrink-0 whitespace-nowrap"
           >
             <span class="relative z-10 flex items-center gap-1.5 sm:gap-2">
               <Sparkles class="w-3.5 h-3.5 shrink-0" />
@@ -1300,17 +1310,17 @@ onUnmounted(() => {
           <p class="text-center text-xs uppercase tracking-[0.25em] text-slate-400 mb-5 sm:mb-6">
             {{ t.locationsHeading }}
           </p>
-          <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2.5 sm:gap-3.5">
+          <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 sm:gap-3.5">
             <div
               v-for="(loc, lIdx) in cameroonZones"
               :key="loc.name"
               :class="[
-                'px-3 sm:px-4 py-2.5 sm:py-3 rounded-2xl bg-slate-900/60 border border-amber-500/15 hover:border-amber-500/40 transition-all text-center',
+                'px-2.5 sm:px-4 py-2 sm:py-3 rounded-2xl bg-slate-900/60 border border-amber-500/15 hover:border-amber-500/40 transition-all text-center',
                 lIdx === 4 ? 'col-span-2 sm:col-span-1' : ''
               ]"
             >
-              <p class="text-xs sm:text-sm font-serif font-bold tracking-[0.12em] sm:tracking-[0.15em] text-amber-300">{{ loc.name }}</p>
-              <p class="text-[10px] sm:text-[11px] text-slate-400 mt-0.5">{{ loc.desc }}</p>
+              <p class="text-xs sm:text-sm font-serif font-bold tracking-normal sm:tracking-[0.15em] text-amber-300 break-words">{{ loc.name }}</p>
+              <p class="text-[10px] sm:text-[11px] text-slate-400 mt-0.5 leading-tight">{{ loc.desc }}</p>
             </div>
           </div>
         </div>
@@ -1347,13 +1357,13 @@ onUnmounted(() => {
                   {{ t.aboutPortraitBadge }}
                 </div>
 
-                <div class="absolute bottom-5 left-5 right-5 p-5 rounded-2xl bg-slate-950/90 backdrop-blur-xl border border-amber-500/30 depth-z-35">
-                  <div class="flex items-center justify-between">
+                <div class="absolute bottom-3 left-3 right-3 sm:bottom-5 sm:left-5 sm:right-5 p-3.5 sm:p-5 rounded-2xl bg-slate-950/90 backdrop-blur-xl border border-amber-500/30 depth-z-35">
+                  <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                     <div>
-                      <h3 class="text-xl font-serif font-bold text-white">Jean-Paul Ndamen</h3>
+                      <h3 class="text-lg sm:text-xl font-serif font-bold text-white">Jean-Paul Ndamen</h3>
                       <p class="text-xs text-amber-400 uppercase tracking-widest mt-0.5">{{ t.aboutRole }}</p>
                     </div>
-                    <svg class="w-24 h-10 text-amber-400 opacity-90" viewBox="0 0 160 50" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                    <svg class="w-16 sm:w-24 h-7 sm:h-10 text-amber-400 opacity-90 self-end sm:self-auto" viewBox="0 0 160 50" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
                       <path d="M10 35 C20 10, 30 15, 25 38 C35 20, 50 18, 55 35 C65 15, 75 14, 85 35 C95 25, 115 18, 145 28" />
                       <path d="M40 42 L130 38" stroke-width="1.2" stroke-dasharray="3 3" />
                     </svg>
@@ -1654,7 +1664,7 @@ onUnmounted(() => {
               <div class="relative my-auto flex items-center justify-center py-6">
                 <!-- Outer Ring Halo -->
                 <div
-                  class="relative w-72 h-72 sm:w-96 sm:h-96 rounded-full border-2 transition-all duration-700 flex items-center justify-center shadow-2xl"
+                  class="relative w-52 h-52 sm:w-80 sm:h-80 rounded-full border-2 transition-all duration-700 flex items-center justify-center shadow-2xl"
                   :style="{
                     borderColor: activeFinishObj.color,
                     boxShadow: `0 0 50px ${activeFinishObj.color}25`
@@ -1662,16 +1672,16 @@ onUnmounted(() => {
                 >
                   <!-- Concentric Molding Rings -->
                   <div
-                    class="absolute inset-4 rounded-full border transition-all duration-700 opacity-60"
+                    class="absolute inset-3 sm:inset-4 rounded-full border transition-all duration-700 opacity-60"
                     :style="{ borderColor: activeFinishObj.color }"
                   ></div>
                   <div
-                    class="absolute inset-10 rounded-full border-2 border-dashed transition-all duration-700 opacity-40"
+                    class="absolute inset-7 sm:inset-10 rounded-full border-2 border-dashed transition-all duration-700 opacity-40"
                     :style="{ borderColor: activeFinishObj.color }"
                   ></div>
 
                   <!-- 16 Acanthus Petals Radial Ring -->
-                  <div class="absolute inset-16 flex items-center justify-center transition-all duration-700">
+                  <div class="absolute inset-10 sm:inset-16 flex items-center justify-center transition-all duration-700">
                     <svg viewBox="0 0 200 200" class="w-full h-full transform transition-transform duration-700" :class="{ 'scale-110': isExploded }">
                       <circle cx="100" cy="100" r="90" fill="none" :stroke="activeFinishObj.color" stroke-width="1.5" stroke-dasharray="4 4" opacity="0.4" />
                       <!-- Radial Petals -->
@@ -1697,14 +1707,14 @@ onUnmounted(() => {
                   </div>
 
                   <!-- Exploded Dimension Callouts when isExploded is true -->
-                  <div v-if="isExploded" class="absolute inset-0 pointer-events-none flex flex-col justify-between p-2 text-[10px] text-amber-300 font-mono tracking-widest uppercase">
-                    <div class="flex justify-between items-center">
-                      <span class="bg-slate-950/90 px-2 py-1 rounded border border-amber-400/30">01. Cœur d'Acanthe Sculpté</span>
-                      <span class="bg-slate-950/90 px-2 py-1 rounded border border-amber-400/30">Ø 900 mm</span>
+                  <div v-if="isExploded" class="absolute inset-0 pointer-events-none flex flex-col justify-between p-1.5 sm:p-2 text-[8px] sm:text-[10px] text-amber-300 font-mono tracking-normal sm:tracking-widest uppercase">
+                    <div class="flex justify-between items-center gap-1">
+                      <span class="bg-slate-950/90 px-1.5 sm:px-2 py-0.5 sm:py-1 rounded border border-amber-400/30 truncate max-w-[120px] sm:max-w-none">01. Cœur d'Acanthe</span>
+                      <span class="bg-slate-950/90 px-1.5 sm:px-2 py-0.5 sm:py-1 rounded border border-amber-400/30 shrink-0">Ø 900mm</span>
                     </div>
-                    <div class="flex justify-between items-center">
-                      <span class="bg-slate-950/90 px-2 py-1 rounded border border-amber-400/30">02. Tore de Perles Fines</span>
-                      <span class="bg-slate-950/90 px-2 py-1 rounded border border-amber-400/30">Plâtre Armé Filasse</span>
+                    <div class="flex justify-between items-center gap-1">
+                      <span class="bg-slate-950/90 px-1.5 sm:px-2 py-0.5 sm:py-1 rounded border border-amber-400/30 truncate max-w-[120px] sm:max-w-none">02. Tore Perles</span>
+                      <span class="bg-slate-950/90 px-1.5 sm:px-2 py-0.5 sm:py-1 rounded border border-amber-400/30 shrink-0">Plâtre Armé</span>
                     </div>
                   </div>
                 </div>
@@ -1814,16 +1824,16 @@ onUnmounted(() => {
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
           <div class="lg:col-span-7">
             <div
-              class="relative rounded-3xl overflow-hidden border border-amber-500/30 shadow-2xl transition-colors duration-700 p-6 sm:p-10 min-h-[380px] flex flex-col justify-between"
+              class="relative rounded-3xl overflow-hidden border border-amber-500/30 shadow-2xl transition-colors duration-700 p-4 sm:p-10 min-h-[340px] sm:min-h-[380px] flex flex-col justify-between"
               :style="{ backgroundColor: selectedSwatch.hex }"
             >
-              <div class="h-5 w-full rounded-full shadow-md transition-colors duration-500 border-b border-black/15" :style="{ backgroundColor: selectedSwatch.moldingHex }"></div>
-              <div class="my-6 mx-auto w-full max-w-lg rounded-2xl border-4 p-6 backdrop-blur-md bg-slate-950/75 shadow-2xl transition-colors duration-500" :style="{ borderColor: selectedSwatch.moldingHex }">
-                <div class="flex items-center justify-between text-xs uppercase tracking-widest text-amber-300 mb-2">
+              <div class="h-4 sm:h-5 w-full rounded-full shadow-md transition-colors duration-500 border-b border-black/15" :style="{ backgroundColor: selectedSwatch.moldingHex }"></div>
+              <div class="my-4 sm:my-6 mx-auto w-full max-w-lg rounded-2xl border-2 sm:border-4 p-4 sm:p-6 backdrop-blur-md bg-slate-950/75 shadow-2xl transition-colors duration-500" :style="{ borderColor: selectedSwatch.moldingHex }">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between text-[10px] sm:text-xs uppercase tracking-widest text-amber-300 gap-1 mb-2">
                   <span>{{ selectedSwatch.brand }}</span>
                   <span>{{ selectedSwatch.climate }}</span>
                 </div>
-                <h3 class="text-2xl font-serif font-bold text-white">{{ selectedSwatch.name }}</h3>
+                <h3 class="text-xl sm:text-2xl font-serif font-bold text-white">{{ selectedSwatch.name }}</h3>
                 <p class="text-xs text-slate-300 mt-2 leading-relaxed">{{ selectedSwatch.undertone }}</p>
               </div>
               <div class="h-7 w-full rounded-xl shadow-inner transition-colors duration-500 flex items-center justify-between px-4" :style="{ backgroundColor: selectedSwatch.moldingHex }">
@@ -1934,33 +1944,33 @@ onUnmounted(() => {
       <Transition name="lightbox">
         <div
           v-if="selectedProject"
-          class="fixed inset-0 z-[80] flex items-center justify-center p-4 sm:p-6 bg-slate-950/90 backdrop-blur-2xl"
+          class="fixed inset-0 z-[80] flex items-center justify-center p-2.5 sm:p-6 bg-slate-950/90 backdrop-blur-2xl"
           @click.self="closeLightbox"
           @touchstart.passive="handleLightboxTouchStart"
           @touchend.passive="handleLightboxTouchEnd"
         >
-          <div class="relative w-full max-w-5xl rounded-3xl bg-slate-900 border border-amber-500/40 shadow-2xl overflow-hidden grid grid-cols-1 lg:grid-cols-12 max-h-[90vh]">
-            <button @click="closeLightbox" class="absolute top-4 right-4 z-30 w-10 h-10 rounded-full bg-slate-950/90 border border-amber-500/40 flex items-center justify-center text-amber-400 hover:bg-amber-500 hover:text-slate-950 transition-all">
-              <X class="w-5 h-5" />
+          <div class="relative w-full max-w-5xl rounded-3xl bg-slate-900 border border-amber-500/40 shadow-2xl overflow-hidden grid grid-cols-1 lg:grid-cols-12 max-h-[92vh]">
+            <button @click="closeLightbox" class="absolute top-3 right-3 sm:top-4 sm:right-4 z-30 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-slate-950/90 border border-amber-500/40 flex items-center justify-center text-amber-400 hover:bg-amber-500 hover:text-slate-950 transition-all">
+              <X class="w-4 h-4 sm:w-5 sm:h-5" />
             </button>
-            <div class="lg:col-span-7 relative bg-black flex items-center justify-center overflow-hidden min-h-[280px] sm:min-h-[420px]">
+            <div class="lg:col-span-7 relative bg-black flex items-center justify-center overflow-hidden min-h-[220px] sm:min-h-[420px]">
               <img :src="selectedProject.image" :alt="selectedProject.title" :class="['w-full h-full object-cover transition-transform duration-500 cursor-zoom-in', isLightboxZoomed ? 'scale-125 cursor-zoom-out' : 'scale-100']" @click="isLightboxZoomed = !isLightboxZoomed" />
-              <div class="absolute bottom-4 left-4 right-4 flex items-center justify-between">
-                <div class="flex items-center gap-2">
-                  <button @click.stop="navigateLightbox(-1)" class="w-9 h-9 rounded-full bg-slate-950/85 border border-amber-500/40 flex items-center justify-center text-amber-300 hover:bg-amber-500 hover:text-slate-950">
+              <div class="absolute bottom-3 left-3 right-3 sm:bottom-4 sm:left-4 sm:right-4 flex items-center justify-between">
+                <div class="flex items-center gap-1.5 sm:gap-2">
+                  <button @click.stop="navigateLightbox(-1)" class="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-slate-950/85 border border-amber-500/40 flex items-center justify-center text-amber-300 hover:bg-amber-500 hover:text-slate-950">
                     <ChevronLeft class="w-4 h-4" />
                   </button>
-                  <button @click.stop="navigateLightbox(1)" class="w-9 h-9 rounded-full bg-slate-950/85 border border-amber-500/40 flex items-center justify-center text-amber-300 hover:bg-amber-500 hover:text-slate-950">
+                  <button @click.stop="navigateLightbox(1)" class="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-slate-950/85 border border-amber-500/40 flex items-center justify-center text-amber-300 hover:bg-amber-500 hover:text-slate-950">
                     <ChevronRight class="w-4 h-4" />
                   </button>
                 </div>
               </div>
             </div>
-            <div class="lg:col-span-5 p-6 sm:p-8 flex flex-col justify-between overflow-y-auto space-y-6">
-              <div class="space-y-4">
+            <div class="lg:col-span-5 p-4 sm:p-8 flex flex-col justify-between overflow-y-auto space-y-4 sm:space-y-6">
+              <div class="space-y-3 sm:space-y-4">
                 <span class="inline-block px-3 py-1 rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-300 text-xs font-bold uppercase tracking-widest">{{ selectedProject.categoryLabel }}</span>
-                <h3 class="text-2xl font-serif font-bold text-white">{{ selectedProject.title }}</h3>
-                <p class="text-sm text-slate-300 leading-relaxed">{{ selectedProject.description }}</p>
+                <h3 class="text-xl sm:text-2xl font-serif font-bold text-white">{{ selectedProject.title }}</h3>
+                <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">{{ selectedProject.description }}</p>
               </div>
               <button
                 @click="selectServiceForConsultation(selectedProject.category); closeLightbox()"
@@ -2110,19 +2120,19 @@ onUnmounted(() => {
               class="luxury-shimmer-card p-[1.5px] rounded-3xl shadow-[0_25px_70px_rgba(0,0,0,0.85)] card-3d transition-transform duration-200 ease-out"
               :style="get3DCardStyle('consult3d')"
             >
-              <div class="p-7 sm:p-9 rounded-[23px] bg-slate-900/95 backdrop-blur-xl space-y-6 relative overflow-hidden">
+              <div class="p-4 sm:p-9 rounded-[23px] bg-slate-900/95 backdrop-blur-xl space-y-5 sm:space-y-6 relative overflow-hidden">
                 <div
                   class="pointer-events-none absolute inset-0 z-20 transition-opacity duration-300"
                   :style="get3DGlareStyle('consult3d')"
                 ></div>
 
-                <div class="relative z-10 space-y-6">
-                  <div class="flex flex-wrap items-center justify-between gap-2 pb-4 border-b border-amber-500/20">
+                <div class="relative z-10 space-y-5 sm:space-y-6">
+                  <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 pb-4 border-b border-amber-500/20">
                     <div>
                       <span class="text-xs uppercase tracking-widest text-amber-400 font-bold block">{{ t.formBadge }}</span>
-                      <h3 class="text-2xl font-serif font-bold text-white mt-0.5">{{ t.formTitle }}</h3>
+                      <h3 class="text-xl sm:text-2xl font-serif font-bold text-white mt-0.5">{{ t.formTitle }}</h3>
                     </div>
-                    <span class="px-3 py-1 rounded-full bg-emerald-500/15 border border-emerald-400/40 text-emerald-300 text-xs font-semibold">
+                    <span class="self-start sm:self-auto px-2.5 sm:px-3 py-1 rounded-full bg-emerald-500/15 border border-emerald-400/40 text-emerald-300 text-[11px] sm:text-xs font-semibold leading-tight">
                       ● {{ t.formAvailability }}
                     </span>
                   </div>
@@ -2297,11 +2307,11 @@ onUnmounted(() => {
 
           <div class="lg:col-span-7">
             <Transition name="fade-slide" mode="out-in">
-              <div :key="currentTestimonial.id" class="p-8 sm:p-10 rounded-3xl bg-slate-900/90 border border-amber-500/30 shadow-2xl space-y-6">
+              <div :key="currentTestimonial.id" class="p-5 sm:p-10 rounded-3xl bg-slate-900/90 border border-amber-500/30 shadow-2xl space-y-5 sm:space-y-6">
                 <div class="flex items-center gap-1 text-amber-400">
                   <Star v-for="n in 5" :key="n" class="w-4 h-4 fill-amber-400" />
                 </div>
-                <p class="text-lg sm:text-xl font-serif text-white leading-relaxed italic">
+                <p class="text-base sm:text-xl font-serif text-white leading-relaxed italic">
                   « {{ currentTestimonial.quote }} »
                 </p>
                 <div class="pt-4 border-t border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
