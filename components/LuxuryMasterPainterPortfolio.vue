@@ -370,6 +370,18 @@ const navLinks = computed(() => [
   { id: 'contact', label: lang.value === 'fr' ? 'Contact' : 'Contact', href: '#contact' }
 ])
 
+// Streamlined desktop navigation (guarantees spacious fit and full CTA visibility on laptops from 1024px to 1920px)
+const desktopNavLinks = computed(() => [
+  { id: 'accueil', label: lang.value === 'fr' ? 'Accueil' : 'Home', href: '#accueil' },
+  { id: 'apropos', label: lang.value === 'fr' ? 'L’Artisan' : 'About', href: '#apropos' },
+  { id: 'avant-apres', label: lang.value === 'fr' ? 'Avant/Après' : 'Before/After', href: '#avant-apres' },
+  { id: 'services', label: lang.value === 'fr' ? 'Expertises' : 'Services', href: '#services' },
+  { id: 'atelier-3d', label: lang.value === 'fr' ? 'Atelier 3D' : '3D Studio', href: '#atelier-3d' },
+  { id: 'nuancier', label: lang.value === 'fr' ? 'Nuancier' : 'Nuances', href: '#nuancier' },
+  { id: 'galerie', label: lang.value === 'fr' ? 'Réalisations' : 'Portfolio', href: '#galerie' },
+  { id: 'contact', label: lang.value === 'fr' ? 'Contact' : 'Contact', href: '#contact' }
+])
+
 const handleScroll = () => {
   const currentY = window.scrollY
   scrollY.value = currentY
@@ -1009,7 +1021,7 @@ onUnmounted(() => {
         isScrolled ? 'py-2.5 sm:py-3 shadow-2xl shadow-black/80' : 'py-3 sm:py-4 lg:py-5'
       ]"
     >
-      <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 flex items-center justify-between gap-2 sm:gap-4">
+      <div class="max-w-[1536px] w-full mx-auto px-3 sm:px-6 lg:px-8 flex items-center justify-between gap-2 lg:gap-4">
         <a
           href="#accueil"
           @click.prevent="scrollToSection('accueil')"
@@ -1024,20 +1036,21 @@ onUnmounted(() => {
             <span class="block text-sm sm:text-lg font-serif tracking-[0.14em] sm:tracking-[0.18em] text-white font-semibold whitespace-nowrap">
               MAISON <span class="text-amber-400">NDAMEN</span>
             </span>
-            <span class="hidden sm:block text-[10px] uppercase tracking-[0.2em] text-amber-300/80 truncate">
+            <span class="hidden xl:block text-[10px] uppercase tracking-[0.16em] text-amber-300/80 truncate max-w-[180px] 2xl:max-w-none">
               {{ t.brandSubtitle }}
             </span>
           </div>
         </a>
 
-        <nav class="hidden xl:flex items-center gap-1 bg-slate-900/70 border border-amber-500/20 rounded-full px-2.5 py-1.5 backdrop-blur-md">
+        <!-- Desktop Navigation Links (>= xl, Streamlined & Guaranteed Fit on all Laptops) -->
+        <nav class="hidden xl:flex items-center gap-0.5 2xl:gap-1 bg-slate-900/70 border border-amber-500/20 rounded-full px-2 py-1 2xl:px-2.5 2xl:py-1.5 backdrop-blur-md shrink-0">
           <a
-            v-for="link in navLinks"
+            v-for="link in desktopNavLinks"
             :key="link.id"
             :href="link.href"
             @click.prevent="scrollToSection(link.id)"
             :class="[
-              'px-3.5 py-1.5 rounded-full text-xs font-medium tracking-wide transition-all duration-300',
+              'px-2.5 2xl:px-3.5 py-1 2xl:py-1.5 rounded-full text-[11px] 2xl:text-xs font-medium tracking-wide transition-all duration-300 whitespace-nowrap',
               activeSection === link.id
                 ? 'bg-gradient-to-r from-amber-500 to-amber-400 text-slate-950 font-semibold shadow-md shadow-amber-500/30'
                 : 'text-slate-300 hover:text-amber-400'
@@ -1051,7 +1064,7 @@ onUnmounted(() => {
           <button
             @click="toggleLanguage"
             type="button"
-            class="inline-flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-full bg-slate-900/90 border border-amber-500/35 hover:border-amber-400 text-[11px] sm:text-xs font-bold tracking-wider uppercase text-amber-300 transition-all shadow-inner shrink-0"
+            class="inline-flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-full bg-slate-900/90 border border-amber-500/35 hover:border-amber-400 text-[11px] sm:text-xs font-bold tracking-wider uppercase text-amber-300 transition-all shadow-inner shrink-0 whitespace-nowrap"
             :title="lang === 'fr' ? 'Switch to English' : 'Passer en Français'"
           >
             <span class="text-xs sm:text-sm">🇨🇲</span>
@@ -1060,13 +1073,14 @@ onUnmounted(() => {
             <span :class="lang === 'en' ? 'text-white underline decoration-amber-400 underline-offset-2' : 'text-slate-400'">EN</span>
           </button>
 
+          <!-- Header CTA Button (100% visible on laptops, tablets and computers) -->
           <button
             @click="scrollToSection('consultation')"
-            class="hidden sm:inline-flex relative group overflow-hidden rounded-full px-4 sm:px-5 py-2 sm:py-2.5 text-xs font-semibold uppercase tracking-wider text-slate-950 bg-gradient-to-r from-amber-300 via-amber-400 to-amber-500 shadow-[0_0_20px_rgba(245,158,11,0.35)] hover:shadow-[0_0_30px_rgba(245,158,11,0.6)] transition-all duration-300 shrink-0"
+            class="inline-flex relative group overflow-hidden rounded-full px-3.5 sm:px-4 xl:px-5 py-2 sm:py-2.5 text-[11px] sm:text-xs font-semibold uppercase tracking-wider text-slate-950 bg-gradient-to-r from-amber-300 via-amber-400 to-amber-500 shadow-[0_0_20px_rgba(245,158,11,0.35)] hover:shadow-[0_0_30px_rgba(245,158,11,0.6)] transition-all duration-300 shrink-0 whitespace-nowrap"
           >
             <span class="relative z-10 flex items-center gap-1.5 sm:gap-2">
-              <Sparkles class="w-3.5 h-3.5" />
-              <span>{{ t.navCta }}</span>
+              <Sparkles class="w-3.5 h-3.5 shrink-0" />
+              <span class="whitespace-nowrap">{{ t.navCta }}</span>
             </span>
           </button>
 
