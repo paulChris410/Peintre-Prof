@@ -53,6 +53,30 @@
     .touch-manipulation {
       touch-action: manipulation;
     }
+    .luxury-header-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      width: 100%;
+      z-index: 100;
+      background-color: rgba(2, 6, 23, 0.96);
+      -webkit-backdrop-filter: blur(20px);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(245, 158, 11, 0.35);
+      box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.85);
+    }
+    .luxury-mobile-drawer {
+      background-color: rgba(2, 6, 23, 0.98);
+      -webkit-backdrop-filter: blur(24px);
+      backdrop-filter: blur(24px);
+    }
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
     }
     body {
       cursor: auto;
@@ -146,109 +170,125 @@
       <div class="absolute bottom-0 left-1/4 w-[40rem] h-[28rem] rounded-full bg-slate-800/30 blur-[160px]"></div>
     </div>
 
-    <!-- FLOATING GLASSMORPHIC NAVBAR + LANGUAGE SWITCHER + SCROLL PROGRESS BAR -->
-    <header
-      :class="[
-        'fixed top-0 inset-x-0 z-50 transition-all duration-300 backdrop-blur-xl bg-slate-950/92 border-b border-amber-500/20 [transform:translateZ(0)]',
-        isScrolled ? 'py-2 sm:py-3 shadow-2xl shadow-black/80' : 'py-2.5 sm:py-4 lg:py-5'
-      ]"
-      style="padding-top: max(env(safe-area-inset-top, 0px), isScrolled ? 0.5rem : 0.625rem); padding-left: max(env(safe-area-inset-left, 0px), 0.5rem); padding-right: max(env(safe-area-inset-right, 0px), 0.5rem);"
-    >
-      <div class="max-w-[1536px] w-full mx-auto px-2 xs:px-3 sm:px-6 lg:px-8 flex items-center justify-between gap-1.5 xs:gap-2 lg:gap-4">
-        <!-- Brand Logo (Cameroon Luxury Master Craftsman) -->
+    <!-- FLOATING GLASSMORPHIC NAVBAR + ALWAYS-VISIBLE MOBILE NAV BAR + SCROLL PROGRESS BAR -->
+    <header class="luxury-header-bar transition-all duration-300">
+      <!-- TIER 1: MAIN BAR (Logo + Desktop Nav + Language + Gold CTA + Hamburger) -->
+      <div
+        :class="[
+          'max-w-[1536px] w-full mx-auto px-2.5 xs:px-3.5 sm:px-6 lg:px-8 flex items-center justify-between gap-1.5 xs:gap-2 lg:gap-3 transition-all duration-300',
+          isScrolled ? 'py-2 sm:py-2.5' : 'py-2.5 sm:py-3.5'
+        ]"
+      >
+        <!-- Brand Logo (Stacked Crest on Mobile for Maximum Breathing Room, Single-Line on >= sm) -->
         <a
           href="#accueil"
           @click.prevent="scrollToSection('accueil')"
           class="group flex items-center gap-2 sm:gap-3 focus:outline-none shrink-0 touch-manipulation"
         >
-          <div class="relative w-8 h-8 xs:w-9 xs:h-9 sm:w-11 sm:h-11 rounded-xl bg-gradient-to-br from-amber-400 via-amber-500 to-amber-700 p-[1px] shadow-lg shadow-amber-500/20 group-hover:shadow-amber-500/40 transition-all duration-300 shrink-0">
-            <div class="w-full h-full bg-slate-950 rounded-[11px] flex items-center justify-center relative overflow-hidden">
+          <div class="relative w-8 h-8 xs:w-9 xs:h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-amber-300 via-amber-500 to-amber-700 p-[1.5px] shadow-lg shadow-amber-500/25 group-hover:shadow-amber-500/50 transition-all duration-300 shrink-0">
+            <div class="w-full h-full bg-slate-950 rounded-[10px] flex items-center justify-center relative overflow-hidden">
               <span class="text-amber-400 font-serif font-bold text-sm xs:text-base sm:text-lg">N</span>
             </div>
           </div>
-          <div class="min-w-0">
-            <span class="block text-xs xs:text-sm sm:text-lg font-serif tracking-[0.1em] sm:tracking-[0.18em] text-white font-semibold whitespace-nowrap">
-              MAISON <span class="text-amber-400">NDAMEN</span>
+          <div class="min-w-0 leading-none">
+            <span class="block sm:inline text-[11px] xs:text-xs sm:text-base xl:text-lg font-serif tracking-[0.12em] sm:tracking-[0.16em] text-white font-bold whitespace-nowrap">
+              MAISON
             </span>
-            <span class="hidden xl:block text-[10px] uppercase tracking-[0.16em] text-amber-300/80 truncate max-w-[180px] 2xl:max-w-none">
+            <span class="block sm:inline sm:ml-1.5 text-[11px] xs:text-xs sm:text-base xl:text-lg font-serif tracking-[0.12em] sm:tracking-[0.16em] text-amber-400 font-bold whitespace-nowrap mt-0.5 sm:mt-0">
+              NDAMEN
+            </span>
+            <span class="hidden 2xl:block text-[10px] uppercase tracking-[0.16em] text-amber-300/80 truncate mt-1">
               {{ t.brandSubtitle }}
             </span>
           </div>
         </a>
 
-        <!-- Desktop Navigation Links (>= xl, Streamlined & Guaranteed Fit on all Laptops) -->
-        <nav class="hidden xl:flex items-center gap-0.5 2xl:gap-1 bg-slate-900/70 border border-amber-500/20 rounded-full px-2 py-1 2xl:px-2.5 2xl:py-1.5 backdrop-blur-md shrink-0">
+        <!-- Desktop Navigation Links (Visible on all Laptops & Desktops >= 1024px / lg) -->
+        <nav
+          class="hidden lg:flex items-center gap-0.5 xl:gap-1 bg-slate-900/95 border border-amber-500/30 rounded-full px-2 py-1 xl:px-2.5 xl:py-1.5 shadow-lg shrink-0"
+          aria-label="Navigation principale"
+        >
           <a
             v-for="link in desktopNavLinks"
             :key="link.id"
             :href="link.href"
             @click.prevent="scrollToSection(link.id)"
             :class="[
-              'px-2.5 2xl:px-3.5 py-1 2xl:py-1.5 rounded-full text-[11px] 2xl:text-xs font-medium tracking-wide transition-all duration-300 whitespace-nowrap',
+              'px-2 xl:px-3 py-1 xl:py-1.5 rounded-full text-[11px] xl:text-xs font-semibold tracking-wide transition-all duration-300 whitespace-nowrap',
               activeSection === link.id
-                ? 'bg-gradient-to-r from-amber-500 to-amber-400 text-slate-950 font-semibold shadow-md shadow-amber-500/30'
-                : 'text-slate-300 hover:text-amber-400'
+                ? 'bg-gradient-to-r from-amber-400 to-amber-500 text-slate-950 font-bold shadow-md shadow-amber-500/30'
+                : 'text-slate-200 hover:text-amber-400'
             ]"
           >
             {{ link.label }}
           </a>
         </nav>
 
-        <!-- Right Side Controls: Language Switcher + CTA + Mobile Hamburger -->
+        <!-- Right Side Controls: Language Switcher + Always-Visible Gold CTA + Mobile Drawer Toggle -->
         <div class="flex items-center gap-1.5 xs:gap-2 sm:gap-2.5 shrink-0">
           <!-- Bilingual Cameroon Switcher (FR / EN) -->
           <button
             @click="toggleLanguage"
             type="button"
-            class="inline-flex items-center gap-1 px-2 xs:px-2.5 sm:px-3 py-1 xs:py-1.5 sm:py-2 rounded-full bg-slate-900/90 border border-amber-500/35 hover:border-amber-400 text-[10px] xs:text-[11px] sm:text-xs font-bold tracking-wider uppercase text-amber-300 transition-all shadow-inner shrink-0 whitespace-nowrap touch-manipulation select-none active:scale-95"
+            class="inline-flex items-center gap-1 px-2 xs:px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-full bg-slate-900 border border-amber-500/40 hover:border-amber-400 text-[10px] xs:text-[11px] sm:text-xs font-bold tracking-wider uppercase text-amber-300 transition-all shadow-md shrink-0 whitespace-nowrap touch-manipulation select-none active:scale-95"
             :title="lang === 'fr' ? 'Switch to English' : 'Passer en Français'"
           >
-            <span class="text-[11px] xs:text-xs sm:text-sm leading-none">🇨🇲</span>
+            <span class="hidden xs:inline text-xs leading-none">🇨🇲</span>
             <span :class="lang === 'fr' ? 'text-white underline decoration-amber-400 underline-offset-2' : 'text-slate-400'">FR</span>
-            <span class="text-slate-600">/</span>
+            <span class="text-slate-500">/</span>
             <span :class="lang === 'en' ? 'text-white underline decoration-amber-400 underline-offset-2' : 'text-slate-400'">EN</span>
           </button>
 
-          <!-- Mobile Quick Action CTA (Adaptive across Samsung, Pixel, iPhone) -->
-          <!-- On screens < 360px: Compact 1-Tap Golden Spark Icon -->
-          <!-- On screens >= 360px and < 640px: Sleek "RDV" Golden Pill -->
+          <!-- Primary Gold CTA Button (100% Visible on All Phones, Tablets, Laptops & Desktops) -->
           <button
             @click="scrollToSection('consultation')"
-            class="sm:hidden inline-flex items-center justify-center gap-1 h-8 px-2 xs:px-2.5 rounded-xl bg-gradient-to-r from-amber-300 via-amber-400 to-amber-500 text-slate-950 font-bold text-[10px] uppercase tracking-wider shadow-md shadow-amber-500/30 shrink-0 whitespace-nowrap touch-manipulation active:scale-95 transition-transform"
+            class="inline-flex items-center justify-center gap-1 xs:gap-1.5 rounded-full px-2.5 xs:px-3 sm:px-4 xl:px-5 py-1.5 sm:py-2 text-[10px] xs:text-[11px] sm:text-xs font-bold uppercase tracking-wider text-slate-950 bg-gradient-to-r from-amber-300 via-amber-400 to-amber-500 shadow-[0_0_20px_rgba(245,158,11,0.4)] hover:shadow-[0_0_30px_rgba(245,158,11,0.65)] transition-all duration-300 shrink-0 whitespace-nowrap touch-manipulation active:scale-95"
             :title="t.navCta"
-            aria-label="Rendez-Vous Privé"
           >
-            <svg class="w-3.5 h-3.5 text-slate-950 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
-            <span class="hidden xs:inline font-semibold">RDV</span>
+            <svg class="w-3 h-3 xs:w-3.5 xs:h-3.5 text-slate-950 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
+            <span class="sm:hidden">{{ lang === 'fr' ? 'Rendez-Vous' : 'Book Visit' }}</span>
+            <span class="hidden sm:inline">{{ t.navCta }}</span>
           </button>
 
-          <!-- Header CTA Button (100% visible on laptops, tablets and computers >= sm) -->
-          <button
-            @click="scrollToSection('consultation')"
-            class="hidden sm:inline-flex relative group overflow-hidden rounded-full px-3.5 sm:px-4 xl:px-5 py-2 sm:py-2.5 text-[11px] sm:text-xs font-semibold uppercase tracking-wider text-slate-950 bg-gradient-to-r from-amber-300 via-amber-400 to-amber-500 shadow-[0_0_20px_rgba(245,158,11,0.35)] hover:shadow-[0_0_30px_rgba(245,158,11,0.6)] transition-all duration-300 shrink-0 whitespace-nowrap touch-manipulation active:scale-95"
-          >
-            <span class="relative z-10 flex items-center gap-1.5 sm:gap-2">
-              <svg class="w-3.5 h-3.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
-              <span class="whitespace-nowrap">{{ t.navCta }}</span>
-            </span>
-          </button>
-
-          <!-- Mobile / Tablet Hamburger Toggle Button -->
+          <!-- Mobile / Tablet Full Menu Drawer Toggle Button (< lg) -->
           <button
             @click="toggleMobileMenu"
             type="button"
-            class="xl:hidden w-8 h-8 xs:w-9 xs:h-9 sm:w-10 sm:h-10 rounded-xl bg-slate-900/90 border border-amber-500/30 flex items-center justify-center text-amber-400 hover:bg-amber-500 hover:text-slate-950 transition-colors shrink-0 touch-manipulation active:scale-95"
+            class="lg:hidden w-8 h-8 xs:w-9 xs:h-9 sm:w-10 sm:h-10 rounded-xl bg-slate-900 border border-amber-500/40 flex items-center justify-center text-amber-400 hover:bg-amber-500 hover:text-slate-950 transition-colors shrink-0 touch-manipulation active:scale-95 shadow-md"
             :aria-expanded="mobileMenuOpen"
             aria-label="Menu de navigation"
           >
-            <svg v-if="!mobileMenuOpen" class="w-4 h-4 xs:w-5 xs:h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
-            <svg v-else class="w-4 h-4 xs:w-5 xs:h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+            <svg v-if="!mobileMenuOpen" class="w-4 h-4 xs:w-5 xs:h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+            <svg v-else class="w-4 h-4 xs:w-5 xs:h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
           </button>
         </div>
       </div>
 
+      <!-- TIER 2: ALWAYS-VISIBLE MOBILE & TABLET NAVIGATION BAR (Samsung, Pixel, iPhone, iPad < 1024px) -->
+      <div class="lg:hidden w-full bg-slate-900/95 border-t border-amber-500/25 px-2.5 sm:px-6 py-1.5">
+        <nav
+          class="flex items-center gap-1.5 sm:gap-2 overflow-x-auto no-scrollbar py-0.5"
+          aria-label="Navigation mobile directe"
+        >
+          <a
+            v-for="link in navLinks"
+            :key="'mob-pill-' + link.id"
+            :href="link.href"
+            @click.prevent="scrollToSection(link.id)"
+            :class="[
+              'px-3 py-1.5 rounded-full text-[11px] sm:text-xs font-semibold tracking-wide whitespace-nowrap transition-all duration-200 shrink-0 touch-manipulation active:scale-95',
+              activeSection === link.id
+                ? 'bg-gradient-to-r from-amber-300 via-amber-400 to-amber-500 text-slate-950 font-bold shadow-[0_0_12px_rgba(245,158,11,0.45)]'
+                : 'bg-slate-950 text-slate-200 border border-amber-500/25 hover:border-amber-400 hover:text-amber-300'
+            ]"
+          >
+            {{ link.label }}
+          </a>
+        </nav>
+      </div>
+
       <!-- SCROLL PROGRESS INDICATOR -->
-      <div class="absolute bottom-0 left-0 right-0 h-[2px] bg-slate-900/80 overflow-hidden">
+      <div class="absolute bottom-0 left-0 right-0 h-[2px] bg-slate-950 overflow-hidden">
         <div
           class="h-full bg-gradient-to-r from-amber-300 via-amber-400 to-amber-500 shadow-[0_0_12px_rgba(245,158,11,0.9)] transition-all duration-150 ease-out"
           :style="{ width: `${scrollProgress}%` }"
@@ -260,8 +300,7 @@
     <transition name="fade-slide">
       <div
         v-if="mobileMenuOpen"
-        class="fixed inset-0 z-40 xl:hidden bg-slate-950/98 backdrop-blur-2xl overflow-y-auto overscroll-contain"
-        style="padding-top: max(4.75rem, calc(env(safe-area-inset-top, 0px) + 4.25rem)); padding-bottom: max(1.75rem, env(safe-area-inset-bottom, 0px)); padding-left: max(1rem, env(safe-area-inset-left, 0px)); padding-right: max(1rem, env(safe-area-inset-right, 0px));"
+        class="fixed inset-0 z-[90] lg:hidden luxury-mobile-drawer overflow-y-auto overscroll-contain pt-28 sm:pt-32 pb-8 px-4 sm:px-8"
       >
         <div class="min-h-full flex flex-col justify-between max-w-lg mx-auto w-full py-2">
           <!-- Links Section -->
@@ -285,7 +324,7 @@
                 'flex items-center justify-between py-2.5 xs:py-3 px-3.5 xs:px-4 rounded-xl text-sm xs:text-base sm:text-lg font-serif font-semibold border transition-all touch-manipulation active:scale-[0.99]',
                 activeSection === link.id
                   ? 'bg-amber-500/15 border-amber-400/50 text-amber-300 shadow-sm shadow-amber-500/20'
-                  : 'border-white/5 text-slate-200 hover:border-amber-500/30 hover:bg-slate-900/60'
+                  : 'border-white/10 bg-slate-900/60 text-slate-200 hover:border-amber-500/30'
               ]"
             >
               <span>{{ link.label }}</span>
@@ -333,7 +372,7 @@
     <!-- ========================================== -->
     <!-- 1. HERO SECTION (CAMEROON LUXURY ATMOSPHERE)-->
     <!-- ========================================== -->
-    <section id="accueil" class="relative pt-28 pb-16 sm:pt-36 sm:pb-24 lg:pt-40 lg:pb-28 overflow-hidden z-10 scene-3d">
+    <section id="accueil" class="relative pt-32 pb-16 sm:pt-36 sm:pb-24 lg:pt-36 lg:pb-28 overflow-hidden z-10 scene-3d">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-10 items-center">
           <div class="lg:col-span-7 space-y-6 sm:space-y-7">
@@ -2036,7 +2075,7 @@
           activeSection.value = id
           const el = document.getElementById(id)
           if (el) {
-            const headerOffset = window.innerWidth < 640 ? 64 : 80
+            const headerOffset = window.innerWidth < 1024 ? 104 : 80
             const top = el.getBoundingClientRect().top + window.scrollY - headerOffset
             window.scrollTo({ top, behavior: 'smooth' })
           }
