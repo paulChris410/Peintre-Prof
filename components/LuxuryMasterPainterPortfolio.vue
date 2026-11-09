@@ -410,7 +410,8 @@ const scrollToSection = (id) => {
   activeSection.value = id
   const el = document.getElementById(id)
   if (el) {
-    const top = el.getBoundingClientRect().top + window.scrollY - 80
+    const headerOffset = window.innerWidth < 640 ? 64 : 80
+    const top = el.getBoundingClientRect().top + window.scrollY - headerOffset
     window.scrollTo({ top, behavior: 'smooth' })
   }
 }
@@ -1017,23 +1018,25 @@ onUnmounted(() => {
     <!-- FLOATING NAVBAR + BILINGUAL SWITCHER + SCROLL PROGRESS BAR -->
     <header
       :class="[
-        'fixed top-0 inset-x-0 z-50 transition-all duration-300 backdrop-blur-xl bg-slate-950/90 border-b border-amber-500/20',
-        isScrolled ? 'py-2.5 sm:py-3 shadow-2xl shadow-black/80' : 'py-3 sm:py-4 lg:py-5'
+        'fixed top-0 inset-x-0 z-50 transition-all duration-300 backdrop-blur-xl bg-slate-950/92 border-b border-amber-500/20 [transform:translateZ(0)]',
+        isScrolled ? 'py-2 sm:py-3 shadow-2xl shadow-black/80' : 'py-2.5 sm:py-4 lg:py-5'
       ]"
+      style="padding-top: max(env(safe-area-inset-top, 0px), isScrolled ? 0.5rem : 0.625rem); padding-left: max(env(safe-area-inset-left, 0px), 0.5rem); padding-right: max(env(safe-area-inset-right, 0px), 0.5rem);"
     >
-      <div class="max-w-[1536px] w-full mx-auto px-3 sm:px-6 lg:px-8 flex items-center justify-between gap-2 lg:gap-4">
+      <div class="max-w-[1536px] w-full mx-auto px-2 xs:px-3 sm:px-6 lg:px-8 flex items-center justify-between gap-1.5 xs:gap-2 lg:gap-4">
+        <!-- Brand Logo (Cameroon Luxury Master Craftsman) -->
         <a
           href="#accueil"
           @click.prevent="scrollToSection('accueil')"
-          class="group flex items-center gap-2.5 sm:gap-3 focus:outline-none shrink-0"
+          class="group flex items-center gap-2 sm:gap-3 focus:outline-none shrink-0 touch-manipulation"
         >
-          <div class="relative w-9 h-9 sm:w-11 sm:h-11 rounded-xl bg-gradient-to-br from-amber-400 via-amber-500 to-amber-700 p-[1px] shadow-lg shadow-amber-500/20 group-hover:shadow-amber-500/40 transition-all duration-300 shrink-0">
+          <div class="relative w-8 h-8 xs:w-9 xs:h-9 sm:w-11 sm:h-11 rounded-xl bg-gradient-to-br from-amber-400 via-amber-500 to-amber-700 p-[1px] shadow-lg shadow-amber-500/20 group-hover:shadow-amber-500/40 transition-all duration-300 shrink-0">
             <div class="w-full h-full bg-slate-950 rounded-[11px] flex items-center justify-center relative overflow-hidden">
-              <span class="text-amber-400 font-serif font-bold text-base sm:text-lg">N</span>
+              <span class="text-amber-400 font-serif font-bold text-sm xs:text-base sm:text-lg">N</span>
             </div>
           </div>
           <div class="min-w-0">
-            <span class="block text-sm sm:text-lg font-serif tracking-[0.14em] sm:tracking-[0.18em] text-white font-semibold whitespace-nowrap">
+            <span class="block text-xs xs:text-sm sm:text-lg font-serif tracking-[0.1em] sm:tracking-[0.18em] text-white font-semibold whitespace-nowrap">
               MAISON <span class="text-amber-400">NDAMEN</span>
             </span>
             <span class="hidden xl:block text-[10px] uppercase tracking-[0.16em] text-amber-300/80 truncate max-w-[180px] 2xl:max-w-none">
@@ -1060,33 +1063,38 @@ onUnmounted(() => {
           </a>
         </nav>
 
-        <div class="flex items-center gap-2 sm:gap-2.5 shrink-0">
+        <!-- Right Side Controls: Language Switcher + CTA + Mobile Hamburger -->
+        <div class="flex items-center gap-1.5 xs:gap-2 sm:gap-2.5 shrink-0">
+          <!-- Bilingual Cameroon Switcher (FR / EN) -->
           <button
             @click="toggleLanguage"
             type="button"
-            class="inline-flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-full bg-slate-900/90 border border-amber-500/35 hover:border-amber-400 text-[11px] sm:text-xs font-bold tracking-wider uppercase text-amber-300 transition-all shadow-inner shrink-0 whitespace-nowrap"
+            class="inline-flex items-center gap-1 px-2 xs:px-2.5 sm:px-3 py-1 xs:py-1.5 sm:py-2 rounded-full bg-slate-900/90 border border-amber-500/35 hover:border-amber-400 text-[10px] xs:text-[11px] sm:text-xs font-bold tracking-wider uppercase text-amber-300 transition-all shadow-inner shrink-0 whitespace-nowrap touch-manipulation select-none active:scale-95"
             :title="lang === 'fr' ? 'Switch to English' : 'Passer en Français'"
           >
-            <span class="text-xs sm:text-sm">🇨🇲</span>
+            <span class="text-[11px] xs:text-xs sm:text-sm leading-none">🇨🇲</span>
             <span :class="lang === 'fr' ? 'text-white underline decoration-amber-400 underline-offset-2' : 'text-slate-400'">FR</span>
             <span class="text-slate-600">/</span>
             <span :class="lang === 'en' ? 'text-white underline decoration-amber-400 underline-offset-2' : 'text-slate-400'">EN</span>
           </button>
 
-          <!-- Mobile Quick 1-Tap CTA Icon (Visible on phones < sm, so mobile users have immediate access without header cramp) -->
+          <!-- Mobile Quick Action CTA (Adaptive across Samsung, Pixel, iPhone) -->
+          <!-- On screens < 360px: Compact 1-Tap Golden Spark Icon -->
+          <!-- On screens >= 360px and < 640px: Sleek "RDV" Golden Pill -->
           <button
             @click="scrollToSection('consultation')"
-            class="sm:hidden w-8 h-8 rounded-xl bg-gradient-to-r from-amber-300 via-amber-400 to-amber-500 text-slate-950 flex items-center justify-center shadow-md shadow-amber-500/30 shrink-0"
+            class="sm:hidden inline-flex items-center justify-center gap-1 h-8 px-2 xs:px-2.5 rounded-xl bg-gradient-to-r from-amber-300 via-amber-400 to-amber-500 text-slate-950 font-bold text-[10px] uppercase tracking-wider shadow-md shadow-amber-500/30 shrink-0 whitespace-nowrap touch-manipulation active:scale-95 transition-transform"
             :title="t.navCta"
             aria-label="Rendez-Vous Privé"
           >
-            <Sparkles class="w-4 h-4 text-slate-950" />
+            <Sparkles class="w-3.5 h-3.5 text-slate-950 shrink-0" />
+            <span class="hidden xs:inline font-semibold">RDV</span>
           </button>
 
-          <!-- Header CTA Button (100% visible on laptops, tablets and computers >= sm) -->
+          <!-- Tablet & Desktop Full CTA Button (>= sm: 640px+) -->
           <button
             @click="scrollToSection('consultation')"
-            class="hidden sm:inline-flex relative group overflow-hidden rounded-full px-3.5 sm:px-4 xl:px-5 py-2 sm:py-2.5 text-[11px] sm:text-xs font-semibold uppercase tracking-wider text-slate-950 bg-gradient-to-r from-amber-300 via-amber-400 to-amber-500 shadow-[0_0_20px_rgba(245,158,11,0.35)] hover:shadow-[0_0_30px_rgba(245,158,11,0.6)] transition-all duration-300 shrink-0 whitespace-nowrap"
+            class="hidden sm:inline-flex relative group overflow-hidden rounded-full px-3.5 sm:px-4 xl:px-5 py-2 sm:py-2.5 text-[11px] sm:text-xs font-semibold uppercase tracking-wider text-slate-950 bg-gradient-to-r from-amber-300 via-amber-400 to-amber-500 shadow-[0_0_20px_rgba(245,158,11,0.35)] hover:shadow-[0_0_30px_rgba(245,158,11,0.6)] transition-all duration-300 shrink-0 whitespace-nowrap touch-manipulation active:scale-95"
           >
             <span class="relative z-10 flex items-center gap-1.5 sm:gap-2">
               <Sparkles class="w-3.5 h-3.5 shrink-0" />
@@ -1094,18 +1102,21 @@ onUnmounted(() => {
             </span>
           </button>
 
+          <!-- Mobile / Tablet Hamburger Toggle Button -->
           <button
             @click="toggleMobileMenu"
             type="button"
-            class="xl:hidden w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-slate-900/90 border border-amber-500/30 flex items-center justify-center text-amber-400 hover:bg-amber-500 hover:text-slate-950 transition-colors shrink-0"
-            aria-label="Menu"
+            class="xl:hidden w-8 h-8 xs:w-9 xs:h-9 sm:w-10 sm:h-10 rounded-xl bg-slate-900/90 border border-amber-500/30 flex items-center justify-center text-amber-400 hover:bg-amber-500 hover:text-slate-950 transition-colors shrink-0 touch-manipulation active:scale-95"
+            :aria-expanded="mobileMenuOpen"
+            aria-label="Menu de navigation"
           >
-            <Menu v-if="!mobileMenuOpen" class="w-5 h-5" />
-            <X v-else class="w-5 h-5" />
+            <Menu v-if="!mobileMenuOpen" class="w-4 h-4 xs:w-5 xs:h-5" />
+            <X v-else class="w-4 h-4 xs:w-5 xs:h-5" />
           </button>
         </div>
       </div>
 
+      <!-- SCROLL PROGRESS INDICATOR -->
       <div class="absolute bottom-0 left-0 right-0 h-[2px] bg-slate-900/80 overflow-hidden">
         <div
           class="h-full bg-gradient-to-r from-amber-300 via-amber-400 to-amber-500 shadow-[0_0_12px_rgba(245,158,11,0.9)] transition-all duration-150 ease-out"
@@ -1118,60 +1129,72 @@ onUnmounted(() => {
     <Transition name="fade-slide">
       <div
         v-if="mobileMenuOpen"
-        class="fixed inset-0 z-40 xl:hidden bg-slate-950/98 backdrop-blur-2xl pt-20 sm:pt-24 px-4 sm:px-8 pb-8 flex flex-col justify-between overflow-y-auto"
+        class="fixed inset-0 z-40 xl:hidden bg-slate-950/98 backdrop-blur-2xl overflow-y-auto overscroll-contain"
+        style="padding-top: max(4.75rem, calc(env(safe-area-inset-top, 0px) + 4.25rem)); padding-bottom: max(1.75rem, env(safe-area-inset-bottom, 0px)); padding-left: max(1rem, env(safe-area-inset-left, 0px)); padding-right: max(1rem, env(safe-area-inset-right, 0px));"
       >
-        <div class="space-y-2 max-w-lg mx-auto w-full pt-4">
-          <div class="flex items-center justify-between pb-3 border-b border-white/10 mb-4">
-            <p class="text-xs uppercase tracking-[0.25em] text-amber-400 font-semibold">
-              {{ t.mobileNavTitle }}
-            </p>
-            <span class="text-xs text-slate-400 font-mono">MAISON NDAMEN</span>
-          </div>
+        <div class="min-h-full flex flex-col justify-between max-w-lg mx-auto w-full py-2">
+          <!-- Links Section -->
+          <div class="space-y-1.5 xs:space-y-2 w-full">
+            <div class="flex items-center justify-between pb-2.5 border-b border-amber-500/20 mb-3">
+              <div class="flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
+                <p class="text-[11px] xs:text-xs uppercase tracking-[0.2em] text-amber-400 font-semibold">
+                  {{ t.mobileNavTitle }}
+                </p>
+              </div>
+              <span class="text-[10px] text-slate-400 font-mono tracking-widest">MAISON NDAMEN</span>
+            </div>
 
-          <a
-            v-for="link in navLinks"
-            :key="link.id"
-            :href="link.href"
-            @click.prevent="scrollToSection(link.id)"
-            :class="[
-              'flex items-center justify-between py-3 px-4 rounded-2xl text-base sm:text-lg font-serif font-semibold border transition-all',
-              activeSection === link.id
-                ? 'bg-amber-500/15 border-amber-400/50 text-amber-300'
-                : 'border-white/5 text-slate-200 hover:border-amber-500/30'
-            ]"
-          >
-            <span>{{ link.label }}</span>
-            <ArrowRight class="w-4 h-4 text-amber-400" />
-          </a>
-
-          <button
-            @click="scrollToSection('consultation')"
-            class="w-full mt-3 py-3.5 px-3 rounded-xl bg-gradient-to-r from-amber-300 via-amber-400 to-amber-500 text-slate-950 font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg text-center leading-snug"
-          >
-            <Calendar class="w-4 h-4 shrink-0" />
-            <span class="break-words">{{ t.heroPrimaryCta }}</span>
-          </button>
-        </div>
-
-        <div class="pt-6 border-t border-amber-500/20 space-y-3 max-w-lg mx-auto w-full">
-          <div class="flex items-center justify-between p-3.5 rounded-2xl bg-slate-900/90 border border-amber-500/30">
-            <span class="text-xs uppercase tracking-wider text-slate-300">{{ lang === 'fr' ? 'Langue (Cameroun)' : 'Language (Cameroon)' }}</span>
-            <button
-              @click="toggleLanguage"
-              class="px-3.5 py-1.5 rounded-full bg-amber-500 text-slate-950 text-xs font-bold uppercase shrink-0"
+            <a
+              v-for="link in navLinks"
+              :key="link.id"
+              :href="link.href"
+              @click.prevent="scrollToSection(link.id)"
+              :class="[
+                'flex items-center justify-between py-2.5 xs:py-3 px-3.5 xs:px-4 rounded-xl text-sm xs:text-base sm:text-lg font-serif font-semibold border transition-all touch-manipulation active:scale-[0.99]',
+                activeSection === link.id
+                  ? 'bg-amber-500/15 border-amber-400/50 text-amber-300 shadow-sm shadow-amber-500/20'
+                  : 'border-white/5 text-slate-200 hover:border-amber-500/30 hover:bg-slate-900/60'
+              ]"
             >
-              {{ lang === 'fr' ? 'English (EN)' : 'Français (FR)' }}
+              <span>{{ link.label }}</span>
+              <ArrowRight class="w-4 h-4 text-amber-400/80 shrink-0" />
+            </a>
+
+            <!-- Direct Mobile CTA Inside Menu -->
+            <button
+              @click="scrollToSection('consultation')"
+              class="w-full mt-3 py-3.5 px-4 rounded-xl bg-gradient-to-r from-amber-300 via-amber-400 to-amber-500 text-slate-950 font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg shadow-amber-500/25 text-center leading-snug touch-manipulation active:scale-[0.99]"
+            >
+              <Calendar class="w-4 h-4 shrink-0" />
+              <span>{{ t.heroPrimaryCta }}</span>
             </button>
           </div>
-          <a
-            href="https://wa.me/237677002244"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="w-full py-3.5 px-3 rounded-xl bg-emerald-500 text-slate-950 font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg text-center leading-snug break-words"
-          >
-            <MessageCircle class="w-4 h-4 shrink-0" />
-            <span>{{ t.whatsappDirectBtn }}</span>
-          </a>
+
+          <!-- Footer Actions Inside Menu -->
+          <div class="pt-5 mt-4 border-t border-amber-500/20 space-y-2.5 w-full">
+            <div class="flex items-center justify-between p-3 rounded-xl bg-slate-900/90 border border-amber-500/30">
+              <span class="text-xs uppercase tracking-wider text-slate-300 flex items-center gap-1.5">
+                <span>🇨🇲</span>
+                <span>{{ lang === 'fr' ? 'Langue (Cameroun)' : 'Language (Cameroon)' }}</span>
+              </span>
+              <button
+                @click="toggleLanguage"
+                class="px-3 py-1 rounded-full bg-amber-500 hover:bg-amber-400 text-slate-950 text-[11px] font-bold uppercase shrink-0 transition-colors touch-manipulation"
+              >
+                {{ lang === 'fr' ? 'English (EN)' : 'Français (FR)' }}
+              </button>
+            </div>
+            <a
+              href="https://wa.me/237677002244"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="w-full py-3 px-4 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/20 text-center leading-snug touch-manipulation transition-colors"
+            >
+              <MessageCircle class="w-4 h-4 shrink-0" />
+              <span>{{ t.whatsappDirectBtn }}</span>
+            </a>
+          </div>
         </div>
       </div>
     </Transition>
