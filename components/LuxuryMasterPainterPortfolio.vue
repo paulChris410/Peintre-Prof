@@ -1122,10 +1122,10 @@ onUnmounted(() => {
 
           <button
             @click="scrollToSection('consultation')"
-            class="w-full mt-3 py-3.5 rounded-xl bg-gradient-to-r from-amber-300 via-amber-400 to-amber-500 text-slate-950 font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg"
+            class="w-full mt-3 py-3.5 px-3 rounded-xl bg-gradient-to-r from-amber-300 via-amber-400 to-amber-500 text-slate-950 font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg text-center leading-snug"
           >
-            <Calendar class="w-4 h-4" />
-            <span>{{ t.heroPrimaryCta }}</span>
+            <Calendar class="w-4 h-4 shrink-0" />
+            <span class="break-words">{{ t.heroPrimaryCta }}</span>
           </button>
         </div>
 
@@ -1134,7 +1134,7 @@ onUnmounted(() => {
             <span class="text-xs uppercase tracking-wider text-slate-300">{{ lang === 'fr' ? 'Langue (Cameroun)' : 'Language (Cameroon)' }}</span>
             <button
               @click="toggleLanguage"
-              class="px-3.5 py-1.5 rounded-full bg-amber-500 text-slate-950 text-xs font-bold uppercase"
+              class="px-3.5 py-1.5 rounded-full bg-amber-500 text-slate-950 text-xs font-bold uppercase shrink-0"
             >
               {{ lang === 'fr' ? 'English (EN)' : 'Français (FR)' }}
             </button>
@@ -1143,9 +1143,9 @@ onUnmounted(() => {
             href="https://wa.me/237677002244"
             target="_blank"
             rel="noopener noreferrer"
-            class="w-full py-3.5 rounded-xl bg-emerald-500 text-slate-950 font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg"
+            class="w-full py-3.5 px-3 rounded-xl bg-emerald-500 text-slate-950 font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg text-center leading-snug break-words"
           >
-            <MessageCircle class="w-4 h-4" />
+            <MessageCircle class="w-4 h-4 shrink-0" />
             <span>{{ t.whatsappDirectBtn }}</span>
           </a>
         </div>
@@ -1188,22 +1188,22 @@ onUnmounted(() => {
               </div>
             </div>
 
-            <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 pt-1">
+            <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 pt-1 w-full sm:w-auto">
               <button
                 @click="scrollToSection('consultation')"
-                class="group inline-flex items-center justify-center gap-3 px-6 sm:px-8 py-3.5 sm:py-4 rounded-full text-xs sm:text-sm font-bold uppercase tracking-wider text-slate-950 bg-gradient-to-r from-amber-300 via-amber-400 to-amber-500 shadow-[0_0_30px_rgba(245,158,11,0.35)] hover:shadow-[0_0_45px_rgba(245,158,11,0.65)] transition-all duration-300 transform hover:-translate-y-0.5"
+                class="group w-full sm:w-auto inline-flex items-center justify-center gap-2 sm:gap-3 px-4 sm:px-8 py-3.5 sm:py-4 rounded-full text-xs sm:text-sm font-bold uppercase tracking-wider text-slate-950 bg-gradient-to-r from-amber-300 via-amber-400 to-amber-500 shadow-[0_0_30px_rgba(245,158,11,0.35)] hover:shadow-[0_0_45px_rgba(245,158,11,0.65)] transition-all duration-300 transform hover:-translate-y-0.5 text-center leading-snug"
               >
-                <Calendar class="w-4 h-4" />
-                <span>{{ t.heroPrimaryCta }}</span>
-                <ArrowRight class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
+                <Calendar class="w-4 h-4 shrink-0" />
+                <span class="break-words">{{ t.heroPrimaryCta }}</span>
+                <ArrowRight class="hidden sm:inline-block w-4 h-4 shrink-0 transform group-hover:translate-x-1 transition-transform" />
               </button>
 
               <button
                 @click="scrollToSection('apropos')"
-                class="inline-flex items-center justify-center gap-3 px-5 sm:px-7 py-3.5 sm:py-4 rounded-full text-xs sm:text-sm font-semibold uppercase tracking-wider text-white bg-slate-900/90 hover:bg-slate-800 border border-amber-500/30 hover:border-amber-400 transition-all duration-300"
+                class="w-full sm:w-auto inline-flex items-center justify-center gap-2 sm:gap-3 px-4 sm:px-7 py-3.5 sm:py-4 rounded-full text-xs sm:text-sm font-semibold uppercase tracking-wider text-white bg-slate-900/90 hover:bg-slate-800 border border-amber-500/30 hover:border-amber-400 transition-all duration-300 text-center leading-snug"
               >
-                <User class="w-4 h-4 text-amber-400" />
-                <span>{{ t.heroSecondaryCta }}</span>
+                <User class="w-4 h-4 text-amber-400 shrink-0" />
+                <span class="break-words">{{ t.heroSecondaryCta }}</span>
               </button>
             </div>
 
@@ -1399,18 +1399,18 @@ onUnmounted(() => {
               </div>
             </div>
 
-            <div class="pt-4 flex flex-wrap items-center gap-4">
+            <div class="pt-4 flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4">
               <button
                 @click="scrollToSection('consultation')"
-                class="px-6 py-3.5 rounded-xl bg-gradient-to-r from-amber-300 via-amber-400 to-amber-500 text-slate-950 font-bold text-xs uppercase tracking-wider shadow-lg shadow-amber-500/25 hover:brightness-110 transition-all"
+                class="w-full sm:w-auto px-4 sm:px-6 py-3.5 rounded-xl bg-gradient-to-r from-amber-300 via-amber-400 to-amber-500 text-slate-950 font-bold text-xs uppercase tracking-wider shadow-lg shadow-amber-500/25 hover:brightness-110 transition-all text-center leading-snug break-words"
               >
                 {{ t.aboutMeetBtn }}
               </button>
               <a
                 href="tel:+237677002244"
-                class="px-5 py-3.5 rounded-xl bg-slate-900 border border-amber-500/30 hover:border-amber-400 text-amber-300 text-xs font-bold uppercase tracking-wider flex items-center gap-2 transition-all"
+                class="w-full sm:w-auto px-4 sm:px-5 py-3.5 rounded-xl bg-slate-900 border border-amber-500/30 hover:border-amber-400 text-amber-300 text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 transition-all text-center leading-snug"
               >
-                <Phone class="w-4 h-4" />
+                <Phone class="w-4 h-4 shrink-0" />
                 <span>{{ t.aboutDirectLine }} : +237 6 77 00 22 44</span>
               </a>
             </div>
@@ -1560,13 +1560,13 @@ onUnmounted(() => {
                 </span>
               </div>
 
-              <div class="p-7 space-y-5 relative z-10">
+              <div class="p-5 sm:p-7 space-y-4 sm:space-y-5 relative z-10">
                 <div>
                   <p class="text-xs text-amber-400 uppercase tracking-widest font-semibold mb-1">{{ service.subtitle }}</p>
-                  <h3 class="text-2xl font-serif font-bold text-white group-hover:text-amber-300 transition-colors">{{ service.title }}</h3>
+                  <h3 class="text-xl sm:text-2xl font-serif font-bold text-white group-hover:text-amber-300 transition-colors">{{ service.title }}</h3>
                 </div>
-                <p class="text-sm text-slate-300 leading-relaxed">{{ service.description }}</p>
-                <ul class="space-y-2.5 pt-2 border-t border-white/10">
+                <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">{{ service.description }}</p>
+                <ul class="space-y-2 sm:space-y-2.5 pt-2 border-t border-white/10">
                   <li v-for="(feat, fIdx) in service.features" :key="fIdx" class="flex items-start gap-2.5 text-xs text-slate-200">
                     <CheckCircle2 class="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
                     <span>{{ feat }}</span>
@@ -1575,15 +1575,15 @@ onUnmounted(() => {
               </div>
             </div>
 
-            <div class="px-7 pb-7 pt-3 relative z-10">
-              <div class="p-4 rounded-2xl bg-slate-950/90 border border-amber-500/20 flex items-center justify-between">
+            <div class="px-4 sm:px-7 pb-5 sm:pb-7 pt-2 sm:pt-3 relative z-10">
+              <div class="p-3.5 sm:p-4 rounded-2xl bg-slate-950/90 border border-amber-500/20 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <div>
-                  <span class="text-xs uppercase tracking-wider text-slate-400 block">{{ t.serviceFormatLabel }}</span>
-                  <span class="text-sm font-serif font-bold text-amber-400">{{ service.commitment }}</span>
+                  <span class="text-[10px] sm:text-xs uppercase tracking-wider text-slate-400 block">{{ t.serviceFormatLabel }}</span>
+                  <span class="text-xs sm:text-sm font-serif font-bold text-amber-400">{{ service.commitment }}</span>
                 </div>
                 <button
                   @click="selectServiceForConsultation(service.id)"
-                  class="px-4 py-2.5 rounded-xl bg-amber-500/15 hover:bg-amber-500 text-amber-300 hover:text-slate-950 border border-amber-500/30 text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-1.5"
+                  class="w-full sm:w-auto px-4 py-2.5 rounded-xl bg-amber-500/15 hover:bg-amber-500 text-amber-300 hover:text-slate-950 border border-amber-500/30 text-xs font-bold uppercase tracking-wider transition-all flex items-center justify-center gap-1.5 shrink-0 text-center leading-snug"
                 >
                   <span>{{ t.serviceConsultBtn }}</span>
                   <ArrowRight class="w-3.5 h-3.5" />
@@ -1697,16 +1697,16 @@ onUnmounted(() => {
               </div>
 
               <!-- Live Explode Toggle Floating in Canvas Bottom Bar -->
-              <div class="flex flex-col sm:flex-row items-center justify-between gap-3 z-20 pt-4 border-t border-white/10">
-                <div class="text-xs text-slate-300">
+              <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 z-20 pt-4 border-t border-white/10">
+                <div class="text-xs text-slate-300 text-center sm:text-left">
                   <span class="text-amber-400 font-bold">{{ activeFinishObj.name }}</span> — {{ activeFinishObj.desc }}
                 </div>
                 <button
                   @click="toggleExplode"
                   type="button"
-                  class="px-5 py-2.5 rounded-xl bg-slate-950/90 hover:bg-slate-900 border border-amber-400 text-amber-300 text-xs font-bold uppercase tracking-wider transition-all shadow-xl flex items-center gap-2"
+                  class="w-full sm:w-auto px-4 sm:px-5 py-2.5 rounded-xl bg-slate-950/90 hover:bg-slate-900 border border-amber-400 text-amber-300 text-xs font-bold uppercase tracking-wider transition-all shadow-xl flex items-center justify-center gap-2 text-center"
                 >
-                  <Layers class="w-4 h-4" />
+                  <Layers class="w-4 h-4 shrink-0" />
                   <span>{{ isExploded ? t.atelierAssembleBtn : t.atelierExplodeBtn }}</span>
                 </button>
               </div>
@@ -1763,11 +1763,11 @@ onUnmounted(() => {
                   <span>{{ t.atelierSpec3 }}</span>
                 </li>
               </ul>
-              <div class="pt-3 border-t border-white/10 flex items-center justify-between">
+              <div class="pt-3 border-t border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                 <span class="text-xs text-slate-400">{{ t.atelierCustomQuotePrompt }}</span>
                 <button
                   @click="scrollToSection('consultation')"
-                  class="text-xs font-bold uppercase tracking-wider text-amber-400 hover:text-amber-300 underline underline-offset-4 flex items-center gap-1"
+                  class="text-xs font-bold uppercase tracking-wider text-amber-400 hover:text-amber-300 underline underline-offset-4 flex items-center gap-1 text-left sm:text-right"
                 >
                   <span>{{ t.atelierOrderStaffBtn }}</span>
                   <ArrowRight class="w-3.5 h-3.5" />
@@ -1841,10 +1841,13 @@ onUnmounted(() => {
               </div>
               <button
                 @click="applySwatchToConsultation(selectedSwatch)"
-                class="w-full py-3.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs uppercase tracking-wider transition-all flex items-center justify-center gap-2"
+                class="w-full py-3.5 px-3 sm:px-4 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs uppercase tracking-wider transition-all flex items-center justify-center gap-2 text-center leading-snug"
               >
-                <Check class="w-4 h-4" />
-                <span>{{ t.swatchApplyBtn }} (« {{ selectedSwatch.name }} »)</span>
+                <Check class="w-4 h-4 shrink-0" />
+                <!-- Mobile concise label (prevents button blowout / cramp on 320px-390px screens) -->
+                <span class="sm:hidden">{{ lang === 'fr' ? 'Retenir cette nuance :' : 'Select shade:' }} « {{ selectedSwatch.name }} »</span>
+                <!-- Desktop full label -->
+                <span class="hidden sm:inline">{{ t.swatchApplyBtn }} (« {{ selectedSwatch.name }} »)</span>
               </button>
             </div>
           </div>
@@ -1945,7 +1948,10 @@ onUnmounted(() => {
                 <h3 class="text-2xl font-serif font-bold text-white">{{ selectedProject.title }}</h3>
                 <p class="text-sm text-slate-300 leading-relaxed">{{ selectedProject.description }}</p>
               </div>
-              <button @click="selectServiceForConsultation(selectedProject.category); closeLightbox()" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-amber-300 via-amber-400 to-amber-500 text-slate-950 font-bold text-xs uppercase tracking-wider">
+              <button
+                @click="selectServiceForConsultation(selectedProject.category); closeLightbox()"
+                class="w-full py-3.5 px-4 rounded-xl bg-gradient-to-r from-amber-300 via-amber-400 to-amber-500 text-slate-950 font-bold text-xs uppercase tracking-wider text-center leading-snug break-words shadow-lg"
+              >
                 {{ t.lightboxConsultBtn }}
               </button>
             </div>
@@ -1967,20 +1973,20 @@ onUnmounted(() => {
           </h2>
         </div>
 
-        <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-10">
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-4 mb-10">
           <button
             v-for="(step, idx) in craftsmanshipSteps"
             :key="step.stepNumber"
             @click="activeStepIndex = idx"
             :class="[
-              'text-left p-4 sm:p-5 rounded-2xl border transition-all duration-300',
+              'text-left p-3 sm:p-5 rounded-2xl border transition-all duration-300',
               activeStepIndex === idx ? 'bg-gradient-to-br from-amber-500/20 via-amber-500/10 to-slate-900 border-amber-400 shadow-lg' : 'bg-slate-900/70 border-white/10 hover:border-amber-500/30'
             ]"
           >
-            <div class="flex items-center justify-between mb-2">
-              <span class="text-xs font-bold uppercase tracking-widest text-amber-400">{{ t.stepWord }} {{ step.stepNumber }}</span>
+            <div class="flex items-center justify-between mb-1.5 sm:mb-2">
+              <span class="text-[10px] sm:text-xs font-bold uppercase tracking-widest text-amber-400">{{ t.stepWord }} {{ step.stepNumber }}</span>
             </div>
-            <p class="text-sm sm:text-base font-serif font-bold text-white">{{ step.title }}</p>
+            <p class="text-xs sm:text-base font-serif font-bold text-white leading-snug break-words">{{ step.title }}</p>
           </button>
         </div>
 
@@ -2223,22 +2229,25 @@ onUnmounted(() => {
                       </p>
                     </div>
 
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5 pt-2">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-3.5 pt-2">
                       <button
                         type="submit"
-                        class="w-full py-4 px-5 rounded-xl bg-gradient-to-r from-amber-300 via-amber-400 to-amber-500 hover:brightness-110 text-slate-950 font-bold text-xs uppercase tracking-wider shadow-[0_0_25px_rgba(245,158,11,0.35)] transition-all flex items-center justify-center gap-2"
+                        class="w-full py-3.5 sm:py-4 px-3 sm:px-5 rounded-xl bg-gradient-to-r from-amber-300 via-amber-400 to-amber-500 hover:brightness-110 text-slate-950 font-bold text-xs uppercase tracking-wider shadow-[0_0_25px_rgba(245,158,11,0.35)] transition-all flex items-center justify-center gap-2 text-center leading-snug break-words"
                       >
-                        <CheckCircle2 class="w-4 h-4" />
-                        <span>{{ t.submitBookingBtn }}</span>
+                        <CheckCircle2 class="w-4 h-4 shrink-0" />
+                        <span>✦ {{ t.submitBookingBtn }}</span>
                       </button>
 
                       <button
                         type="button"
                         @click="sendConsultationViaWhatsApp"
-                        class="w-full py-4 px-5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs uppercase tracking-wider shadow-lg transition-all flex items-center justify-center gap-2"
+                        class="w-full py-3.5 sm:py-4 px-3 sm:px-5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs uppercase tracking-wider shadow-lg transition-all flex items-center justify-center gap-2 text-center leading-snug break-words"
                       >
-                        <MessageCircle class="w-4 h-4" />
-                        <span>{{ t.submitWhatsappBtn }}</span>
+                        <MessageCircle class="w-4 h-4 shrink-0" />
+                        <!-- Mobile concise label to eliminate cramp -->
+                        <span class="sm:hidden">💬 {{ lang === 'fr' ? 'WhatsApp : Dossier & Photos' : 'WhatsApp : Project & Photos' }}</span>
+                        <!-- Desktop full label -->
+                        <span class="hidden sm:inline">💬 {{ t.submitWhatsappBtn }}</span>
                       </button>
                     </div>
                   </form>
@@ -2306,22 +2315,22 @@ onUnmounted(() => {
             <h3 class="text-2xl sm:text-4xl font-serif font-bold text-white">{{ t.footerBannerTitle }}</h3>
             <p class="text-sm text-slate-300">{{ t.footerBannerSub }}</p>
           </div>
-          <div class="flex flex-wrap items-center gap-3.5 shrink-0">
+          <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-3.5 w-full sm:w-auto shrink-0">
             <a
               href="tel:+237677002244"
-              class="px-6 py-4 rounded-full bg-gradient-to-r from-amber-300 via-amber-400 to-amber-500 text-slate-950 font-bold text-xs uppercase tracking-wider shadow-lg flex items-center gap-2"
+              class="w-full sm:w-auto px-4 sm:px-6 py-3.5 sm:py-4 rounded-full bg-gradient-to-r from-amber-300 via-amber-400 to-amber-500 text-slate-950 font-bold text-xs uppercase tracking-wider shadow-lg flex items-center justify-center gap-2 text-center leading-snug"
             >
-              <Phone class="w-4 h-4" />
-              <span>+237 6 77 00 22 44</span>
+              <Phone class="w-4 h-4 shrink-0" />
+              <span>☎ +237 6 77 00 22 44</span>
             </a>
             <a
               href="https://wa.me/237677002244"
               target="_blank"
               rel="noopener noreferrer"
-              class="px-6 py-4 rounded-full bg-emerald-500 text-slate-950 font-bold text-xs uppercase tracking-wider shadow-lg flex items-center gap-2"
+              class="w-full sm:w-auto px-4 sm:px-6 py-3.5 sm:py-4 rounded-full bg-emerald-500 text-slate-950 font-bold text-xs uppercase tracking-wider shadow-lg flex items-center justify-center gap-2 text-center leading-snug"
             >
-              <MessageCircle class="w-4 h-4" />
-              <span>WhatsApp VIP</span>
+              <MessageCircle class="w-4 h-4 shrink-0" />
+              <span>💬 WhatsApp VIP</span>
             </a>
           </div>
         </div>
@@ -2347,7 +2356,7 @@ onUnmounted(() => {
             <div class="pt-2 flex items-center gap-3">
               <button
                 @click="toggleLanguage"
-                class="px-4 py-2 rounded-xl bg-slate-900 border border-amber-500/30 hover:border-amber-400 text-xs font-bold text-amber-300 uppercase tracking-wider flex items-center gap-2"
+                class="w-full sm:w-auto px-4 py-2.5 rounded-xl bg-slate-900 border border-amber-500/30 hover:border-amber-400 text-xs font-bold text-amber-300 uppercase tracking-wider flex items-center justify-center gap-2 transition-all leading-snug"
               >
                 <span>🇨🇲</span>
                 <span>{{ lang === 'fr' ? 'English Version (EN)' : 'Version Française (FR)' }}</span>
@@ -2424,12 +2433,13 @@ onUnmounted(() => {
       href="https://wa.me/237677002244?text=Bonjour%20Maitre%20Ndamen%2C%20je%20souhaite%20planifier%20une%20visite%20de%20mon%20chantier%20au%20Cameroun."
       target="_blank"
       rel="noopener noreferrer"
-      class="fixed bottom-6 right-6 z-40 group flex items-center gap-3 px-4 py-3 rounded-full bg-slate-950/95 border border-emerald-500/50 hover:border-emerald-400 shadow-[0_10px_35px_rgba(16,185,129,0.35)] transition-all duration-300 hover:-translate-y-1"
+      aria-label="WhatsApp VIP Maître Jean-Paul Ndamen"
+      class="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-40 group flex items-center justify-center sm:justify-start w-12 h-12 sm:w-auto sm:h-auto p-0 sm:px-4 sm:py-3 rounded-full bg-slate-950/95 border border-emerald-500/50 hover:border-emerald-400 shadow-[0_10px_35px_rgba(16,185,129,0.35)] transition-all duration-300 hover:-translate-y-1"
     >
-      <div class="relative w-10 h-10 rounded-full bg-emerald-500 flex items-center justify-center text-slate-950 shadow-md">
+      <div class="relative w-10 h-10 rounded-full bg-emerald-500 flex items-center justify-center text-slate-950 shadow-md shrink-0">
         <MessageCircle class="w-5 h-5" />
       </div>
-      <div class="hidden sm:block pr-2">
+      <div class="hidden sm:block pr-2 pl-2.5">
         <span class="block text-[10px] uppercase tracking-widest text-emerald-400 font-bold">{{ t.floatingWaTop }}</span>
         <span class="block text-xs font-semibold text-white">{{ t.floatingWaBottom }}</span>
       </div>
